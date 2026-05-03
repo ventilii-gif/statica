@@ -662,6 +662,13 @@ bindRange('moT','moTv');
 bindRange('moU','moUv', v=>v.toFixed(2));
 bindRange('moD','moDv', v=>v.toFixed(2));
 
+// ----- Sticky nav: sit below header -----
+const _hdr = document.querySelector('header');
+const _nav = document.querySelector('nav.main');
+function _updateNavTop(){ _nav.style.top = _hdr.offsetHeight + 'px'; }
+new ResizeObserver(_updateNavTop).observe(_hdr);
+_updateNavTop();
+
 // ----- Initial render -----
 renderFuni(); renderOrizz(); renderInclin(); renderMolla();
 </script>
