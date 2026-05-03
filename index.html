@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1565c0">
+<title>Equilibrio · Fisica Liceo</title>
+<style>
+:root{
+  --bg:#f4f7fb;--surface:#fff;--primary:#1565c0;--primary-d:#0d47a1;--accent:#ff7043;
+  --text:#1a1a2e;--muted:#5b6378;--border:#d6dce8;--shadow:0 2px 6px rgba(0,0,0,.08);
+  --vT:#1565c0;--vP:#e53935;--vN:#2e7d32;--vF:#f57c00;--vFa:#7b1fa2;--vFe:#00897b;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-size:clamp(15px,2.4vw,17px);line-height:1.55}
+header{background:linear-gradient(135deg,var(--primary),var(--primary-d));color:#fff;
+  padding:.85rem 1rem;box-shadow:var(--shadow);position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:clamp(1.15rem,4.5vw,1.55rem)}
+header .sub{font-size:.85em;opacity:.85}
+nav.main{background:var(--surface);display:flex;overflow-x:auto;
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:5;
+  scrollbar-width:thin}
+nav.main button{flex:0 0 auto;background:none;border:0;padding:.85rem 1rem;
+  font-size:.95em;color:var(--muted);border-bottom:3px solid transparent;
+  cursor:pointer;white-space:nowrap;min-height:44px}
+nav.main button.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+main{padding:1rem;max-width:880px;margin:0 auto}
+section.scene{display:none}
+section.scene.active{display:block}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:1rem;margin-bottom:1rem;box-shadow:var(--shadow)}
+.card h2{margin-top:0;color:var(--primary-d);font-size:1.15em}
+.card h3{margin:.8rem 0 .3rem;color:var(--primary-d);font-size:1em}
+.formula{background:#f0f4fa;border-left:3px solid var(--primary);
+  padding:.55rem .8rem;margin:.4rem 0;border-radius:4px;
+  font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05em;
+  overflow-x:auto;white-space:nowrap}
+.tip{background:#e8f5e9;border-left:3px solid #2e7d32;padding:.5rem .8rem;
+  margin:.5rem 0;border-radius:4px;font-size:.93em}
+.warn{background:#fff8e1;border-left:3px solid #f9a825;padding:.5rem .8rem;
+  margin:.5rem 0;border-radius:4px;font-size:.93em}
+.ctrl{display:grid;gap:.55rem;margin:.6rem 0}
+.ctrl label{display:flex;align-items:center;gap:.6rem;font-size:.92em}
+.ctrl label .nm{color:var(--muted);min-width:5.5em}
+.ctrl label input[type=range]{flex:1;min-height:30px}
+.ctrl label .v{min-width:3.6em;text-align:right;font-weight:700;
+  color:var(--primary-d);font-variant-numeric:tabular-nums}
+.ctrl select{padding:.45rem;border:1px solid var(--border);border-radius:6px;
+  font-size:1em;background:var(--surface);width:100%}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:.4rem;margin:.6rem 0;font-size:.88em}
+.read .it{background:#eef3fb;padding:.4rem .55rem;border-radius:6px}
+.read .it .l{color:var(--muted);font-size:.78em;display:block}
+.read .it .v{font-weight:700;font-variant-numeric:tabular-nums}
+.eqs{text-align:center;font-weight:700;padding:.5rem;border-radius:8px;margin-top:.5rem}
+.eqs.ok{background:#c8e6c9;color:#1b5e20}
+.eqs.no{background:#ffcdd2;color:#b71c1c}
+.eqs.lim{background:#ffe0b2;color:#bf360c}
+svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border);
+  border-radius:8px;display:block;font-family:sans-serif}
+.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:.4rem 0;font-size:.78em}
+.legend span{display:inline-flex;align-items:center;gap:.3rem;
+  background:#f0f4fa;padding:.18rem .5rem;border-radius:999px}
+.legend span i{display:inline-block;width:14px;height:3px;background:currentColor;border-radius:2px}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem}
+.home-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:.9rem;cursor:pointer;box-shadow:var(--shadow);text-align:left;font-size:1em;
+  font-family:inherit;color:inherit}
+.home-card:hover{border-color:var(--primary)}
+.home-card .ico{font-size:1.8em;display:block;margin-bottom:.3rem}
+.home-card strong{color:var(--primary-d);display:block;margin-bottom:.15rem}
+.home-card span{color:var(--muted);font-size:.88em}
+.kbd{font-family:ui-monospace,monospace;background:#eef3fb;padding:.05em .35em;border-radius:3px;font-size:.9em}
+@media(max-width:480px){main{padding:.7rem}.card{padding:.85rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>⚖️ Equilibrio dei corpi</h1>
+  <div class="sub">Fisica per il liceo scientifico · teoria & simulazioni</div>
+</header>
+<nav class="main" id="mainNav">
+  <button data-tab="home" class="active">🏠 Home</button>
+  <button data-tab="funi">🪢 Funi</button>
+  <button data-tab="orizz">📏 Piano orizzontale</button>
+  <button data-tab="inclin">⛰️ Piano inclinato</button>
+  <button data-tab="molla">🌀 Molla</button>
+</nav>
+<main>
+
+<section class="scene active" id="home">
+  <div class="card">
+    <h2>Quando un corpo è in equilibrio?</h2>
+    <p>Un corpo è in <strong>equilibrio statico</strong> quando la somma vettoriale di tutte le forze applicate è nulla:</p>
+    <div class="formula">Σ <b>F</b> = <b>0</b>   ⇔   ΣF<sub>x</sub> = 0   e   ΣF<sub>y</sub> = 0</div>
+    <p>In questa app esploriamo quattro situazioni tipiche del programma di fisica del liceo. Per ognuna trovi una breve teoria e una <strong>simulazione interattiva</strong> in cui muovi i cursori e vedi i vettori delle forze cambiare in tempo reale.</p>
+    <div class="tip">💡 Suggerimento: parti dalla simulazione, prova valori estremi (angoli piccoli, attrito nullo) e osserva cosa succede ai vettori. La teoria diventerà naturale.</div>
+  </div>
+  <div class="home-grid">
+    <button class="home-card" data-go="funi"><span class="ico">🪢</span><strong>Corpo appeso a funi</strong><span>Tensioni e angoli delle funi</span></button>
+    <button class="home-card" data-go="orizz"><span class="ico">📏</span><strong>Piano orizzontale</strong><span>Forza applicata e attrito</span></button>
+    <button class="home-card" data-go="inclin"><span class="ico">⛰️</span><strong>Piano inclinato</strong><span>Scomposizione del peso</span></button>
+    <button class="home-card" data-go="molla"><span class="ico">🌀</span><strong>Forze elastiche</strong><span>Legge di Hooke</span></button>
+  </div>
+</section>
+
+<section class="scene" id="funi">
+  <div class="card">
+    <h2>🪢 Corpo appeso a funi</h2>
+    <h3>Caso 1 — fune verticale</h3>
+    <p>Un corpo di massa <em>m</em> sospeso a una sola fune verticale: la tensione bilancia il peso.</p>
+    <div class="formula">T = m g</div>
+    <h3>Caso 2 — due funi inclinate</h3>
+    <p>Se le funi formano angoli <em>α</em> e <em>β</em> col soffitto, l'equilibrio dà il sistema:</p>
+    <div class="formula">T₁ cos α = T₂ cos β        (asse x)</div>
+    <div class="formula">T₁ sin α + T₂ sin β = m g  (asse y)</div>
+    <p>Risolvendo:</p>
+    <div class="formula">T₁ = m g · cos β / sin(α+β)   ·   T₂ = m g · cos α / sin(α+β)</div>
+    <div class="tip">📐 Caso simmetrico (α = β): T = mg / (2 sin α). Più piccolo è l'angolo, più grandi diventano le tensioni — per questo le funi tese quasi orizzontali si spezzano.</div>
+  </div>
+  <div class="card">
+    <h2>Simulazione</h2>
+    <div class="ctrl">
+      <label><span class="nm">Massa</span><input type="range" id="fuM" min="0.5" max="20" step="0.5" value="5"><span class="v" id="fuMv">5</span> kg</label>
+      <label><span class="nm">Angolo α (sx)</span><input type="range" id="fuA" min="15" max="85" step="1" value="45"><span class="v" id="fuAv">45</span>°</label>
+      <label><span class="nm">Angolo β (dx)</span><input type="range" id="fuB" min="15" max="85" step="1" value="45"><span class="v" id="fuBv">45</span>°</label>
+    </div>
+    <svg class="sim" id="svgFuni" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend"><span style="color:var(--vT)"><i></i>Tensione T</span><span style="color:var(--vP)"><i></i>Peso P</span></div>
+    <div class="read">
+      <div class="it"><span class="l">Peso P</span><span class="v" id="fuP">—</span> N</div>
+      <div class="it"><span class="l">T₁ (sx)</span><span class="v" id="fuT1">—</span> N</div>
+      <div class="it"><span class="l">T₂ (dx)</span><span class="v" id="fuT2">—</span> N</div>
+    </div>
+    <div class="eqs ok">✓ Sistema in equilibrio (per costruzione)</div>
+  </div>
+</section>
+
+<section class="scene" id="orizz">
+  <div class="card">
+    <h2>📏 Piano orizzontale con attrito</h2>
+    <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> (eventualmente inclinata di un angolo <em>θ</em> rispetto al piano), e l'attrito <em>f<sub>a</sub></em>.</p>
+    <h3>Equilibrio verticale</h3>
+    <div class="formula">N = m g − F sin θ        (con θ &gt; 0 verso l'alto)</div>
+    <h3>Equilibrio orizzontale</h3>
+    <p>Il corpo resta fermo finché l'attrito statico riesce a bilanciare la componente orizzontale della forza:</p>
+    <div class="formula">F cos θ ≤ μ<sub>s</sub> · N</div>
+    <div class="tip">🔍 Tirando con un angolo verso l'alto si <em>scarica</em> il piano (N diminuisce) e con esso la massima forza d'attrito disponibile: c'è un angolo ottimale che minimizza la forza necessaria a far muovere il corpo.</div>
+  </div>
+  <div class="card">
+    <h2>Simulazione</h2>
+    <div class="ctrl">
+      <label><span class="nm">Massa</span><input type="range" id="orM" min="0.5" max="30" step="0.5" value="10"><span class="v" id="orMv">10</span> kg</label>
+      <label><span class="nm">Forza F</span><input type="range" id="orF" min="0" max="200" step="1" value="40"><span class="v" id="orFv">40</span> N</label>
+      <label><span class="nm">Angolo θ</span><input type="range" id="orT" min="-30" max="60" step="1" value="0"><span class="v" id="orTv">0</span>°</label>
+      <label><span class="nm">μ statico</span><input type="range" id="orU" min="0" max="1" step="0.01" value="0.30"><span class="v" id="orUv">0.30</span></label>
+    </div>
+    <svg class="sim" id="svgOrizz" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vP)"><i></i>P</span>
+      <span style="color:var(--vN)"><i></i>N</span>
+      <span style="color:var(--vF)"><i></i>F applicata</span>
+      <span style="color:var(--vFa)"><i></i>f<sub>a</sub> attrito</span>
+    </div>
+    <div class="read">
+      <div class="it"><span class="l">P = mg</span><span class="v" id="orP">—</span> N</div>
+      <div class="it"><span class="l">N</span><span class="v" id="orN">—</span> N</div>
+      <div class="it"><span class="l">F<sub>x</sub></span><span class="v" id="orFx">—</span> N</div>
+      <div class="it"><span class="l">μ·N (max attrito)</span><span class="v" id="orMax">—</span> N</div>
+    </div>
+    <div class="eqs" id="orStat">—</div>
+  </div>
+</section>
+
+<section class="scene" id="inclin">
+  <div class="card">
+    <h2>⛰️ Piano inclinato</h2>
+    <p>Su un piano inclinato di angolo <em>θ</em> conviene scegliere gli assi <strong>parallelo</strong> e <strong>perpendicolare</strong> al piano. Il peso si scompone in:</p>
+    <div class="formula">P<sub>∥</sub> = m g sin θ   (lungo il piano, verso il basso)</div>
+    <div class="formula">P<sub>⊥</sub> = m g cos θ   (perpendicolare, premuto contro il piano)</div>
+    <p>La reazione vincolare bilancia la componente perpendicolare:</p>
+    <div class="formula">N = m g cos θ</div>
+    <h3>Condizione di equilibrio</h3>
+    <p>Senza forze esterne, il corpo resta fermo se l'attrito statico riesce a tenere:</p>
+    <div class="formula">m g sin θ ≤ μ<sub>s</sub> · m g cos θ   ⇔   tan θ ≤ μ<sub>s</sub></div>
+    <p>L'<strong>angolo limite</strong> oltre il quale il corpo scivola è</p>
+    <div class="formula">θ<sub>lim</sub> = arctan(μ<sub>s</sub>)</div>
+    <div class="tip">🧗 È il principio del piano inclinato come "macchina semplice": serve meno forza per sollevare un corpo lungo il piano che verticalmente.</div>
+  </div>
+  <div class="card">
+    <h2>Simulazione</h2>
+    <div class="ctrl">
+      <label><span class="nm">Massa</span><input type="range" id="inM" min="0.5" max="30" step="0.5" value="10"><span class="v" id="inMv">10</span> kg</label>
+      <label><span class="nm">Angolo θ</span><input type="range" id="inT" min="0" max="60" step="1" value="25"><span class="v" id="inTv">25</span>°</label>
+      <label><span class="nm">μ statico</span><input type="range" id="inU" min="0" max="1" step="0.01" value="0.40"><span class="v" id="inUv">0.40</span></label>
+      <label><span class="nm">Forza F ∥</span><input type="range" id="inF" min="0" max="200" step="1" value="0"><span class="v" id="inFv">0</span> N</label>
+    </div>
+    <svg class="sim" id="svgInclin" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vP)"><i></i>P</span>
+      <span style="color:var(--vN)"><i></i>N</span>
+      <span style="color:var(--vF)"><i></i>F</span>
+      <span style="color:var(--vFa)"><i></i>f<sub>a</sub></span>
+    </div>
+    <div class="read">
+      <div class="it"><span class="l">P<sub>∥</sub></span><span class="v" id="inPp">—</span> N</div>
+      <div class="it"><span class="l">P<sub>⊥</sub> = N</span><span class="v" id="inN">—</span> N</div>
+      <div class="it"><span class="l">f<sub>a</sub> richiesto</span><span class="v" id="inFa">—</span> N</div>
+      <div class="it"><span class="l">μ·N (max)</span><span class="v" id="inMax">—</span> N</div>
+      <div class="it"><span class="l">θ<sub>lim</sub></span><span class="v" id="inLim">—</span>°</div>
+    </div>
+    <div class="eqs" id="inStat">—</div>
+  </div>
+</section>
+
+<section class="scene" id="molla">
+  <div class="card">
+    <h2>🌀 Forze elastiche — legge di Hooke</h2>
+    <p>Una molla di costante elastica <em>k</em> deformata di <em>Δx</em> esercita una forza di <strong>richiamo</strong>:</p>
+    <div class="formula">F<sub>el</sub> = − k · Δx     (modulo: |F<sub>el</sub>| = k |Δx|)</div>
+    <h3>(a) Molla verticale con massa appesa</h3>
+    <p>All'equilibrio, il richiamo elastico bilancia il peso:</p>
+    <div class="formula">k · Δx = m g   ⇒   Δx = m g / k</div>
+    <h3>(b) Molla orizzontale con attrito</h3>
+    <p>Il corpo resta fermo finché la forza elastica non supera la massima forza d'attrito:</p>
+    <div class="formula">|k · Δx| ≤ μ<sub>s</sub> · m g</div>
+    <h3>(c) Molla su piano inclinato (senza attrito)</h3>
+    <div class="formula">k · Δx = m g sin θ</div>
+    <div class="tip">🪀 La costante <em>k</em> si misura in N/m: dice di quanti newton aumenta la forza elastica per ogni metro di deformazione.</div>
+  </div>
+  <div class="card">
+    <h2>Simulazione</h2>
+    <div class="ctrl">
+      <label><span class="nm">Configurazione</span>
+        <select id="moMode">
+          <option value="a">a) Molla verticale</option>
+          <option value="b">b) Molla orizzontale + attrito</option>
+          <option value="c">c) Molla su piano inclinato</option>
+        </select>
+      </label>
+      <label><span class="nm">Massa</span><input type="range" id="moM" min="0.2" max="15" step="0.1" value="2"><span class="v" id="moMv">2.0</span> kg</label>
+      <label><span class="nm">Costante k</span><input type="range" id="moK" min="10" max="500" step="5" value="100"><span class="v" id="moKv">100</span> N/m</label>
+      <label id="moTL" hidden><span class="nm">Angolo θ</span><input type="range" id="moT" min="0" max="60" step="1" value="20"><span class="v" id="moTv">20</span>°</label>
+      <label id="moUL" hidden><span class="nm">μ statico</span><input type="range" id="moU" min="0" max="1" step="0.01" value="0.30"><span class="v" id="moUv">0.30</span></label>
+      <label id="moDL" hidden><span class="nm">Δx imposto</span><input type="range" id="moD" min="-0.20" max="0.20" step="0.005" value="0"><span class="v" id="moDv">0.00</span> m</label>
+    </div>
+    <svg class="sim" id="svgMolla" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="legend">
+      <span style="color:var(--vP)"><i></i>P</span>
+      <span style="color:var(--vN)"><i></i>N</span>
+      <span style="color:var(--vFe)"><i></i>F<sub>el</sub></span>
+      <span style="color:var(--vFa)"><i></i>f<sub>a</sub></span>
+    </div>
+    <div class="read" id="moRead"></div>
+    <div class="eqs" id="moStat">—</div>
+  </div>
+</section>
+
+</main>
+<script>
+"use strict";
+const G = 9.81;
+const COL = {T:'#1565c0',P:'#e53935',N:'#2e7d32',F:'#f57c00',Fa:'#7b1fa2',Fe:'#00897b'};
+
+// ----- Helper: arrow as SVG string -----
+function arrow(x1,y1,x2,y2,color,label,labelOff){
+  const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy);
+  if(L<0.5) return '';
+  const ux=dx/L, uy=dy/L;
+  const tipL=Math.min(10,L*0.45), tipW=tipL*0.55;
+  const bx=x2-tipL*ux, by=y2-tipL*uy;
+  const lx=bx-tipW*uy, ly=by+tipW*ux;
+  const rx=bx+tipW*uy, ry=by-tipW*ux;
+  let lbl='';
+  if(label){
+    const off = labelOff ?? 14;
+    const tx = x2 + off*ux - off*0.4*uy;
+    const ty = y2 + off*uy + off*0.4*ux;
+    lbl=`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" fill="${color}" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle">${label}</text>`;
+  }
+  return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>`+
+    `<polygon points="${x2.toFixed(1)},${y2.toFixed(1)} ${lx.toFixed(1)},${ly.toFixed(1)} ${rx.toFixed(1)},${ry.toFixed(1)}" fill="${color}"/>${lbl}`;
+}
+
+// ----- Tab navigation -----
+const navBtns = document.querySelectorAll('#mainNav button');
+const scenes = document.querySelectorAll('section.scene');
+function showTab(name){
+  navBtns.forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  scenes.forEach(s=>s.classList.toggle('active', s.id===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navBtns.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+document.querySelectorAll('.home-card').forEach(c=>c.addEventListener('click',()=>showTab(c.dataset.go)));
+
+// ----- Slider value bind helper -----
+function bindRange(id, valId, fmt){
+  const el=document.getElementById(id);
+  const out=document.getElementById(valId);
+  const upd=()=>{ out.textContent = fmt? fmt(+el.value) : el.value; };
+  el.addEventListener('input', upd); upd();
+  return el;
+}
+
+// ============ FUNI ============
+function renderFuni(){
+  const m=+document.getElementById('fuM').value;
+  const aD=+document.getElementById('fuA').value;
+  const bD=+document.getElementById('fuB').value;
+  const a=aD*Math.PI/180, b=bD*Math.PI/180;
+  const W=m*G;
+  const T1 = W*Math.cos(b)/Math.sin(a+b);
+  const T2 = W*Math.cos(a)/Math.sin(a+b);
+  // body at (cx,cy); ceiling at top; anchors slide outward
+  const cx=200, cy=200, ceil=30;
+  const dxL=(cy-ceil)/Math.tan(a);
+  const dxR=(cy-ceil)/Math.tan(b);
+  const lx=cx-dxL, rx=cx+dxR;
+  const minX=Math.min(lx-15,0), maxX=Math.max(rx+15,400);
+  const vbW=maxX-minX;
+  const svg=document.getElementById('svgFuni');
+  svg.setAttribute('viewBox', `${minX} 0 ${vbW} 300`);
+  // Vector scaling
+  const Fmax=Math.max(W,T1,T2,1);
+  const sc=70/Fmax;
+  // Ceiling hatched
+  let ceiling=`<line x1="${minX}" y1="${ceil}" x2="${maxX}" y2="${ceil}" stroke="#444" stroke-width="2"/>`;
+  for(let x=Math.floor(minX/14)*14; x<maxX; x+=14){
+    ceiling+=`<line x1="${x}" y1="${ceil}" x2="${x-7}" y2="${ceil-9}" stroke="#666" stroke-width="1"/>`;
+  }
+  // Ropes
+  const ropes=`<line x1="${lx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="#555" stroke-width="1.5"/>
+    <line x1="${rx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="#555" stroke-width="1.5"/>`;
+  // Body
+  const bw=44, bh=34;
+  const body=`<rect x="${cx-bw/2}" y="${cy}" width="${bw}" height="${bh}" rx="4" fill="#ffd54f" stroke="#8d6e00" stroke-width="1.5"/>
+    <text x="${cx}" y="${cy+bh/2+4}" text-anchor="middle" font-size="12" fill="#5d4e00" font-weight="700">${m} kg</text>`;
+  // Vectors at body top center
+  const ax=cx, ay=cy;
+  const vP = arrow(ax, ay+bh, ax, ay+bh + W*sc, COL.P, 'P');
+  const vT1 = arrow(ax, ay, ax - T1*sc*Math.cos(a), ay - T1*sc*Math.sin(a), COL.T, 'T₁');
+  const vT2 = arrow(ax, ay, ax + T2*sc*Math.cos(b), ay - T2*sc*Math.sin(b), COL.T, 'T₂');
+  // Angles arcs (small)
+  function arc(cxx,cyy,r,ang1,ang2){
+    const x1=cxx+r*Math.cos(ang1), y1=cyy-r*Math.sin(ang1);
+    const x2=cxx+r*Math.cos(ang2), y2=cyy-r*Math.sin(ang2);
+    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="#888" stroke-width="1"/>`;
+  }
+  const arcA = arc(lx,ceil,18,0,-a) + `<text x="${lx+24}" y="${ceil+14}" font-size="11" fill="#555">α</text>`;
+  const arcB = arc(rx,ceil,18,Math.PI+b,Math.PI) + `<text x="${rx-30}" y="${ceil+14}" font-size="11" fill="#555">β</text>`;
+  svg.innerHTML = ceiling + ropes + arcA + arcB + body + vP + vT1 + vT2;
+  document.getElementById('fuP').textContent = W.toFixed(1);
+  document.getElementById('fuT1').textContent = T1.toFixed(1);
+  document.getElementById('fuT2').textContent = T2.toFixed(1);
+}
+['fuM','fuA','fuB'].forEach(id=>document.getElementById(id).addEventListener('input',renderFuni));
+bindRange('fuM','fuMv'); bindRange('fuA','fuAv'); bindRange('fuB','fuBv');
+
+// ============ ORIZZONTALE ============
+function renderOrizz(){
+  const m=+document.getElementById('orM').value;
+  const F=+document.getElementById('orF').value;
+  const tD=+document.getElementById('orT').value;
+  const u=+document.getElementById('orU').value;
+  const t=tD*Math.PI/180;
+  const W=m*G;
+  const Fx=F*Math.cos(t), Fy=F*Math.sin(t);
+  const N=Math.max(0, W - Fy);
+  const fMax=u*N;
+  const fNeeded=Math.abs(Fx);
+  const ok = fNeeded <= fMax + 1e-9;
+  const fa = ok ? -Fx : -Math.sign(Fx)*fMax;
+  // Drawing
+  const cx=200, gy=180; // ground y
+  const bw=70, bh=42;
+  const bx=cx-bw/2, by=gy-bh;
+  // Vector scaling: max arrow length 70, based on max |force|
+  const Fmax=Math.max(W,F,N,fMax,1);
+  const sc=Math.min(70,140)/Fmax;
+  // Ground
+  let ground=`<line x1="20" y1="${gy}" x2="380" y2="${gy}" stroke="#444" stroke-width="2"/>`;
+  for(let x=20;x<380;x+=14) ground+=`<line x1="${x}" y1="${gy}" x2="${x-7}" y2="${gy+9}" stroke="#666" stroke-width="1"/>`;
+  // Body
+  const body=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="4" fill="#90caf9" stroke="#0d47a1" stroke-width="1.5"/>
+    <text x="${cx}" y="${by+bh/2+4}" text-anchor="middle" font-size="12" font-weight="700" fill="#0d47a1">${m} kg</text>`;
+  // Vectors
+  const vP = arrow(cx, by+bh/2, cx, by+bh/2 + W*sc, COL.P, 'P');
+  const vN = arrow(cx, by, cx, by - N*sc, COL.N, 'N');
+  // F applied from body in direction (cos t, -sin t) (theta>0 means upward)
+  const vF = F>0.5 ? arrow(cx, by+bh/2, cx + F*sc*Math.cos(t), by+bh/2 - F*sc*Math.sin(t), COL.F, 'F') : '';
+  // Friction along ground, opposite Fx
+  const vFa = (Math.abs(fa)>0.5) ? arrow(cx, by+bh-4, cx + fa*sc, by+bh-4, COL.Fa, 'fₐ') : '';
+  document.getElementById('svgOrizz').innerHTML = ground + body + vP + vN + vF + vFa;
+  // Readouts
+  document.getElementById('orP').textContent = W.toFixed(1);
+  document.getElementById('orN').textContent = N.toFixed(1);
+  document.getElementById('orFx').textContent = Fx.toFixed(1);
+  document.getElementById('orMax').textContent = fMax.toFixed(1);
+  const stat=document.getElementById('orStat');
+  if(F<0.01){ stat.className='eqs ok'; stat.textContent='✓ Corpo fermo (nessuna forza applicata)'; }
+  else if(ok){
+    const ratio = fMax>0 ? fNeeded/fMax : 0;
+    if(ratio>0.95){ stat.className='eqs lim'; stat.textContent='⚠ Sul punto di muoversi (limite di attrito)'; }
+    else { stat.className='eqs ok'; stat.textContent='✓ In equilibrio: l\'attrito statico basta'; }
+  } else {
+    stat.className='eqs no'; stat.textContent='✗ Si muove: F supera la max forza d\'attrito';
+  }
+}
+['orM','orF','orT','orU'].forEach(id=>document.getElementById(id).addEventListener('input',renderOrizz));
+bindRange('orM','orMv'); bindRange('orF','orFv'); bindRange('orT','orTv');
+bindRange('orU','orUv', v=>v.toFixed(2));
+
+// ============ INCLINATO ============
+function renderInclin(){
+  const m=+document.getElementById('inM').value;
+  const tD=+document.getElementById('inT').value;
+  const u=+document.getElementById('inU').value;
+  const F=+document.getElementById('inF').value;
+  const t=tD*Math.PI/180;
+  const W=m*G;
+  const Pp=W*Math.sin(t);     // along plane, downhill
+  const Pn=W*Math.cos(t);     // perpendicular
+  const N=Pn;
+  const fMax=u*N;
+  // Net along plane (positive = downhill). F is up the plane.
+  const along = Pp - F;
+  const fNeeded = Math.abs(along);
+  const ok = fNeeded <= fMax + 1e-9;
+  const fa = ok ? -along : -Math.sign(along)*fMax; // friction along plane
+  const lim = Math.atan(u)*180/Math.PI;
+  // Drawing
+  const W_svg=400, H_svg=280;
+  const baseY=240;
+  const apexX=40;
+  // Triangle: from (apexX, baseY-h) to (apexX+L, baseY)
+  // Choose L so triangle fills nicely; h = L tan t
+  const L=320;
+  const h=L*Math.tan(t);
+  const topX=apexX, topY=baseY-h;
+  const rightX=apexX+L, rightY=baseY;
+  // Body on the slope, parameter s = 0.55 of the way up
+  const s=0.55;
+  const bcX = topX + (1-s)*(rightX-topX);
+  const bcY = topY + (1-s)*(rightY-topY);
+  // body rectangle perpendicular to slope; size
+  const bw=44, bh=30;
+  // unit vectors along and normal to slope
+  const ux=Math.cos(-t), uy=Math.sin(-t); // along slope going up: from rightX,rightY to topX,topY
+  // along slope direction up: (-cos t, -sin t)? Let's compute: from right(base) to top(apex): (topX-rightX, topY-rightY) = (-L, -h)/sqrt(L²+h²) = (-cos t, -sin t)
+  const aux = -Math.cos(t), auy = -Math.sin(t); // up the slope
+  // normal (out of plane, away from solid): rotate up-vector by -90°: (-auy, aux) = (sin t, -cos t)
+  const nux = Math.sin(t), nuy = -Math.cos(t);
+  // body center offset from slope surface by bh/2 in normal direction
+  const ccX = bcX + nux*bh/2, ccY = bcY + nuy*bh/2;
+  // body polygon corners
+  const corner = (sx,sy)=>{
+    const x = ccX + sx*(bw/2)*aux + sy*(bh/2)*nux;
+    const y = ccY + sx*(bw/2)*auy + sy*(bh/2)*nuy;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  };
+  const bodyPts = [corner(-1,-1),corner(1,-1),corner(1,1),corner(-1,1)].join(' ');
+  // Triangle (incline)
+  const tri=`<polygon points="${apexX},${topY} ${rightX},${rightY} ${apexX},${baseY}" fill="#d7ccc8" stroke="#5d4037" stroke-width="1.5"/>`;
+  // Ground hatching at base
+  let ground=`<line x1="20" y1="${baseY}" x2="${W_svg-20}" y2="${baseY}" stroke="#444" stroke-width="1.5"/>`;
+  for(let x=20;x<W_svg-20;x+=14) ground+=`<line x1="${x}" y1="${baseY}" x2="${x-7}" y2="${baseY+9}" stroke="#666" stroke-width="1"/>`;
+  const body=`<polygon points="${bodyPts}" fill="#ffcc80" stroke="#bf360c" stroke-width="1.5"/>
+    <text x="${ccX.toFixed(1)}" y="${(ccY+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#5d2e00">${m}kg</text>`;
+  // Angle arc at base
+  const arcR=24;
+  const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="#444" stroke-width="1.2"/>
+    <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="#444">θ</text>`;
+  // Vector scale
+  const Fmax=Math.max(W,F,N,fMax,1);
+  const sc=70/Fmax;
+  // Vectors from body center (ccX,ccY)
+  // P downward
+  const vP=arrow(ccX,ccY, ccX, ccY + W*sc, COL.P, 'P');
+  // P parallel (dashed), P perp (dashed) — components
+  // dashed lines (no arrows) for components illustration
+  const compP = `<line x1="${ccX}" y1="${ccY}" x2="${(ccX-Pp*sc*aux).toFixed(1)}" y2="${(ccY-Pp*sc*auy).toFixed(1)}" stroke="${COL.P}" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>
+    <line x1="${ccX}" y1="${ccY}" x2="${(ccX-Pn*sc*nux).toFixed(1)}" y2="${(ccY-Pn*sc*nuy).toFixed(1)}" stroke="${COL.P}" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>`;
+  // N along normal direction (out of plane)
+  const vN=arrow(ccX,ccY, ccX + nux*N*sc, ccY + nuy*N*sc, COL.N, 'N');
+  // F up the slope (along aux,auy)
+  const vF= F>0.5 ? arrow(ccX,ccY, ccX + aux*F*sc, ccY + auy*F*sc, COL.F, 'F') : '';
+  // friction along slope: fa is signed (positive = up the slope when along>0)
+  const vFa= Math.abs(fa)>0.5 ? arrow(ccX,ccY, ccX + aux*fa*sc, ccY + auy*fa*sc, COL.Fa, 'fₐ') : '';
+  document.getElementById('svgInclin').innerHTML = ground + tri + arc + body + compP + vP + vN + vF + vFa;
+  document.getElementById('inPp').textContent = Pp.toFixed(1);
+  document.getElementById('inN').textContent = N.toFixed(1);
+  document.getElementById('inFa').textContent = fNeeded.toFixed(1);
+  document.getElementById('inMax').textContent = fMax.toFixed(1);
+  document.getElementById('inLim').textContent = lim.toFixed(1);
+  const stat=document.getElementById('inStat');
+  if(ok){
+    const ratio = fMax>0 ? fNeeded/fMax : 0;
+    if(ratio>0.95 && fMax>0){ stat.className='eqs lim'; stat.textContent='⚠ Limite di equilibrio (sul punto di slittare)'; }
+    else { stat.className='eqs ok'; stat.textContent='✓ In equilibrio sul piano inclinato'; }
+  } else {
+    const dir = along>0 ? 'verso il basso' : 'verso l\'alto';
+    stat.className='eqs no';
+    stat.textContent = '✗ Scivola '+dir+' (l\'attrito non basta)';
+  }
+}
+['inM','inT','inU','inF'].forEach(id=>document.getElementById(id).addEventListener('input',renderInclin));
+bindRange('inM','inMv'); bindRange('inT','inTv');
+bindRange('inU','inUv', v=>v.toFixed(2)); bindRange('inF','inFv');
+
+// ============ MOLLA ============
+function springPath(x1,y1,x2,y2, coils, amp){
+  const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy);
+  if(L<1) return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#555" stroke-width="2"/>`;
+  const ux=dx/L, uy=dy/L;
+  const nx=-uy, ny=ux;
+  const N=coils*2;
+  let d=`M ${x1.toFixed(1)} ${y1.toFixed(1)} L ${(x1+ux*L*0.1).toFixed(1)} ${(y1+uy*L*0.1).toFixed(1)} `;
+  const startT=0.1, endT=0.9;
+  for(let i=0;i<=N;i++){
+    const t = startT + (endT-startT)*i/N;
+    const px = x1+ux*L*t + nx*amp*((i%2===0)?1:-1);
+    const py = y1+uy*L*t + ny*amp*((i%2===0)?1:-1);
+    d += `L ${px.toFixed(1)} ${py.toFixed(1)} `;
+  }
+  d += `L ${(x1+ux*L*0.9).toFixed(1)} ${(y1+uy*L*0.9).toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+  return `<path d="${d}" fill="none" stroke="#555" stroke-width="2"/>`;
+}
+function setMollaUI(mode){
+  document.getElementById('moTL').hidden = (mode!=='c');
+  document.getElementById('moUL').hidden = (mode!=='b');
+  document.getElementById('moDL').hidden = (mode!=='b');
+}
+function renderMolla(){
+  const mode=document.getElementById('moMode').value;
+  setMollaUI(mode);
+  const m=+document.getElementById('moM').value;
+  const k=+document.getElementById('moK').value;
+  const W=m*G;
+  const svg=document.getElementById('svgMolla');
+  const read=document.getElementById('moRead');
+  const stat=document.getElementById('moStat');
+  let html='';
+  if(mode==='a'){
+    // Vertical: equilibrium dx = mg/k (always reachable)
+    const dx = W/k; // m
+    const ceil=30;
+    const baseSpringLen=80;
+    const stretch = Math.min(120, dx*400); // pixel stretch (visual)
+    const sx=200;
+    const ay = ceil + baseSpringLen + stretch;
+    // Anchor & ceiling
+    let ce=`<line x1="60" y1="${ceil}" x2="340" y2="${ceil}" stroke="#444" stroke-width="2"/>`;
+    for(let x=60;x<340;x+=14) ce+=`<line x1="${x}" y1="${ceil}" x2="${x-7}" y2="${ceil-9}" stroke="#666" stroke-width="1"/>`;
+    const sp = springPath(sx,ceil,sx,ay,8,9);
+    const bw=50,bh=40;
+    const body=`<rect x="${sx-bw/2}" y="${ay}" width="${bw}" height="${bh}" rx="4" fill="#a5d6a7" stroke="#1b5e20" stroke-width="1.5"/>
+      <text x="${sx}" y="${ay+bh/2+4}" text-anchor="middle" font-size="12" font-weight="700" fill="#1b5e20">${m.toFixed(1)} kg</text>`;
+    const Fmax=Math.max(W,1); const sc=60/Fmax;
+    const vFe = arrow(sx,ay, sx, ay - W*sc, COL.Fe, 'F_el');
+    const vP = arrow(sx,ay+bh, sx, ay+bh + W*sc, COL.P, 'P');
+    html = ce + sp + body + vFe + vP;
+    read.innerHTML = `<div class="it"><span class="l">P = mg</span><span class="v">${W.toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">Δx = mg/k</span><span class="v">${(dx*100).toFixed(2)}</span> cm</div>
+      <div class="it"><span class="l">F_el</span><span class="v">${(k*dx).toFixed(2)}</span> N</div>`;
+    stat.className='eqs ok'; stat.textContent='✓ Equilibrio: l\'allungamento bilancia il peso';
+  } else if(mode==='b'){
+    const u=+document.getElementById('moU').value;
+    const dx=+document.getElementById('moD').value; // can be negative
+    const Fel = -k*dx; // sign: if dx>0 (stretched right), spring pulls left (negative)
+    const fMaxA = u*W;
+    const ok = Math.abs(Fel) <= fMaxA + 1e-9;
+    const fa = ok ? -Fel : -Math.sign(Fel)*fMaxA;
+    // Drawing horizontal
+    const gy=180;
+    let ground=`<line x1="20" y1="${gy}" x2="380" y2="${gy}" stroke="#444" stroke-width="2"/>`;
+    for(let x=20;x<380;x+=14) ground+=`<line x1="${x}" y1="${gy}" x2="${x-7}" y2="${gy+9}" stroke="#666" stroke-width="1"/>`;
+    // Wall on left
+    let wall=`<line x1="40" y1="60" x2="40" y2="${gy}" stroke="#444" stroke-width="3"/>`;
+    for(let y=60;y<gy;y+=14) wall+=`<line x1="40" y1="${y}" x2="31" y2="${y+7}" stroke="#666" stroke-width="1"/>`;
+    // Body position depends on dx (stretched right = body further right)
+    const restX=180; const bw=60, bh=40;
+    const bx = restX + dx*400;
+    const by = gy-bh;
+    const cx = bx+bw/2;
+    const sp = springPath(40, by+bh/2, bx, by+bh/2, 9, 8);
+    const body=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" rx="4" fill="#90caf9" stroke="#0d47a1" stroke-width="1.5"/>
+      <text x="${cx}" y="${by+bh/2+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#0d47a1">${m.toFixed(1)}kg</text>`;
+    const Fmax=Math.max(W,Math.abs(Fel),fMaxA,1); const sc=60/Fmax;
+    const vP=arrow(cx,by+bh/2, cx, by+bh/2 + W*sc, COL.P, 'P');
+    const vN=arrow(cx,by, cx, by - W*sc, COL.N, 'N');
+    const vFe = Math.abs(Fel)>0.5 ? arrow(cx, by+bh/2, cx + Fel*sc, by+bh/2, COL.Fe, 'F_el') : '';
+    const vFa = Math.abs(fa)>0.5 ? arrow(cx, by+bh-4, cx + fa*sc, by+bh-4, COL.Fa, 'fₐ') : '';
+    html = ground + wall + sp + body + vP + vN + vFe + vFa;
+    read.innerHTML = `<div class="it"><span class="l">Δx</span><span class="v">${(dx*100).toFixed(1)}</span> cm</div>
+      <div class="it"><span class="l">|F_el| = k|Δx|</span><span class="v">${Math.abs(Fel).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">μ·mg (max attrito)</span><span class="v">${fMaxA.toFixed(2)}</span> N</div>`;
+    if(Math.abs(dx)<0.001){ stat.className='eqs ok'; stat.textContent='✓ Molla a riposo: nessuna forza orizzontale'; }
+    else if(ok) { stat.className='eqs ok'; stat.textContent='✓ Equilibrio: l\'attrito statico tiene il corpo fermo'; }
+    else { stat.className='eqs no'; stat.textContent='✗ Il corpo si muove: la forza elastica supera l\'attrito massimo'; }
+  } else {
+    // Mode c — incline, no friction. dx = mg sin t / k
+    const tD=+document.getElementById('moT').value;
+    const t=tD*Math.PI/180;
+    const dx = W*Math.sin(t)/k;
+    // Drawing inclined plane with spring along the slope
+    const baseY=230; const apexX=40; const Lp=320;
+    const h=Lp*Math.tan(t);
+    const topY=baseY-h; const rightX=apexX+Lp; const rightY=baseY;
+    let ground=`<line x1="20" y1="${baseY}" x2="380" y2="${baseY}" stroke="#444" stroke-width="1.5"/>`;
+    for(let x=20;x<380;x+=14) ground+=`<line x1="${x}" y1="${baseY}" x2="${x-7}" y2="${baseY+9}" stroke="#666" stroke-width="1"/>`;
+    const tri=`<polygon points="${apexX},${topY} ${rightX},${rightY} ${apexX},${baseY}" fill="#d7ccc8" stroke="#5d4037" stroke-width="1.5"/>`;
+    // Slope unit vectors
+    const aux=-Math.cos(t), auy=-Math.sin(t); // up the slope
+    const nux=Math.sin(t), nuy=-Math.cos(t);  // out of slope
+    // Body position
+    const s=0.55;
+    const bcX = apexX + (1-s)*(rightX-apexX);
+    const bcY = topY + (1-s)*(rightY-topY);
+    const bw=40, bh=28;
+    const ccX = bcX + nux*bh/2, ccY = bcY + nuy*bh/2;
+    const corner = (sx,sy)=>{
+      const x = ccX + sx*(bw/2)*aux + sy*(bh/2)*nux;
+      const y = ccY + sx*(bw/2)*auy + sy*(bh/2)*nuy;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    };
+    const bodyPts = [corner(-1,-1),corner(1,-1),corner(1,1),corner(-1,1)].join(' ');
+    // Spring from top corner of incline along the slope down to body
+    // Spring attaches at top apex (apexX, topY), goes along slope to body upper edge
+    const attX = apexX + nux*5, attY = topY + nuy*5; // slightly out of incline
+    // Spring end at body upper-back corner
+    const endX = ccX + aux*(bw/2) + nux*0; // upper edge along up-slope direction
+    const endY = ccY + auy*(bw/2) + nuy*0;
+    const sp = springPath(attX, attY, endX, endY, 10, 7);
+    const body=`<polygon points="${bodyPts}" fill="#ffcc80" stroke="#bf360c" stroke-width="1.5"/>
+      <text x="${ccX.toFixed(1)}" y="${(ccY+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#5d2e00">${m.toFixed(1)}kg</text>`;
+    // Angle arc
+    const arcR=22;
+    const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="#444" stroke-width="1.2"/>
+      <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="#444">θ</text>`;
+    // Vectors
+    const Fel = k*dx;
+    const Fmax=Math.max(W,Fel,1); const sc=60/Fmax;
+    const vP=arrow(ccX,ccY, ccX, ccY + W*sc, COL.P, 'P');
+    const vN=arrow(ccX,ccY, ccX + nux*W*Math.cos(t)*sc, ccY + nuy*W*Math.cos(t)*sc, COL.N, 'N');
+    const vFe= Fel>0.5 ? arrow(ccX,ccY, ccX + aux*Fel*sc, ccY + auy*Fel*sc, COL.Fe, 'F_el') : '';
+    html = ground + tri + arc + sp + body + vP + vN + vFe;
+    read.innerHTML = `<div class="it"><span class="l">P sin θ</span><span class="v">${(W*Math.sin(t)).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">Δx = mg sin θ / k</span><span class="v">${(dx*100).toFixed(2)}</span> cm</div>
+      <div class="it"><span class="l">F_el</span><span class="v">${(k*dx).toFixed(2)}</span> N</div>`;
+    stat.className='eqs ok'; stat.textContent='✓ Equilibrio: la molla bilancia la componente parallela del peso';
+  }
+  svg.innerHTML = html;
+}
+['moMode','moM','moK','moT','moU','moD'].forEach(id=>{
+  const el=document.getElementById(id); if(el) el.addEventListener('input',renderMolla);
+});
+bindRange('moM','moMv', v=>v.toFixed(1));
+bindRange('moK','moKv');
+bindRange('moT','moTv');
+bindRange('moU','moUv', v=>v.toFixed(2));
+bindRange('moD','moDv', v=>v.toFixed(2));
+
+// ----- Initial render -----
+renderFuni(); renderOrizz(); renderInclin(); renderMolla();
+</script>
+</body>
+</html>
