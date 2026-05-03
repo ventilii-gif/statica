@@ -74,6 +74,31 @@ svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border)
 .home-card span{color:var(--muted);font-size:.88em}
 .kbd{font-family:ui-monospace,monospace;background:#eef3fb;padding:.05em .35em;border-radius:3px;font-size:.9em}
 @media(max-width:480px){main{padding:.7rem}.card{padding:.85rem}}
+/* ----- Quiz ----- */
+.quiz-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:.45rem;font-size:.84em}
+.quiz-bar-wrap{background:#d6dce8;border-radius:999px;height:7px;margin-bottom:.9rem;overflow:hidden}
+.quiz-bar-fill{background:var(--primary);height:100%;border-radius:999px;transition:width .35s}
+.quiz-q{font-weight:600;margin:.2rem 0 .75rem;line-height:1.45;font-size:.96em}
+.quiz-opts{display:grid;gap:.4rem;margin-bottom:.45rem}
+.quiz-btn{background:#f0f4fa;border:1.5px solid var(--border);border-radius:8px;
+  padding:.55rem .85rem;text-align:left;cursor:pointer;font-size:.88em;
+  font-family:inherit;color:var(--text);line-height:1.35;transition:background .12s,border-color .12s}
+.quiz-btn:not(:disabled):hover{background:#dde6f7;border-color:var(--primary)}
+.quiz-btn:disabled{cursor:default}
+.quiz-btn.correct{background:#c8e6c9!important;border-color:#388e3c!important;color:#1b5e20;font-weight:600}
+.quiz-btn.wrong{background:#ffcdd2!important;border-color:#c62828!important;color:#b71c1c}
+.quiz-exp{padding:.55rem .85rem;border-radius:8px;font-size:.86em;line-height:1.5;margin:.45rem 0}
+.quiz-exp.ok{background:#e8f5e9;border-left:3px solid #388e3c;color:#1b5e20}
+.quiz-exp.no{background:#ffebee;border-left:3px solid #c62828;color:#b71c1c}
+.quiz-next{background:var(--primary);color:#fff;border:0;border-radius:8px;
+  padding:.48rem 1.1rem;font-size:.88em;cursor:pointer;font-family:inherit;margin-top:.25rem}
+.quiz-next:hover{background:var(--primary-d)}
+.quiz-done{text-align:center;padding:.7rem 0}
+.quiz-score-big{font-size:2.3em;font-weight:800;color:var(--primary-d);display:block;margin-bottom:.25rem}
+.quiz-msg{color:var(--muted);margin:.15rem 0 .8rem;font-size:.93em}
+.quiz-restart{background:var(--primary);color:#fff;border:0;border-radius:8px;
+  padding:.48rem 1.3rem;font-size:.88em;cursor:pointer;font-family:inherit}
+.quiz-restart:hover{background:var(--primary-d)}
 </style>
 </head>
 <body>
@@ -136,6 +161,7 @@ svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border)
     </div>
     <div class="eqs ok">✓ Sistema in equilibrio (per costruzione)</div>
   </div>
+  <div id="qz-funi"></div>
 </section>
 
 <section class="scene" id="orizz">
@@ -172,6 +198,7 @@ svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border)
     </div>
     <div class="eqs" id="orStat">—</div>
   </div>
+  <div id="qz-orizz"></div>
 </section>
 
 <section class="scene" id="inclin">
@@ -213,6 +240,7 @@ svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border)
     </div>
     <div class="eqs" id="inStat">—</div>
   </div>
+  <div id="qz-inclin"></div>
 </section>
 
 <section class="scene" id="molla">
@@ -256,6 +284,7 @@ svg.sim{width:100%;height:auto;background:#fafcff;border:1px solid var(--border)
     <div class="read" id="moRead"></div>
     <div class="eqs" id="moStat">—</div>
   </div>
+  <div id="qz-molla"></div>
 </section>
 
 </main>
@@ -661,6 +690,198 @@ bindRange('moK','moKv');
 bindRange('moT','moTv');
 bindRange('moU','moUv', v=>v.toFixed(2));
 bindRange('moD','moDv', v=>v.toFixed(2));
+
+// ============ QUIZ ============
+const QUIZZES={
+funi:[
+ {q:'Un corpo di massa m è appeso in equilibrio a una sola fune verticale. Qual è la tensione T nella fune?',
+  opts:['T = 0','T = mg / 2','T = mg','T = 2 mg'],ans:2,
+  exp:'Equilibrio verticale: T − mg = 0 ⇒ T = mg. La fune deve sostenere esattamente il peso del corpo.'},
+ {q:'In un sistema a due funi simmetriche (α = β), cosa succede alle tensioni quando l\'angolo α diminuisce (funi più orizzontali)?',
+  opts:['Le tensioni diminuiscono','Le tensioni rimangono costanti','Le tensioni aumentano','Solo T₁ aumenta'],ans:2,
+  exp:'T = mg/(2 sin α). Quando α → 0, sin α → 0 e T → ∞. Le funi quasi orizzontali richiedono tensioni elevatissime.'},
+ {q:'Quale equazione descrive l\'equilibrio sull\'asse x per un corpo appeso a due funi con angoli α (sx) e β (dx) rispetto al soffitto?',
+  opts:['T₁ sin α = T₂ sin β','T₁ cos α = T₂ cos β','T₁ + T₂ = mg','T₁ cos α + T₂ cos β = mg'],ans:1,
+  exp:'Sull\'asse x le componenti orizzontali si bilanciano: T₁ cos α = T₂ cos β. Altrimenti il corpo avrebbe un\'accelerazione orizzontale.'},
+ {q:'Cosa afferma l\'equazione T₁ sin α + T₂ sin β = mg nel sistema a due funi?',
+  opts:['Equilibrio sull\'asse x','Equilibrio sull\'asse y','Definisce l\'angolo limite','Descrive la tensione massima sopportabile'],ans:1,
+  exp:'Le componenti verticali delle due tensioni devono insieme bilanciare il peso mg: è la condizione di equilibrio sull\'asse y.'},
+ {q:'Un corpo di 3 kg è appeso a due funi simmetriche con α = β = 30°. Qual è la tensione in ciascuna fune? (g = 9,81 m/s²)',
+  opts:['9,8 N','14,7 N','25,5 N','29,4 N'],ans:3,
+  exp:'T = mg/(2 sin α) = 3×9,81/(2×0,5) = 29,4 N. La formula mostra come tensioni piccole angolari possano essere molto elevate.'},
+ {q:'Con α = 60°, β = 30° e m = 4 kg, quanto vale T₁ (fune sinistra)? (g = 9,81 m/s²)',
+  opts:['19,6 N','24,0 N','34,0 N','40,4 N'],ans:2,
+  exp:'T₁ = mg·cos β / sin(α+β) = 4×9,81×cos 30°/sin 90° = 39,24×0,866/1 ≈ 34,0 N.'},
+ {q:'Con α = 60°, β = 30° e m = 4 kg, quanto vale T₂ (fune destra)? (g = 9,81 m/s²)',
+  opts:['9,8 N','19,6 N','29,4 N','34,0 N'],ans:1,
+  exp:'T₂ = mg·cos α / sin(α+β) = 4×9,81×cos 60°/sin 90° = 39,24×0,5 ≈ 19,6 N. La fune più verticale (β = 30°) porta meno carico.'},
+ {q:'Con α = β = 45°, per quale massa m ogni fune sopporta esattamente T = 40 N? (g = 9,81 m/s²)',
+  opts:['2,9 kg','4,1 kg','5,8 kg','8,2 kg'],ans:2,
+  exp:'Da T = mg/(2 sin 45°) ⇒ m = 2T sin 45°/g = 2×40×0,707/9,81 ≈ 5,8 kg.'},
+ {q:'Con α = β = 60° e m = 10 kg, quanto vale la tensione in ciascuna fune? (g = 9,81 m/s²)',
+  opts:['28,3 N','49,1 N','56,6 N','98,1 N'],ans:2,
+  exp:'T = mg/(2 sin 60°) = 10×9,81/(2×0,866) = 98,1/1,732 ≈ 56,6 N.'},
+ {q:'Perché le funi quasi orizzontali (α molto piccolo) tendono a spezzarsi più facilmente?',
+  opts:['Sono più lunghe e si usurano prima','T = mg/(2 sin α) cresce al diminuire di α','Le componenti verticali non si bilanciano più','L\'attrito agli ancoraggi è maggiore'],ans:1,
+  exp:'La formula T = mg/(2 sin α) mostra che al diminuire di α, sin α → 0 e T → ∞. Anche un piccolo peso su funi quasi orizzontali genera tensioni elevatissime.'}
+],
+orizz:[
+ {q:'Su piano orizzontale con forza applicata orizzontale (θ = 0°), qual è la reazione vincolare N?',
+  opts:['N = 0','N = mg − F','N = mg','N = mg + F'],ans:2,
+  exp:'Con θ = 0° la forza non ha componente verticale. Equilibrio verticale: N − mg = 0 ⇒ N = mg.'},
+ {q:'Se si tira il corpo verso l\'alto con angolo θ > 0°, come cambia la reazione vincolare N?',
+  opts:['N aumenta','N rimane uguale a mg','N diminuisce','N diventa immediatamente negativa'],ans:2,
+  exp:'N = mg − F sin θ. Con θ > 0 la componente verticale F sin θ alleggerisce il corpo sul piano, riducendo N.'},
+ {q:'Qual è la condizione di equilibrio orizzontale per un corpo su piano con attrito statico μₛ?',
+  opts:['F cos θ = μₛ·N sempre','F cos θ > μₛ·N','F cos θ ≤ μₛ·N','F ≤ μₛ·mg sempre'],ans:2,
+  exp:'Il corpo resta fermo finché la componente orizzontale non supera l\'attrito statico massimo: F cos θ ≤ μₛ·N.'},
+ {q:'Qual è la formula dell\'angolo ottimale θ_opt che minimizza la forza necessaria a mettere in moto il corpo?',
+  opts:['θ_opt = arcsin(μₛ)','θ_opt = arctan(μₛ)','θ_opt = arccos(μₛ)','θ_opt = 45° sempre'],ans:1,
+  exp:'Minimizzando F = μₛmg/(cos θ + μₛ sin θ) rispetto a θ si ottiene θ_opt = arctan(μₛ).'},
+ {q:'Un corpo di 5 kg su piano con μₛ = 0,40 (senza forze applicate). Qual è la massima forza d\'attrito statico? (g = 9,81 m/s²)',
+  opts:['9,8 N','14,7 N','19,6 N','24,5 N'],ans:2,
+  exp:'N = mg = 5×9,81 = 49,05 N. Forza d\'attrito massima: μₛ·N = 0,40×49,05 ≈ 19,6 N.'},
+ {q:'Corpo di 10 kg, F = 30 N orizzontale, μₛ = 0,40. Il corpo è in equilibrio? (g = 9,81 m/s²)',
+  opts:['No, F > μₛ·N','Sì, F ≤ μₛ·N','Sì, ma solo su piano perfettamente orizzontale','Non determinabile senza la velocità'],ans:1,
+  exp:'N = mg = 98,1 N; μₛ·N = 39,2 N. Poiché F = 30 N < 39,2 N, l\'attrito riesce a bilanciare la forza: equilibrio.'},
+ {q:'Corpo di 8 kg, F = 50 N con θ = 30°, μₛ = 0,35. Quanto vale N? (g = 9,81 m/s²)',
+  opts:['28,5 N','53,5 N','78,5 N','103,5 N'],ans:1,
+  exp:'N = mg − F sin θ = 8×9,81 − 50×0,5 = 78,48 − 25 = 53,5 N. La componente verticale alleggerisce il corpo sul piano.'},
+ {q:'Dati m = 8 kg, F = 50 N, θ = 30°, μₛ = 0,35, N ≈ 53,5 N: il corpo si muove?',
+  opts:['No, l\'attrito è sufficiente','Sì, la componente orizzontale supera l\'attrito massimo','Dipende dalla velocità iniziale','Non si può determinare'],ans:1,
+  exp:'F cos 30° ≈ 43,3 N; attrito max = μₛ·N = 0,35×53,5 ≈ 18,7 N. Poiché 43,3 > 18,7 N, il corpo si muove.'},
+ {q:'Un corpo di 4 kg su piano con μₛ = 0,50. Qual è la forza orizzontale massima che non produce moto? (g = 9,81 m/s²)',
+  opts:['9,8 N','15,7 N','19,6 N','24,5 N'],ans:2,
+  exp:'N = mg = 4×9,81 = 39,24 N. Forza massima = μₛ·N = 0,50×39,24 ≈ 19,6 N. Oltre questo valore il corpo inizia a muoversi.'},
+ {q:'Se si spinge il corpo verso il basso con angolo θ < 0° (negativo), come cambia N rispetto a θ = 0°?',
+  opts:['N diminuisce','N rimane uguale','N aumenta','N diventa zero'],ans:2,
+  exp:'N = mg − F sin θ. Con θ < 0°, sin θ < 0, quindi −F sin θ > 0: la componente verticale preme ulteriormente il corpo sul piano, aumentando N e l\'attrito massimo disponibile.'}
+],
+inclin:[
+ {q:'Su un piano inclinato di angolo θ, come si scompone correttamente il peso mg?',
+  opts:['P∥ = mg cos θ (lungo il piano), P⊥ = mg sin θ (perp.)','P∥ = mg sin θ (lungo il piano), P⊥ = mg cos θ (perp.)','P∥ = mg tan θ (lungo il piano), P⊥ = mg (perp.)','P∥ = mg (lungo il piano), P⊥ = mg cos θ (perp.)'],ans:1,
+  exp:'Scegliendo gli assi parallelo e perp. al piano: P∥ = mg sin θ (tende a far scivolare il corpo), P⊥ = mg cos θ (preme contro il piano).'},
+ {q:'Qual è la condizione perché un corpo resti in equilibrio su piano inclinato (angolo θ, attrito μₛ, senza forze esterne)?',
+  opts:['θ < 45° sempre','tan θ ≤ μₛ','cos θ ≤ μₛ sin θ','mg sin θ = 0'],ans:1,
+  exp:'mg sin θ ≤ μₛ·N = μₛ·mg cos θ ⇒ tan θ ≤ μₛ. Nota: la massa non compare — la condizione dipende solo da θ e μₛ.'},
+ {q:'Come si chiama θ_lim = arctan(μₛ), l\'angolo oltre il quale il corpo scivola comunque?',
+  opts:['Angolo di attrito (o angolo limite di equilibrio)','Angolo di Bernoulli','Angolo critico dinamico','Angolo di inclinazione massima geometrica'],ans:0,
+  exp:'θ_lim = arctan(μₛ) è detto "angolo di attrito" o "angolo limite di equilibrio": è una caratteristica della coppia di materiali a contatto.'},
+ {q:'Perché il piano inclinato è considerato una "macchina semplice"?',
+  opts:['Elimina completamente l\'attrito','Permette di sollevare un corpo con forza < peso','Raddoppia la forza applicata','Trasforma forza in calore in modo efficiente'],ans:1,
+  exp:'Per sollevare verticalmente serve F = mg. Sul piano inclinato basta mg sin θ < mg (per θ < 90°): meno forza, ma distanza maggiore — conservazione dell\'energia.'},
+ {q:'Corpo di 5 kg su piano con θ = 30°. Quanto vale la componente del peso parallela al piano? (g = 9,81 m/s²)',
+  opts:['17,3 N','24,5 N','42,5 N','49,1 N'],ans:1,
+  exp:'P∥ = mg sin θ = 5×9,81×0,5 = 24,5 N. È la componente che tende a far scivolare il corpo verso il basso.'},
+ {q:'Corpo di 5 kg su piano con θ = 30°. Quanto vale la reazione vincolare N? (g = 9,81 m/s²)',
+  opts:['24,5 N','42,5 N','49,1 N','56,7 N'],ans:1,
+  exp:'N = mg cos θ = 5×9,81×0,866 ≈ 42,5 N. N è minore del peso perché il piano sostiene solo la componente perpendicolare.'},
+ {q:'Con μₛ = 0,60, qual è l\'angolo limite θ_lim in gradi?',
+  opts:['26,6°','31,0°','36,9°','45,0°'],ans:1,
+  exp:'θ_lim = arctan(0,60) ≈ 31,0°. Per angoli superiori il corpo scivola indipendentemente dalla massa.'},
+ {q:'Corpo di 6 kg su piano con θ = 40°, μₛ = 0,50. Il corpo è in equilibrio?',
+  opts:['Sì, perché θ < 45°','Sì, l\'attrito è sufficiente','No, perché tan 40° > μₛ','Dipende dalla massa'],ans:2,
+  exp:'Condizione: tan θ ≤ μₛ. Qui tan 40° ≈ 0,84 > μₛ = 0,50: il corpo scivola. La massa non influisce sulla condizione di equilibrio.'},
+ {q:'Piano con θ = 25°, μₛ = 0,40, m = 8 kg, forza F = 20 N parallela al piano verso l\'alto. Quanto attrito è richiesto? (g = 9,81 m/s²)',
+  opts:['33,2 N verso il basso','20,0 N verso il basso','13,2 N verso l\'alto','0 N'],ans:2,
+  exp:'P∥ = mg sin 25° ≈ 33,2 N (giù); F = 20 N (su). Risultante = 13,2 N (giù) → attrito necessario = 13,2 N verso l\'alto. Controllo: μₛ·N ≈ 28,5 N > 13,2 N ✓'},
+ {q:'Su piano inclinato senza attrito (μ = 0), quale forza mantiene il corpo in equilibrio?',
+  opts:['Nessuna: il corpo è in equilibrio autonomo','Una forza normale al piano uguale a mg','Una forza parallela al piano verso l\'alto uguale a mg sin θ','Una forza di qualsiasi direzione di modulo mg cos θ'],ans:2,
+  exp:'Senza attrito nulla bilancia P∥ = mg sin θ. Serve una forza esterna parallela al piano verso l\'alto di modulo mg sin θ (es. una molla).'}
+],
+molla:[
+ {q:'La legge di Hooke afferma che la forza elastica è:',
+  opts:['Proporzionale al quadrato della deformazione','Inversamente proporzionale alla deformazione','Direttamente proporzionale alla deformazione','Indipendente dalla deformazione'],ans:2,
+  exp:'F_el = k·Δx: la forza elastica è direttamente proporzionale alla deformazione. k è la costante elastica [N/m].'},
+ {q:'Cosa indica il segno negativo nella formula F_el = −k·Δx?',
+  opts:['Che k è negativa','Che la forza è di richiamo, opposta alla deformazione','Che la molla si accorcia sempre','È solo una convenzione senza significato fisico'],ans:1,
+  exp:'Il segno − indica forza di richiamo: se la molla è allungata (Δx > 0) la forza tende ad accorciarla (F < 0), e viceversa.'},
+ {q:'Per una molla verticale con massa appesa in equilibrio, qual è la deformazione Δx?',
+  opts:['Δx = k/(mg)','Δx = mg/k','Δx = mg·k','Δx = g/k'],ans:1,
+  exp:'Equilibrio: F_el = P ⇒ k·Δx = mg ⇒ Δx = mg/k. Più la molla è rigida (k grande), meno si deforma.'},
+ {q:'Quale fattore NON compare nella formula dell\'allungamento di equilibrio Δx = mg/k?',
+  opts:['La massa m','La costante elastica k','L\'accelerazione di gravità g','La lunghezza naturale L₀ della molla'],ans:3,
+  exp:'Δx = mg/k dipende da m, g e k ma non da L₀. La lunghezza finale è L₀ + Δx, ma l\'allungamento è indipendente da L₀.'},
+ {q:'Molla con k = 200 N/m, massa appesa m = 3 kg. Qual è l\'allungamento all\'equilibrio? (g = 9,81 m/s²)',
+  opts:['7,3 cm','14,7 cm','29,4 cm','58,9 cm'],ans:1,
+  exp:'Δx = mg/k = 3×9,81/200 = 29,43/200 = 0,147 m = 14,7 cm.'},
+ {q:'Stessa molla (k = 200 N/m, m = 3 kg, Δx = 14,7 cm). Qual è la forza elastica all\'equilibrio?',
+  opts:['14,7 N','20,0 N','29,4 N','200 N'],ans:2,
+  exp:'F_el = k·Δx = 200×0,147 = 29,4 N = mg. All\'equilibrio la forza elastica bilancia esattamente il peso — è la verifica del risultato.'},
+ {q:'Molla orizzontale k = 150 N/m, corpo di 2 kg su piano con μₛ = 0,30. Massimo Δx prima che il corpo si muova? (g = 9,81 m/s²)',
+  opts:['1,96 cm','3,92 cm','7,85 cm','12,3 cm'],ans:1,
+  exp:'k·Δx ≤ μₛ·mg ⇒ Δx_max = μₛ·mg/k = 0,30×2×9,81/150 = 5,886/150 ≈ 0,039 m ≈ 3,9 cm.'},
+ {q:'Molla su piano inclinato senza attrito: k = 300 N/m, m = 4 kg, θ = 30°. Deformazione all\'equilibrio? (g = 9,81 m/s²)',
+  opts:['3,3 cm','6,5 cm','9,8 cm','13,1 cm'],ans:1,
+  exp:'Equilibrio lungo il piano: k·Δx = mg sin θ ⇒ Δx = 4×9,81×0,5/300 = 19,62/300 ≈ 0,065 m ≈ 6,5 cm.'},
+ {q:'Molla con k = 400 N/m: quale massa occorre appendere verticalmente per ottenere Δx = 10 cm? (g = 9,81 m/s²)',
+  opts:['0,4 kg','2,5 kg','4,1 kg','40,8 kg'],ans:2,
+  exp:'Da Δx = mg/k ⇒ m = k·Δx/g = 400×0,10/9,81 = 40/9,81 ≈ 4,1 kg.'},
+ {q:'Qual è la corretta unità di misura della costante elastica k?',
+  opts:['N·m','N/m','kg/m','kg·m/s²'],ans:1,
+  exp:'Da F = k·Δx ⇒ k = F/Δx [N/m]. Un valore k = 100 N/m significa che ogni metro di deformazione richiede 100 N di forza.'}
+]};
+
+const qState={};
+['funi','orizz','inclin','molla'].forEach(s=>{qState[s]={idx:0,score:0,answered:false,done:false};});
+
+function renderQuiz(s){
+  const st=qState[s],qs=QUIZZES[s],el=document.getElementById('qz-'+s);
+  if(!el) return;
+  let body;
+  if(st.done){
+    const mi=st.score<=3?0:st.score<=5?1:st.score<=8?2:st.score<=9?3:4;
+    const icons=['😕','🙂','😊','🎉','🏆'];
+    const msgs=['Da rivedere — rileggi la teoria e riprova.','Sufficiente — qualche lacuna da colmare.','Buono — ancora un po\' e arrivi al massimo!','Ottimo risultato!','Perfetto — nessun errore!'];
+    body=`<div class="quiz-done">
+      <span class="quiz-score-big">${icons[mi]} ${st.score}/10</span>
+      <p class="quiz-msg">${msgs[mi]}</p>
+      <button class="quiz-restart" onclick="restartQuiz('${s}')">🔄 Ricomincia quiz</button>
+    </div>`;
+  } else {
+    const q=qs[st.idx],pct=st.idx/qs.length*100;
+    body=`<div class="quiz-hd">
+        <span style="color:var(--muted)">Domanda ${st.idx+1} / ${qs.length}</span>
+        <span style="font-weight:700;color:var(--primary-d)">Punteggio: ${st.score}</span>
+      </div>
+      <div class="quiz-bar-wrap"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
+      <p class="quiz-q">${q.q}</p>
+      <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-btn" id="qb-${s}-${i}" onclick="answerQuiz('${s}',${i})">${'ABCD'[i]}) ${o}</button>`).join('')}</div>
+      <div class="quiz-exp" id="qexp-${s}" style="display:none"></div>
+      <button class="quiz-next" id="qnxt-${s}" style="display:none" onclick="nextQuiz('${s}')">${st.idx+1<qs.length?'Prossima domanda →':'Vedi il risultato finale →'}</button>`;
+  }
+  el.innerHTML=`<div class="card"><h2>🧩 Quiz</h2>${body}</div>`;
+}
+
+function answerQuiz(s,chosen){
+  const st=qState[s]; if(st.answered) return; st.answered=true;
+  const q=QUIZZES[s][st.idx],correct=chosen===q.ans;
+  if(correct) st.score++;
+  for(let i=0;i<4;i++){
+    const b=document.getElementById(`qb-${s}-${i}`); if(!b) continue;
+    b.disabled=true;
+    if(i===q.ans) b.classList.add('correct');
+    else if(i===chosen) b.classList.add('wrong');
+  }
+  const exp=document.getElementById(`qexp-${s}`);
+  exp.style.display='';
+  exp.className=`quiz-exp ${correct?'ok':'no'}`;
+  exp.innerHTML=`<strong>${correct?'✓ Corretto!':'✗ Sbagliato.'}</strong> ${q.exp}`;
+  document.getElementById(`qnxt-${s}`).style.display='';
+}
+
+function nextQuiz(s){
+  const st=qState[s]; st.idx++; st.answered=false;
+  if(st.idx>=QUIZZES[s].length) st.done=true;
+  renderQuiz(s);
+}
+
+function restartQuiz(s){
+  qState[s]={idx:0,score:0,answered:false,done:false};
+  renderQuiz(s);
+}
+
+['funi','orizz','inclin','molla'].forEach(renderQuiz);
 
 // ----- Sticky nav: sit below header -----
 const _hdr = document.querySelector('header');
