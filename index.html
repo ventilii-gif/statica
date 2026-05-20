@@ -102,7 +102,7 @@ section.scene.active{display:block}
 svg.sim{width:100%;height:auto;background:#fcfdff;border:1px solid var(--border);
   border-radius:8px;display:block;font-family:sans-serif}
 svg.sim.grab{cursor:grab}
-svg.sim.grab:active{cursor:grabbing}
+svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 
 /* ===== Legend ===== */
 .legend{display:flex;flex-wrap:wrap;gap:.35rem;margin:.45rem 0 0;font-size:.76em}
@@ -242,7 +242,7 @@ svg.sim.grab:active{cursor:grabbing}
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgFuni" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgFuni" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vT)"><i style="background:var(--vT)"></i>Tensione T</span>
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>Peso P</span>
@@ -283,7 +283,7 @@ svg.sim.grab:active{cursor:grabbing}
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgOrizz" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgOrizz" viewBox="0 0 400 260" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
@@ -328,7 +328,7 @@ svg.sim.grab:active{cursor:grabbing}
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgInclin" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgInclin" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
@@ -378,7 +378,7 @@ svg.sim.grab:active{cursor:grabbing}
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgMolla" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgMolla" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
@@ -430,7 +430,7 @@ svg.sim.grab:active{cursor:grabbing}
     <p class="lead">Regola forza, distanza e angolo. Il <strong>braccio</strong> d è la linea tratteggiata rossa tra O e la retta d'azione di F.</p>
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgMomento" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgMomento" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vF)"><i style="background:var(--vF)"></i>Forza F</span>
           <span style="color:var(--vM)"><i style="background:var(--vM)"></i>Braccio d</span>
@@ -440,7 +440,7 @@ svg.sim.grab:active{cursor:grabbing}
         <div class="ctrl">
           <label><span class="nm">Forza F</span><input type="range" id="moF_F" min="0" max="100" step="1" value="40"><span class="v" id="moF_Fv">40</span></label>
           <label><span class="nm">Distanza r</span><input type="range" id="moF_r" min="0.1" max="2" step="0.05" value="1.0"><span class="v" id="moF_rv">1.00</span></label>
-          <label><span class="nm">Angolo φ</span><input type="range" id="moF_phi" min="0" max="180" step="1" value="90"><span class="v" id="moF_phiv">90°</span></label>
+          <label><span class="nm">Angolo φ</span><input type="range" id="moF_phi" min="-180" max="180" step="1" value="90"><span class="v" id="moF_phiv">90°</span></label>
         </div>
         <div class="read">
           <div class="it"><span class="l">Forza F</span><span class="v" id="moF_Fout">—</span> N</div>
@@ -476,7 +476,7 @@ svg.sim.grab:active{cursor:grabbing}
     <p class="lead">Scegli il genere di leva e regola la forza motrice e i bracci. F₂ è la resistenza che mantiene l'equilibrio.</p>
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgLeva" viewBox="0 0 500 240" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgLeva" viewBox="0 0 500 240" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vF)"><i style="background:var(--vF)"></i>F₁ motrice</span>
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>F₂ resistente</span>
@@ -572,7 +572,7 @@ svg.sim.grab:active{cursor:grabbing}
     <p class="lead">Asta incernierata in A. Regola la forza esterna F finché il momento residuo ΣM_A si annulla: allora la rotazione è impedita.</p>
     <div class="sim-layout">
       <div class="sim-pane">
-        <svg class="sim" id="svgRigido" viewBox="0 0 480 280" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg class="sim grab" id="svgRigido" viewBox="0 0 480 280" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>Peso P</span>
           <span style="color:var(--vF)"><i style="background:var(--vF)"></i>Forza F</span>
@@ -914,7 +914,7 @@ function renderMomento(){
   const r=+document.getElementById('moF_r').value;
   const phiD=+document.getElementById('moF_phi').value;
   const phi=phiD*Math.PI/180;
-  const d=r*Math.sin(phi);
+  const d=r*Math.sin(phi);          // signed: + antiorario, - orario
   const M=F*d;
   const Ox=90, Oy=150, scr=110;          // px per metre
   const Px=Ox+r*scr, Py=Oy;
@@ -931,9 +931,9 @@ function renderMomento(){
     <text x="${Ox-4}" y="${Oy+22}" font-size="12" fill="#5b6470" font-weight="700">O</text>`;
   const ptP=`<circle cx="${Px.toFixed(1)}" cy="${Py}" r="4.5" fill="${COL.F}"/>
     <text x="${Px.toFixed(1)}" y="${Py+20}" font-size="11" fill="#6b7280" text-anchor="middle">P</text>`;
-  const braccio=d>0.015?`<line x1="${Ox}" y1="${Oy}" x2="${footX.toFixed(1)}" y2="${footY.toFixed(1)}" stroke="${COL.M}" stroke-width="1.6" stroke-dasharray="5 3"/>
+  const braccio=Math.abs(d)>0.015?`<line x1="${Ox}" y1="${Oy}" x2="${footX.toFixed(1)}" y2="${footY.toFixed(1)}" stroke="${COL.M}" stroke-width="1.6" stroke-dasharray="5 3"/>
     <line x1="${Px.toFixed(1)}" y1="${Py}" x2="${footX.toFixed(1)}" y2="${footY.toFixed(1)}" stroke="${COL.M}" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
-    <text x="${((Ox+footX)/2).toFixed(1)}" y="${((Oy+footY)/2-7).toFixed(1)}" font-size="11" fill="${COL.M}" font-weight="700" text-anchor="middle">d = ${d.toFixed(2)} m</text>`:'';
+    <text x="${((Ox+footX)/2).toFixed(1)}" y="${((Oy+footY)/2-7).toFixed(1)}" font-size="11" fill="${COL.M}" font-weight="700" text-anchor="middle">d = ${Math.abs(d).toFixed(2)} m</text>`:'';
   const vF=F>0.5?arrow(Px,Py,Fex,Fey,COL.F,'F'):'';
   // angle arc at P between rod (+x) and F
   let phiArc='';
@@ -944,15 +944,15 @@ function renderMomento(){
       <text x="${(Px+aR*1.45*Math.cos(phi/2)).toFixed(1)}" y="${(Py-aR*1.45*Math.sin(phi/2)+4).toFixed(1)}" font-size="11" fill="#6b7280" text-anchor="middle">φ</text>`;
   }
   let rotHint='';
-  if(M>0.4){
-    const ccw=Math.sin(phi)>0;
+  if(Math.abs(M)>0.4){
+    const ccw=M>0;
     rotHint=`<text x="14" y="26" font-size="12" font-weight="700" fill="${ccw?COL.N:COL.M}">${ccw?'↺ antiorario':'↻ orario'}</text>`;
   }
   svg.innerHTML=rod+braccio+phiArc+pivot+ptP+vF+rotHint;
   document.getElementById('moF_Fout').textContent=F.toFixed(0);
-  document.getElementById('moF_dout').textContent=d.toFixed(3);
+  document.getElementById('moF_dout').textContent=Math.abs(d).toFixed(3);
   document.getElementById('moF_Mout').textContent=M.toFixed(2);
-  document.getElementById('moF_dir').textContent=M<0.05?'nullo':(Math.sin(phi)>0?'antiorario ↺':'orario ↻');
+  document.getElementById('moF_dir').textContent=Math.abs(M)<0.05?'nullo':(M>0?'antiorario ↺':'orario ↻');
 }
 
 /* ============ LEVA ============ */
@@ -1153,6 +1153,202 @@ function renderRigido(){
     stat.textContent='✗ ΣM_A = '+SM.toFixed(1)+' N·m — l\'asta ruota attorno ad A';
   }
 }
+
+/* ======= DRAG INFRASTRUCTURE ======= */
+function svgPt(svg,ev){
+  const r=svg.getBoundingClientRect();
+  const vb=svg.viewBox.baseVal;
+  const cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;
+  const cy=(ev.touches?ev.touches[0].clientY:ev.clientY)-r.top;
+  return {x:cx/r.width*vb.width, y:cy/r.height*vb.height};
+}
+function clamp(v,lo,hi){return Math.max(lo,Math.min(hi,v));}
+function setSlider(id,val){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.value=clamp(+val,+el.min,+el.max);
+  el.dispatchEvent(new Event('input'));
+}
+function makeDrag(svgId,onStart,onMove){
+  const svg=document.getElementById(svgId);
+  if(!svg) return;
+  let active=false;
+  function start(ev){
+    const pt=svgPt(svg,ev);
+    if(onStart&&!onStart(pt)) return;
+    active=true; onMove(pt); ev.preventDefault();
+  }
+  function move(ev){
+    if(!active) return;
+    ev.preventDefault();
+    onMove(svgPt(svg,ev));
+  }
+  function end(){ active=false; svg.classList.remove('dragging'); }
+  svg.addEventListener('mousedown',e=>{start(e); if(active) svg.classList.add('dragging');});
+  window.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',end);
+  svg.addEventListener('touchstart',start,{passive:false});
+  window.addEventListener('touchmove',move,{passive:false});
+  window.addEventListener('touchend',end);
+}
+
+/* --- Funi: trascina ancoraggi al soffitto per cambiare α / β --- */
+(function(){
+  const cx=200, cy=200, ceil=30;
+  let side=1;
+  makeDrag('svgFuni',
+    pt=>{ side=pt.x<cx?-1:1; return true; },
+    pt=>{
+      const dx=Math.max(5,Math.abs(pt.x-cx));
+      const ang=Math.round(Math.atan2(cy-ceil,dx)*180/Math.PI);
+      setSlider(side<0?'fuA':'fuB', ang);
+    }
+  );
+})();
+
+/* --- Orizz: trascina la freccia F per cambiare modulo e angolo --- */
+(function(){
+  const ox=200, oy=159;   // origine F (corpo centro): gy-bh+bh/2 = 180-42+21
+  makeDrag('svgOrizz', null, pt=>{
+    const dx=pt.x-ox, dy=-(pt.y-oy);
+    const ang=Math.round(Math.atan2(dy,dx)*180/Math.PI);
+    const F=Math.round(Math.hypot(dx,dy)*200/75);  // 75 SVG px ≈ max F
+    setSlider('orT',ang);
+    setSlider('orF',F);
+  });
+})();
+
+/* --- Inclin: trascina la freccia F parallela al piano --- */
+(function(){
+  makeDrag('svgInclin', null, pt=>{
+    const t=(+document.getElementById('inT').value)*Math.PI/180;
+    const baseY=240,apexX=40,Lp=320;
+    const h=Lp*Math.tan(t);
+    const rightX=apexX+Lp;
+    const bcX=apexX+0.45*(rightX-apexX);
+    const bcY=(baseY-h)+0.45*h;
+    const nux=Math.sin(t),nuy=-Math.cos(t);
+    const ccX=bcX+nux*15, ccY=bcY+nuy*15;
+    const aux=-Math.cos(t), auy=-Math.sin(t);
+    // project mouse onto incline direction
+    const proj=(pt.x-ccX)*aux+(pt.y-ccY)*auy;
+    setSlider('inF', Math.round(Math.max(0,-proj)*200/60));
+  });
+})();
+
+/* --- Molla (orizzontale): trascina il blocco per cambiare Δx --- */
+(function(){
+  makeDrag('svgMolla', null, pt=>{
+    const mode=document.getElementById('moMode').value;
+    if(mode==='b'){
+      const restX=180;
+      const newDx=(pt.x-restX-30)/400;   // bx=restX+dx*400, cx=bx+30
+      setSlider('moD',newDx.toFixed(3));
+    }
+  });
+})();
+
+/* --- Momento: trascina tip-F (→ φ, F) o punto P (→ r) --- */
+(function(){
+  const Ox=90, Oy=150, scr=110;
+  let mode=0;  // 1=angolo+forza, 2=raggio
+  makeDrag('svgMomento',
+    pt=>{
+      const r=+document.getElementById('moF_r').value;
+      const phiD=+document.getElementById('moF_phi').value;
+      const phi=phiD*Math.PI/180;
+      const F=+document.getElementById('moF_F').value;
+      const Px=Ox+r*scr;
+      const tipX=Px+Math.cos(phi)*Math.min(95,F*0.95);
+      const tipY=Oy -Math.sin(phi)*Math.min(95,F*0.95);
+      if(Math.hypot(pt.x-tipX,pt.y-tipY)<28){ mode=1; return true; }
+      if(Math.abs(pt.y-Oy)<18&&pt.x>Ox-5&&pt.x<Px+22){ mode=2; return true; }
+      return false;
+    },
+    pt=>{
+      const r=+document.getElementById('moF_r').value;
+      const Px=Ox+r*scr;
+      if(mode===1){
+        const dx=pt.x-Px, dy=-(pt.y-Oy);
+        const phi=Math.round(Math.atan2(dy,dx)*180/Math.PI);
+        const F=clamp(Math.round(Math.hypot(dx,dy)/0.95),0,100);
+        setSlider('moF_phi',phi);
+        setSlider('moF_F',F);
+      } else {
+        setSlider('moF_r',((pt.x-Ox)/scr).toFixed(2));
+      }
+    }
+  );
+})();
+
+/* --- Leva: trascina i punti di applicazione delle forze --- */
+(function(){
+  const scd=78, beamY=130;
+  let target='';
+  makeDrag('svgLeva',
+    pt=>{
+      const tipo=document.getElementById('levaTipo').value;
+      const d1=+document.getElementById('levaD1').value;
+      const d2=+document.getElementById('levaD2').value;
+      const fulcX=tipo==='1'?250:90;
+      const x1=tipo==='1'?fulcX-d1*scd:fulcX+d1*scd;
+      const x2=fulcX+d2*scd;
+      const dist1=Math.hypot(pt.x-x1,pt.y-beamY);
+      const dist2=Math.hypot(pt.x-x2,pt.y-beamY);
+      if(Math.min(dist1,dist2)>55) return false;
+      target=dist1<dist2?'f1':'f2';
+      return true;
+    },
+    pt=>{
+      const tipo=document.getElementById('levaTipo').value;
+      const fulcX=tipo==='1'?250:90;
+      if(target==='f1'){
+        const d=tipo==='1'?(fulcX-pt.x)/scd:(pt.x-fulcX)/scd;
+        setSlider('levaD1',d.toFixed(2));
+      } else {
+        setSlider('levaD2',((pt.x-fulcX)/scd).toFixed(2));
+      }
+    }
+  );
+})();
+
+/* --- Rigido: trascina tip-F (→ angolo+modulo) o lungo la trave (→ xf) --- */
+(function(){
+  const ax=90, ay=140, bLen=300;
+  let mode=0;
+  makeDrag('svgRigido',
+    pt=>{
+      const xf=+document.getElementById('rgXf').value;
+      const angD=+document.getElementById('rgAng').value;
+      const F=+document.getElementById('rgF').value;
+      const m=+document.getElementById('rgM').value;
+      const ang=angD*Math.PI/180;
+      const fx=ax+xf*bLen;
+      const sc=70/Math.max(m*G,F,1);
+      const tipX=fx+F*Math.cos(ang)*sc;
+      const tipY=ay-F*Math.sin(ang)*sc;
+      if(Math.hypot(pt.x-tipX,pt.y-tipY)<28){ mode=1; return true; }
+      if(Math.abs(pt.y-ay)<14&&pt.x>=ax&&pt.x<=ax+bLen){ mode=2; return true; }
+      return false;
+    },
+    pt=>{
+      const xf=+document.getElementById('rgXf').value;
+      const fx=ax+xf*bLen;
+      if(mode===1){
+        const m=+document.getElementById('rgM').value;
+        const F=+document.getElementById('rgF').value;
+        const sc=70/Math.max(m*G,F,1);
+        const rawAng=Math.round(Math.atan2(-(pt.y-ay),pt.x-fx)*180/Math.PI);
+        const angNorm=((rawAng%360)+360)%360;
+        const dist=Math.hypot(pt.x-fx,pt.y-ay);
+        setSlider('rgAng',angNorm);
+        setSlider('rgF',Math.round(dist/sc));
+      } else {
+        setSlider('rgXf',clamp((pt.x-ax)/bLen,0,1).toFixed(2));
+      }
+    }
+  );
+})();
 
 /* ============ QUIZ DATA ============ */
 const QUIZZES={
