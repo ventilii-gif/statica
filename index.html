@@ -528,8 +528,8 @@ svg.sim.grab:active{cursor:grabbing}
       <div class="sim-pane">
         <svg class="sim grab" id="svgTrave" viewBox="0 0 500 210" preserveAspectRatio="xMidYMid meet"></svg>
         <div class="legend">
-          <span style="color:var(--vP)"><i style="background:var(--vP)"></i>Carico P</span>
-          <span style="color:var(--vN)"><i style="background:var(--vN)"></i>Reazioni R_A, R_B</span>
+          <span style="color:var(--vN)"><i style="background:var(--vN)"></i>Carico P</span>
+          <span style="color:var(--vP)"><i style="background:var(--vP)"></i>Reazioni R_A, R_B</span>
         </div>
       </div>
       <div class="ctrl-pane">
@@ -1035,23 +1035,23 @@ function renderTrave(){
     <circle cx="${x1+7}" cy="${beamY+6+23}" r="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1"/>
     ${hatch(x1-22,beamY+6+28,x1+22,beamY+6+28,1)}
     <text x="${x1}" y="${beamY+6+28+16}" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="700">B · carrello</text>`;
-  // load arrow (downward, onto beam)
+  // load arrow (downward, below beam) — green
   const loadLen=46;
-  const vP=arrow(loadX,beamY-6-loadLen,loadX,beamY-6,COL.P,'')+
-    `<text x="${loadX}" y="${beamY-12-loadLen}" font-size="11" fill="${COL.P}" text-anchor="middle" font-weight="700">P = ${P} N</text>
-    <circle cx="${loadX}" cy="${beamY-6}" r="6" fill="${COL.P}" opacity="0.9"/>`;
-  // reaction arrows (upward, from below the supports)
+  const vP=arrow(loadX,beamY+6,loadX,beamY+6+loadLen,COL.N,'')+
+    `<text x="${loadX}" y="${beamY+6+loadLen+14}" font-size="11" fill="${COL.N}" text-anchor="middle" font-weight="700">P = ${P} N</text>
+    <circle cx="${loadX}" cy="${beamY+6}" r="6" fill="${COL.N}" opacity="0.9"/>`;
+  // reaction arrows (upward, above beam) — red
   const scR=46/Math.max(RA,RB,1);
-  const vRA=arrow(x0,beamY+6+24+26,x0,beamY+6+24+26-Math.max(12,RA*scR),COL.N,'')+
-    `<text x="${x0-2}" y="${beamY+6+24+40}" font-size="10" fill="${COL.N}" text-anchor="middle">R_A</text>`;
-  const vRB=arrow(x1,beamY+6+18+26,x1,beamY+6+18+26-Math.max(12,RB*scR),COL.N,'')+
-    `<text x="${x1+2}" y="${beamY+6+18+40}" font-size="10" fill="${COL.N}" text-anchor="middle">R_B</text>`;
+  const vRA=arrow(x0,beamY-6,x0,beamY-6-Math.max(12,RA*scR),COL.P,'')+
+    `<text x="${x0-2}" y="${beamY-6-Math.max(12,RA*scR)-6}" font-size="10" fill="${COL.P}" text-anchor="middle">R_A</text>`;
+  const vRB=arrow(x1,beamY-6,x1,beamY-6-Math.max(12,RB*scR),COL.P,'')+
+    `<text x="${x1+2}" y="${beamY-6-Math.max(12,RB*scR)-6}" font-size="10" fill="${COL.P}" text-anchor="middle">R_B</text>`;
   // dimension line
-  const dimY=beamY-6-loadLen-26;
+  const dimY=14;
   const dim=`<line x1="${x0}" y1="${dimY}" x2="${loadX}" y2="${dimY}" stroke="#6b7280" stroke-width="1"/>
     <line x1="${x0}" y1="${dimY-4}" x2="${x0}" y2="${dimY+4}" stroke="#6b7280" stroke-width="1"/>
     <line x1="${loadX}" y1="${dimY-4}" x2="${loadX}" y2="${dimY+4}" stroke="#6b7280" stroke-width="1"/>
-    <text x="${(x0+loadX)/2}" y="${dimY-5}" font-size="10.5" fill="#6b7280" text-anchor="middle">a = ${a.toFixed(2)} m</text>`;
+    <text x="${(x0+loadX)/2}" y="${dimY-3}" font-size="10.5" fill="#6b7280" text-anchor="middle">a = ${a.toFixed(2)} m</text>`;
   svg.innerHTML=beam+supA+supB+dim+vRA+vRB+vP;
   document.getElementById('trPout').textContent=P.toFixed(0);
   document.getElementById('trAout').textContent=a.toFixed(2);
