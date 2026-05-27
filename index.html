@@ -776,7 +776,7 @@ function renderInclin(){
     <line x1="${ccX}" y1="${ccY}" x2="${(ccX-Pn*sc*nux).toFixed(1)}" y2="${(ccY-Pn*sc*nuy).toFixed(1)}" stroke="${COL.P}" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>`;
   const vN=arrow(ccX,ccY,ccX+nux*N*sc,ccY+nuy*N*sc,COL.N,'N');
   const vF=F>0.5?arrow(ccX,ccY,ccX+aux*F*sc,ccY+auy*F*sc,COL.F,'F'):'';
-  const vFa=Math.abs(fa)>0.5?arrow(ccX,ccY,ccX+aux*fa*sc,ccY+auy*fa*sc,COL.Fa,'fₐ'):'';
+  const vFa=Math.abs(fa)>0.5?arrow(ccX,ccY,ccX-aux*fa*sc,ccY-auy*fa*sc,COL.Fa,'fₐ'):'';
   document.getElementById('svgInclin').innerHTML=ground+tri+arc+body+compP+vP+vN+vF+vFa;
   document.getElementById('inPp').textContent=Pp.toFixed(1);
   document.getElementById('inN').textContent=N.toFixed(1);
@@ -1232,7 +1232,8 @@ function makeDrag(svgId,onStart,onMove){
     const aux=-Math.cos(t), auy=-Math.sin(t);
     // project mouse onto incline direction
     const proj=(pt.x-ccX)*aux+(pt.y-ccY)*auy;
-    setSlider('inF', Math.round(Math.max(0,-proj)*200/60));
+    // proj>0 = mouse verso cima del piano → F cresce
+    setSlider('inF', Math.round(Math.max(0,proj)*200/60));
   });
 })();
 
