@@ -8,7 +8,7 @@
 <style>
 :root{
   --bg:#f7f8fa;--surface:#fff;--surface2:#f9fafc;
-  --primary:#1565c0;--primary-d:#0d47a1;--primary-l:#eef3fb;
+  --primary:#1565c0;--primary-d:#0d47a1;--primary-l:rgba(21,101,192,.08);
   --text:#1a1a2e;--muted:#6b7280;--border:#e0e4ed;
   --radius:12px;
   --vT:#1565c0;--vP:#e53935;--vN:#2e7d32;--vF:#f57c00;--vFa:#7b1fa2;--vFe:#00897b;--vM:#c62828;
@@ -20,10 +20,12 @@ html,body{background:var(--bg);color:var(--text);
 
 /* ===== Header ===== */
 header{background:var(--surface);border-bottom:1px solid var(--border);
-  padding:.7rem 1rem;position:sticky;top:0;z-index:10;
+  padding:.75rem 1rem;position:sticky;top:0;z-index:10;
   display:flex;align-items:center;justify-content:space-between;gap:.6rem}
-header h1{font-size:clamp(1.02rem,3.6vw,1.32rem);color:var(--text);
-  font-weight:700;letter-spacing:-.01em}
+.header-brand{display:flex;flex-direction:column;gap:.05rem}
+header h1{font-size:clamp(1.15rem,3.8vw,1.45rem);color:var(--text);
+  font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.header-sub{font-size:.75em;color:var(--muted);font-weight:400;line-height:1.3}
 .btn-print{background:var(--surface2);border:1px solid var(--border);
   color:var(--primary-d);border-radius:8px;padding:.4rem .8rem;font-size:.82em;
   cursor:pointer;font-family:inherit;font-weight:600;transition:background .15s,border-color .15s;white-space:nowrap}
@@ -54,7 +56,7 @@ section.scene.active{display:block}
   box-shadow:0 1px 2px rgba(20,30,60,.04)}
 .card h2{margin:0 0 .55rem;color:var(--text);font-size:1.14em;font-weight:700;
   letter-spacing:-.01em}
-.card h3{margin:.9rem 0 .3rem;color:var(--primary-d);font-size:.97em;font-weight:600}
+.card h3{margin:.9rem 0 .3rem;color:var(--primary);font-size:.97em;font-weight:600}
 .card p{margin:.35rem 0;color:var(--text)}
 .lead{color:var(--muted);font-size:.92em;margin:.1rem 0 .7rem}
 
@@ -120,7 +122,9 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   transition:border-color .18s,box-shadow .18s,transform .14s}
 .home-card:hover{border-color:var(--primary);
   box-shadow:0 4px 14px rgba(21,101,192,.12);transform:translateY(-2px)}
-.home-card .ico{font-size:1.7em;display:block;margin-bottom:.32rem}
+.ico{width:2rem;height:2rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  color:var(--primary);opacity:.85}
+.ico svg{width:1.5rem;height:1.5rem}
 .home-card strong{color:var(--primary-d);display:block;margin-bottom:.12rem;font-size:.97em}
 .home-card span{color:var(--muted);font-size:.85em}
 
@@ -184,19 +188,22 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 </head>
 <body>
 <header>
-  <h1>⚖️ Equilibrio dei corpi</h1>
-  <button class="btn-print" onclick="window.print()">🖨️ Stampa teoria</button>
+  <div class="header-brand">
+    <h1>Equilibrio dei corpi</h1>
+    <p class="header-sub">Appunti interattivi di meccanica — simulazioni e teoria</p>
+  </div>
+  <button class="btn-print" onclick="window.print()">Stampa teoria</button>
 </header>
 <nav class="main" id="mainNav">
-  <button data-tab="home" class="active">🏠 Home</button>
-  <button data-tab="funi">🪢 Funi</button>
-  <button data-tab="orizz">📏 Piano orizz.</button>
-  <button data-tab="inclin">⛰️ Piano incl.</button>
-  <button data-tab="molla">🌀 Molla</button>
-  <button data-tab="momento">🔧 Momento</button>
-  <button data-tab="leva">⚖️ Leva</button>
-  <button data-tab="trave">🏗️ Trave</button>
-  <button data-tab="rigido">🔲 Corpo rigido</button>
+  <button data-tab="home" class="active">Home</button>
+  <button data-tab="funi">Funi</button>
+  <button data-tab="orizz">Orizzontale</button>
+  <button data-tab="inclin">Inclinato</button>
+  <button data-tab="molla">Molla</button>
+  <button data-tab="momento">Momento</button>
+  <button data-tab="leva">Leva</button>
+  <button data-tab="trave">Trave</button>
+  <button data-tab="rigido">Corpo rigido</button>
 </nav>
 <main>
 
@@ -207,18 +214,21 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <p>Un corpo è in <strong>equilibrio statico</strong> quando la somma vettoriale di tutte le forze applicate è nulla <em>e</em> la somma dei momenti rispetto a qualsiasi punto è nulla:</p>
     <div class="formula">Σ <b>F</b> = <b>0</b> &nbsp;&nbsp;e&nbsp;&nbsp; Σ M = 0</div>
     <p>Per un corpo <strong>puntiforme</strong> basta la prima condizione; per un <strong>corpo rigido</strong> servono entrambe — la seconda impedisce la rotazione.</p>
-    <div class="tip">💡 Parti dalle simulazioni: muovi i cursori e osserva i vettori cambiare in tempo reale. La teoria diventerà naturale.</div>
+    <div class="tip">Trascina i vettori nelle simulazioni o usa i cursori: la teoria si capisce meglio quando la vedi muoversi.</div>
+  </div>
+  <div class="card" style="border-left:3px solid var(--primary);padding-left:1rem">
+    <p style="font-size:.88em;color:var(--muted);margin:0">Questi appunti raccolgono le simulazioni interattive usate in classe per spiegare l'equilibrio. Ogni sezione ha una parte di <strong>teoria</strong>, una <strong>simulazione</strong> con cui giocare e un <strong>quiz</strong> di autoverifica. Il codice è open source.</p>
   </div>
   <p class="sec-label">Argomenti</p>
   <div class="home-grid">
-    <button class="home-card" data-go="funi"><span class="ico">🪢</span><strong>Corpo appeso a funi</strong><span>Tensioni e angoli</span></button>
-    <button class="home-card" data-go="orizz"><span class="ico">📏</span><strong>Piano orizzontale</strong><span>Forza applicata e attrito</span></button>
-    <button class="home-card" data-go="inclin"><span class="ico">⛰️</span><strong>Piano inclinato</strong><span>Scomposizione del peso</span></button>
-    <button class="home-card" data-go="molla"><span class="ico">🌀</span><strong>Forze elastiche</strong><span>Legge di Hooke</span></button>
-    <button class="home-card" data-go="momento"><span class="ico">🔧</span><strong>Momento di una forza</strong><span>Braccio e rotazione</span></button>
-    <button class="home-card" data-go="leva"><span class="ico">⚖️</span><strong>Leva</strong><span>I, II e III genere</span></button>
-    <button class="home-card" data-go="trave"><span class="ico">🏗️</span><strong>Trave su due appoggi</strong><span>Reazioni vincolari</span></button>
-    <button class="home-card" data-go="rigido"><span class="ico">🔲</span><strong>Corpo rigido</strong><span>ΣF = 0 e ΣM = 0</span></button>
+    <button class="home-card" data-go="funi"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 14L3 2M8 14L13 2"/><circle cx="8" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg></span><strong>Corpo appeso a funi</strong><span>Tensioni e angoli</span></button>
+    <button class="home-card" data-go="orizz"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="8" height="5" rx="1"/><line x1="1" y1="10" x2="15" y2="10"/><path d="M14 7.5h-2.5"/><path d="M13 6.5l1 1-1 1"/></svg></span><strong>Piano orizzontale</strong><span>Forza applicata e attrito</span></button>
+    <button class="home-card" data-go="inclin"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14L2 4L14 14z"/><rect x="5" y="7.5" width="5" height="3.5" rx=".5" transform="rotate(-34 7.5 9.25)"/></svg></span><strong>Piano inclinato</strong><span>Scomposizione del peso</span></button>
+    <button class="home-card" data-go="molla"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="1" x2="8" y2="3"/><path d="M5 3L11 5L5 7L11 9L5 11L11 13"/><line x1="8" y1="13" x2="8" y2="15"/></svg></span><strong>Forze elastiche</strong><span>Legge di Hooke</span></button>
+    <button class="home-card" data-go="momento"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M8 4a4 4 0 0 1 4 4"/><path d="M12 4l0 4-4 0"/></svg></span><strong>Momento di una forza</strong><span>Braccio e rotazione</span></button>
+    <button class="home-card" data-go="leva"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="8" x2="15" y2="8"/><path d="M8 8L6 13H10z"/><line x1="3" y1="6" x2="3" y2="8"/><line x1="12" y1="5" x2="12" y2="8"/></svg></span><strong>Leva</strong><span>I, II e III genere</span></button>
+    <button class="home-card" data-go="trave"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="7" x2="15" y2="7"/><path d="M4 7L2 12H6z"/><path d="M12 7L10 12H14z"/><line x1="8" y1="5" x2="8" y2="7"/><path d="M7 5l1-2 1 2"/></svg></span><strong>Trave su due appoggi</strong><span>Reazioni vincolari</span></button>
+    <button class="home-card" data-go="rigido"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="12" height="7" rx="1"/><line x1="8" y1="5" x2="8" y2="12"/><path d="M8 3l-2 2M8 3l2 2"/></svg></span><strong>Corpo rigido</strong><span>ΣF = 0 e ΣM = 0</span></button>
   </div>
 </section>
 
@@ -226,7 +236,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="funi" data-title="Corpo appeso a funi">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>🪢 Corpo appeso a funi</h2>
+    <h2>Corpo appeso a funi</h2>
     <h3>Caso 1 — fune verticale</h3>
     <p>Un corpo di massa <em>m</em> sospeso a una sola fune verticale: la tensione bilancia il peso.</p>
     <div class="formula">T = m g</div>
@@ -235,7 +245,8 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <div class="formula">T₁ cos α = T₂ cos β &nbsp;&nbsp;(asse x)</div>
     <div class="formula">T₁ sin α + T₂ sin β = m g &nbsp;&nbsp;(asse y)</div>
     <p>Risolvendo:</p>
-    <div class="formula">T₁ = mg · cos β / sin(α+β) &nbsp;·&nbsp; T₂ = mg · cos α / sin(α+β)</div>
+    <div class="formula">T₁ = mg · cos β / sin(α+β)</div>
+    <div class="formula">T₂ = mg · cos α / sin(α+β)</div>
     <div class="tip">📐 Caso simmetrico (α = β): T = mg / (2 sin α). Più piccolo è l'angolo, più grandi le tensioni — per questo le funi tese quasi orizzontali si spezzano.</div>
   </div>
   <p class="sec-label">Simulazione</p>
@@ -270,7 +281,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="orizz" data-title="Piano orizzontale con attrito">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>📏 Piano orizzontale con attrito</h2>
+    <h2>Piano orizzontale con attrito</h2>
     <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> inclinata di <em>θ</em>, e l'attrito <em>fₐ</em>.</p>
     <h3>Equilibrio verticale</h3>
     <div class="formula">N = m g − F sin θ &nbsp;&nbsp;(θ &gt; 0 verso l'alto)</div>
@@ -315,7 +326,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="inclin" data-title="Piano inclinato">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>⛰️ Piano inclinato</h2>
+    <h2>Piano inclinato</h2>
     <p>Su un piano inclinato di angolo <em>θ</em> conviene scegliere gli assi <strong>parallelo</strong> e <strong>perpendicolare</strong> al piano. Il peso si scompone in:</p>
     <div class="formula">P<sub>∥</sub> = m g sin θ &nbsp;&nbsp;(lungo il piano, verso il basso)</div>
     <div class="formula">P<sub>⊥</sub> = m g cos θ &nbsp;&nbsp;⇒&nbsp; N = m g cos θ</div>
@@ -361,7 +372,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="molla" data-title="Forze elastiche — legge di Hooke">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>🌀 Forze elastiche — legge di Hooke</h2>
+    <h2>Forze elastiche — legge di Hooke</h2>
     <p>Una molla di costante elastica <em>k</em> deformata di <em>Δx</em> esercita una forza di <strong>richiamo</strong>:</p>
     <div class="formula">F<sub>el</sub> = − k · Δx &nbsp;&nbsp;(modulo: |F<sub>el</sub>| = k |Δx|)</div>
     <h3>(a) Molla verticale con massa appesa</h3>
@@ -413,7 +424,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="momento" data-title="Momento di una forza">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>🔧 Momento di una forza</h2>
+    <h2>Momento di una forza</h2>
     <p>Il <strong>momento</strong> di una forza <em>F</em> rispetto a un punto O misura la sua capacità di far <strong>ruotare</strong> il corpo attorno a O:</p>
     <div class="formula">M = F · d = F · r · sin φ</div>
     <p>dove <em>d</em> è il <strong>braccio</strong> — la distanza perpendicolare dalla retta d'azione di F al punto O — <em>r</em> è la distanza dal punto di applicazione e <em>φ</em> l'angolo tra F e il segmento OP.</p>
@@ -458,7 +469,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="leva" data-title="La leva">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>⚖️ La leva</h2>
+    <h2>La leva</h2>
     <p>La <strong>leva</strong> è una macchina semplice: un'asta rigida che ruota attorno a un punto fisso, il <strong>fulcro</strong>. Una forza <strong>motrice</strong> F₁ equilibra una forza <strong>resistente</strong> F₂.</p>
     <h3>Condizione di equilibrio</h3>
     <p>I momenti delle due forze rispetto al fulcro devono essere uguali:</p>
@@ -512,7 +523,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="trave" data-title="Trave su due appoggi">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>🏗️ Trave su due appoggi</h2>
+    <h2>Trave su due appoggi</h2>
     <p>Una trave orizzontale di lunghezza <em>L</em> poggia su due vincoli: una <strong>cerniera</strong> in A (blocca traslazione orizzontale e verticale) e un <strong>carrello</strong> in B (trasmette solo la reazione verticale). Un carico <em>P</em> è applicato a distanza <em>a</em> da A.</p>
     <h3>Calcolo delle reazioni</h3>
     <p>Scrivendo l'equilibrio dei momenti rispetto ad A (ΣM_A = 0), la reazione R_A scompare perché ha braccio nullo:</p>
@@ -556,9 +567,11 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 <section class="scene" id="rigido" data-title="Equilibrio del corpo rigido">
   <p class="sec-label">Teoria</p>
   <div class="card">
-    <h2>🔲 Equilibrio del corpo rigido</h2>
+    <h2>Equilibrio del corpo rigido</h2>
     <p>Un corpo rigido è in equilibrio se e solo se sono soddisfatte <strong>tutte e tre</strong> le condizioni:</p>
-    <div class="formula">Σ F<sub>x</sub> = 0 &nbsp;·&nbsp; Σ F<sub>y</sub> = 0 &nbsp;·&nbsp; Σ M<sub>O</sub> = 0</div>
+    <div class="formula" style="white-space:pre-line">Σ F<sub>x</sub> = 0
+Σ F<sub>y</sub> = 0
+Σ M<sub>O</sub> = 0</div>
     <p>Le prime due impediscono la <strong>traslazione</strong>, la terza la <strong>rotazione</strong>. L'equazione dei momenti vale per <em>qualsiasi</em> polo O: conviene sceglierlo dove agisce una forza incognita, così quella forza sparisce dall'equazione.</p>
     <h3>Centro di massa</h3>
     <p>Il peso totale si considera applicato nel <strong>centro di massa</strong> G:</p>
@@ -1618,7 +1631,7 @@ function renderQuiz(s){
       <div class="quiz-exp" id="qexp-${s}" style="display:none"></div>
       <button class="quiz-next" id="qnxt-${s}" style="display:none" onclick="nextQuiz('${s}')">${st.idx+1<total?'Prossima domanda →':'Vedi il risultato finale →'}</button>`;
   }
-  el.innerHTML=`<div class="card"><h2>🧩 Quiz</h2>${body}</div>`;
+  el.innerHTML=`<div class="card"><h2>Quiz</h2>${body}</div>`;
 }
 function answerQuiz(s,chosen){
   const st=qState[s]; if(st.answered) return; st.answered=true;
