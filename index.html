@@ -824,8 +824,8 @@ function springPath(x1,y1,x2,y2,coils,amp){
 }
 function setMollaUI(mode){
   document.getElementById('moTL').hidden=(mode!=='c');
-  document.getElementById('moUL').hidden=(mode!=='b');
-  document.getElementById('moDL').hidden=(mode!=='b');
+  document.getElementById('moUL').hidden=(mode==='a');
+  document.getElementById('moDL').hidden=(mode==='a');
 }
 function renderMolla(){
   const mode=document.getElementById('moMode').value;
@@ -883,12 +883,21 @@ function renderMolla(){
     else{stat.className='eqs no';stat.textContent='✗ Il corpo si muove: la forza elastica supera l\'attrito massimo';}
   } else {
     const t=(+document.getElementById('moT').value)*Math.PI/180;
-    const dx=W*Math.sin(t)/k;
+    const u=+document.getElementById('moU').value;
+    const dx=+document.getElementById('moD').value;    // allungamento imposto (m)
+    const Pp=W*Math.sin(t);                            // componente parallela del peso (giù per il piano)
+    const N=W*Math.cos(t);
+    const Fel=k*dx;                                    // Fel > 0 = tira verso monte
+    const along=Pp-Fel;                                // residuo lungo il piano (+ = giù, − = su)
+    const fMax=u*N;
+    const ok=Math.abs(along)<=fMax+1e-9;
+    // attrito: opposto al moto possibile; convenzione + = su per il piano
+    const fa=ok?along:Math.sign(along)*fMax;
     const baseY=230, apexX=40, Lp=320, h=Lp*Math.tan(t);
     const topY=baseY-h, rightX=apexX+Lp, rightY=baseY;
     const ground=hatch(20,baseY,380,baseY,1);
     const tri=`<polygon points="${apexX},${topY} ${rightX},${rightY} ${apexX},${baseY}" fill="#d7ccc8" stroke="#5d4037" stroke-width="1.5"/>`;
-    const aux=-Math.cos(t), auy=-Math.sin(t);
+    const aux=-Math.cos(t), auy=-Math.sin(t);          // versore su per il piano (SVG)
     const nux=Math.sin(t), nuy=-Math.cos(t);
     const s=0.55;
     const bcX=apexX+(1-s)*(rightX-apexX), bcY=topY+(1-s)*(rightY-topY);
@@ -908,15 +917,25 @@ function renderMolla(){
     const arcR=22;
     const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="#6b7280" stroke-width="1.2"/>
       <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="#6b7280">θ</text>`;
-    const Fel=k*dx, sc=60/Math.max(W,Fel,1);
+    const sc=60/Math.max(W,Math.abs(Fel),fMax,1);
     const vP=arrow(ccX,ccY,ccX,ccY+W*sc,COL.P,'P');
-    const vN=arrow(ccX,ccY,ccX+nux*W*Math.cos(t)*sc,ccY+nuy*W*Math.cos(t)*sc,COL.N,'N');
-    const vFe=Fel>0.5?arrow(ccX,ccY,ccX+aux*Fel*sc,ccY+auy*Fel*sc,COL.Fe,'Fₑₗ'):'';
-    html=ground+tri+arc+sp+body+vP+vN+vFe;
-    read.innerHTML=`<div class="it"><span class="l">P sin θ</span><span class="v">${(W*Math.sin(t)).toFixed(2)}</span> N</div>
-      <div class="it"><span class="l">Δx = mg sinθ/k</span><span class="v">${(dx*100).toFixed(2)}</span> cm</div>
-      <div class="it"><span class="l">Fₑₗ</span><span class="v">${(k*dx).toFixed(2)}</span> N</div>`;
-    stat.className='eqs ok';stat.textContent='✓ Equilibrio: la molla bilancia la componente parallela del peso';
+    const vN=arrow(ccX,ccY,ccX+nux*N*sc,ccY+nuy*N*sc,COL.N,'N');
+    const vFe=Math.abs(Fel)>0.5?arrow(ccX,ccY,ccX+aux*Fel*sc,ccY+auy*Fel*sc,COL.Fe,'Fₑₗ'):'';
+    // attrito: fa>0 = su per il piano → punta lungo +aux
+    const vFa=Math.abs(fa)>0.5?arrow(ccX,ccY,ccX+aux*fa*sc,ccY+auy*fa*sc,COL.Fa,'fₐ'):'';
+    html=ground+tri+arc+sp+body+vP+vN+vFe+vFa;
+    read.innerHTML=`<div class="it"><span class="l">P sin θ</span><span class="v">${Pp.toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">Fₑₗ = k·Δx</span><span class="v">${Fel.toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">fₐ richiesto</span><span class="v">${Math.abs(along).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">μ·N max</span><span class="v">${fMax.toFixed(2)}</span> N</div>`;
+    if(ok){
+      const ratio=fMax>0?Math.abs(along)/fMax:0;
+      if(ratio>0.95&&fMax>0){stat.className='eqs lim';stat.textContent='⚠ Limite di equilibrio (sul punto di slittare)';}
+      else{stat.className='eqs ok';stat.textContent='✓ Equilibrio: molla + attrito bilanciano il peso parallelo';}
+    } else {
+      stat.className='eqs no';
+      stat.textContent='✗ Scivola '+(along>0?'verso il basso':"verso l'alto")+" — l'attrito non basta";
+    }
   }
   svg.innerHTML=html;
 }
