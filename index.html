@@ -162,10 +162,43 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   .ctrl label .nm{min-width:5.2em}
 }
 
+/* ===== Sub-nav (sotto-schede) ===== */
+nav.subnav{display:flex;gap:.3rem;margin-bottom:1rem;
+  border-bottom:1px solid var(--border);overflow-x:auto;padding-bottom:0}
+nav.subnav button{flex:0 0 auto;background:transparent;border:0;
+  border-bottom:2.5px solid transparent;padding:.55rem .95rem;
+  font-size:.9em;color:var(--muted);cursor:pointer;font-family:inherit;
+  font-weight:600;transition:color .15s,border-color .15s;margin-bottom:-1px;
+  border-radius:0}
+nav.subnav button:hover{color:var(--text)}
+nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)}
+.subscene{display:none}
+.subscene.active{display:block}
+
+/* ===== Esercizi svolti ===== */
+.esercizio{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1rem 1.15rem;margin-bottom:.9rem;
+  box-shadow:0 1px 2px rgba(20,30,60,.04)}
+.esercizio h3{color:var(--primary);font-size:.97em;font-weight:700;
+  margin:0 0 .4rem;letter-spacing:-.005em}
+.esercizio .testo{color:var(--text);margin:.3rem 0 .65rem;font-size:.95em}
+.esercizio .dati{background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:.55rem .8rem;margin:.5rem 0;font-size:.87em;
+  color:var(--muted);font-family:"Cambria Math",Georgia,serif}
+.esercizio .dati b{color:var(--text);font-weight:600}
+.esercizio .step{margin:.5rem 0;padding-left:.6rem;border-left:2px solid var(--border)}
+.esercizio .step-t{font-weight:600;color:var(--text);font-size:.89em;margin-bottom:.15rem}
+.esercizio .step-b{color:var(--muted);font-size:.87em}
+.esercizio .risultato{background:rgba(21,101,192,.08);border-left:3px solid var(--primary);
+  padding:.55rem .85rem;margin:.7rem 0 0;border-radius:0 8px 8px 0;
+  font-weight:600;color:var(--primary-d);font-size:.95em}
+
 /* ===== PRINT MODE ===== */
 .print-only{display:none}
 @media print{
-  nav.main,.btn-print,.sim-block,.quiz-block,.home-grid{display:none!important}
+  nav.main,.btn-print,.sim-block,.quiz-block,.home-grid,nav.subnav{display:none!important}
+  .subscene{display:block!important}
+  .esercizio{page-break-inside:avoid;box-shadow:none;border:1px solid #ccc}
   header{position:static;border-bottom:2px solid #000;padding:.4rem 0}
   header h1{font-size:1.3rem}
   html,body{background:#fff;font-size:11pt}
@@ -174,7 +207,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   section.scene::before{content:attr(data-title);display:block;
     font-size:1.25em;font-weight:800;color:#000;margin:1.1rem 0 .4rem;
     border-bottom:1.5px solid #000;padding-bottom:.2rem}
-  section.scene#home::before{content:none}
+  section.scene#intro::before{content:none}
   .card{box-shadow:none;border:1px solid #ccc;break-inside:avoid;margin-bottom:.7rem}
   .formula{background:#f1f1f1;border-left:3px solid #444}
   .print-only{display:block}
@@ -188,45 +221,89 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   <button class="btn-print" onclick="window.print()">🖨️ Stampa teoria</button>
 </header>
 <nav class="main" id="mainNav">
-  <button data-tab="home" class="active">🏠 Home</button>
-  <button data-tab="funi">🪢 Funi</button>
-  <button data-tab="orizz">📏 Piano orizz.</button>
-  <button data-tab="inclin">⛰️ Piano incl.</button>
-  <button data-tab="molla">🌀 Molla</button>
-  <button data-tab="momento">🔧 Momento</button>
-  <button data-tab="leva">⚖️ Leva</button>
-  <button data-tab="trave">🏗️ Trave</button>
-  <button data-tab="rigido">🔲 Corpo rigido</button>
+  <button data-tab="intro" class="active">Introduzione</button>
+  <button data-tab="funi">Funi</button>
+  <button data-tab="orizz">Orizzontale</button>
+  <button data-tab="inclin">Inclinato</button>
+  <button data-tab="molla">Molla</button>
+  <button data-tab="momento">Momento</button>
+  <button data-tab="leva">Leva</button>
+  <button data-tab="trave">Trave</button>
+  <button data-tab="rigido">Corpo rigido</button>
 </nav>
 <main>
 
-<!-- ============ HOME ============ -->
-<section class="scene active" id="home" data-title="Equilibrio dei corpi">
+<!-- ============ INTRO ============ -->
+<section class="scene active" id="intro" data-title="Introduzione">
   <div class="card">
-    <h2>Quando un corpo è in equilibrio?</h2>
-    <p>Un corpo è in <strong>equilibrio statico</strong> quando la somma vettoriale di tutte le forze applicate è nulla <em>e</em> la somma dei momenti rispetto a qualsiasi punto è nulla:</p>
-    <div class="formula">Σ <b>F</b> = <b>0</b> &nbsp;&nbsp;e&nbsp;&nbsp; Σ M = 0</div>
-    <p>Per un corpo <strong>puntiforme</strong> basta la prima condizione; per un <strong>corpo rigido</strong> servono entrambe — la seconda impedisce la rotazione.</p>
-    <div class="tip">💡 Parti dalle simulazioni: muovi i cursori e osserva i vettori cambiare in tempo reale. La teoria diventerà naturale.</div>
+    <h2>Statica: l'equilibrio dei corpi</h2>
+    <p>La <strong>statica</strong> è la branca della meccanica che studia i corpi in <strong>equilibrio</strong>: fermi rispetto a un sistema di riferimento inerziale, con risultante delle forze e dei momenti nulla.</p>
+    <p>In queste pagine affronterai otto moduli, dai casi elementari (corpo appeso a una fune) fino all'equilibrio del corpo rigido. Ogni modulo è organizzato in quattro parti:</p>
+    <ul style="margin:.5rem 0 .5rem 1.3rem;color:var(--text)">
+      <li><strong>Teoria</strong> — definizioni, formule, spiegazioni essenziali</li>
+      <li><strong>Simulazione</strong> — muovi i cursori o trascina i vettori col mouse: la teoria diventa visibile</li>
+      <li><strong>Esercizi</strong> — problemi svolti passo per passo, con formule e calcoli espliciti</li>
+      <li><strong>Quiz</strong> — domande a risposta multipla per verificare la comprensione</li>
+    </ul>
+    <div class="formula">Σ F = 0 &nbsp;·&nbsp; Σ M = 0</div>
+    <p class="lead">Due equazioni vettoriali che, dai tempi di Archimede in poi, hanno spiegato ponti, gru, bilance e — con l'aggiunta della dinamica — l'intero moto dei corpi.</p>
   </div>
+
+  <div class="card">
+    <h2>Un percorso storico</h2>
+    <p>La statica è la più antica delle scienze fisiche. Nasce con i problemi concreti dei costruttori — leve, carrucole, pareti che stanno in piedi — e si affina in due millenni fino alla sintesi newtoniana.</p>
+
+    <h3>Archimede di Siracusa (287 – 212 a.C.)</h3>
+    <p>Fonda la statica come scienza. Nel trattato <em>Sull'equilibrio dei piani</em> enuncia la <strong>legge della leva</strong>:</p>
+    <div class="formula">F₁ · d₁ = F₂ · d₂</div>
+    <p>Sua la frase attribuita: <em>«Datemi un punto d'appoggio e solleverò il mondo»</em>. Introduce il concetto di <strong>baricentro</strong> per figure piane e definisce implicitamente il momento di una forza.</p>
+
+    <h3>Erone di Alessandria (I sec. d.C.)</h3>
+    <p>Nel trattato <em>Meccanica</em> classifica le cinque <strong>macchine semplici</strong> (leva, verricello, carrucola, cuneo, vite) mostrando come tutte si riducano al principio della leva.</p>
+
+    <h3>Simon Stevin (1548 – 1620)</h3>
+    <p>Ingegnere e matematico fiammingo. Nel <em>De Beghinselen der Weeghconst</em> (1586) dimostra il <strong>parallelogramma delle forze</strong> con l'esperimento della "catena di sfere" sul piano inclinato — un ragionamento per assurdo di eleganza rara.</p>
+    <p>Getta anche le basi della statica dei fluidi (paradosso idrostatico).</p>
+
+    <h3>Galileo Galilei (1564 – 1642)</h3>
+    <p>Studia sistematicamente il <strong>piano inclinato</strong> e la scomposizione del peso in componenti parallela e perpendicolare al piano. Nei <em>Discorsi</em> (1638) apre la strada alla dinamica pur restando ancorato a problemi di equilibrio.</p>
+
+    <h3>Isaac Newton (1642 – 1727)</h3>
+    <p>Nei <em>Principia Mathematica</em> (1687) formula le tre leggi della dinamica: l'equilibrio diventa il caso particolare in cui la risultante è nulla (I e III legge). La statica si trasforma da collezione di principi in <strong>corollario della meccanica</strong>.</p>
+
+    <h3>Pierre Varignon (1654 – 1722)</h3>
+    <p>Dimostra il <strong>teorema di Varignon</strong>: il momento della risultante di più forze concorrenti è uguale alla somma dei momenti delle singole forze. È lo strumento operativo che rende calcolabile ogni sistema piano.</p>
+
+    <h3>Leonhard Euler (1707 – 1783) e Louis Poinsot (1777 – 1859)</h3>
+    <p>Estendono la statica al <strong>corpo rigido tridimensionale</strong>. Poinsot introduce il concetto di <strong>coppia di forze</strong> (due forze uguali, opposte, non allineate) e dimostra che ogni sistema di forze piano è equivalente a una forza più una coppia.</p>
+
+    <div class="tip">Ogni modulo di questi appunti tocca almeno uno di questi contributi. La leva è di Archimede, il piano inclinato di Galileo, la scomposizione delle forze di Stevin, il momento nasce con Archimede e diventa strumento con Varignon, e sopra tutto governa la seconda legge di Newton nel caso statico.</div>
+  </div>
+
   <p class="sec-label">Argomenti</p>
   <div class="home-grid">
-    <button class="home-card" data-go="funi"><span class="ico">🪢</span><strong>Corpo appeso a funi</strong><span>Tensioni e angoli</span></button>
-    <button class="home-card" data-go="orizz"><span class="ico">📏</span><strong>Piano orizzontale</strong><span>Forza applicata e attrito</span></button>
-    <button class="home-card" data-go="inclin"><span class="ico">⛰️</span><strong>Piano inclinato</strong><span>Scomposizione del peso</span></button>
-    <button class="home-card" data-go="molla"><span class="ico">🌀</span><strong>Forze elastiche</strong><span>Legge di Hooke</span></button>
-    <button class="home-card" data-go="momento"><span class="ico">🔧</span><strong>Momento di una forza</strong><span>Braccio e rotazione</span></button>
-    <button class="home-card" data-go="leva"><span class="ico">⚖️</span><strong>Leva</strong><span>I, II e III genere</span></button>
-    <button class="home-card" data-go="trave"><span class="ico">🏗️</span><strong>Trave su due appoggi</strong><span>Reazioni vincolari</span></button>
-    <button class="home-card" data-go="rigido"><span class="ico">🔲</span><strong>Corpo rigido</strong><span>ΣF = 0 e ΣM = 0</span></button>
+    <button class="home-card" data-go="funi"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 14L3 2M8 14L13 2"/><circle cx="8" cy="14" r="1.2" fill="currentColor" stroke="none"/></svg></span><strong>Corpo appeso a funi</strong><span>Tensioni e angoli</span></button>
+    <button class="home-card" data-go="orizz"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="8" height="5" rx="1"/><line x1="1" y1="10" x2="15" y2="10"/><path d="M14 7.5h-2.5"/><path d="M13 6.5l1 1-1 1"/></svg></span><strong>Piano orizzontale</strong><span>Forza applicata e attrito</span></button>
+    <button class="home-card" data-go="inclin"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 14L2 4L14 14z"/><rect x="5" y="7.5" width="5" height="3.5" rx=".5" transform="rotate(-34 7.5 9.25)"/></svg></span><strong>Piano inclinato</strong><span>Scomposizione del peso</span></button>
+    <button class="home-card" data-go="molla"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="8" y1="1" x2="8" y2="3"/><path d="M5 3L11 5L5 7L11 9L5 11L11 13"/><line x1="8" y1="13" x2="8" y2="15"/></svg></span><strong>Forze elastiche</strong><span>Legge di Hooke</span></button>
+    <button class="home-card" data-go="momento"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="1.5" fill="currentColor" stroke="none"/><path d="M8 4a4 4 0 0 1 4 4"/><path d="M12 4l0 4-4 0"/></svg></span><strong>Momento di una forza</strong><span>Braccio e rotazione</span></button>
+    <button class="home-card" data-go="leva"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="8" x2="15" y2="8"/><path d="M8 8L6 13H10z"/><line x1="3" y1="6" x2="3" y2="8"/><line x1="12" y1="5" x2="12" y2="8"/></svg></span><strong>Leva</strong><span>I, II e III genere</span></button>
+    <button class="home-card" data-go="trave"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="7" x2="15" y2="7"/><path d="M4 7L2 12H6z"/><path d="M12 7L10 12H14z"/><line x1="8" y1="5" x2="8" y2="7"/><path d="M7 5l1-2 1 2"/></svg></span><strong>Trave su due appoggi</strong><span>Reazioni vincolari</span></button>
+    <button class="home-card" data-go="rigido"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="12" height="7" rx="1"/><line x1="8" y1="5" x2="8" y2="12"/><path d="M8 3l-2 2M8 3l2 2"/></svg></span><strong>Corpo rigido</strong><span>ΣF = 0 e ΣM = 0</span></button>
   </div>
 </section>
 
 <!-- ============ FUNI ============ -->
 <section class="scene" id="funi" data-title="Corpo appeso a funi">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>🪢 Corpo appeso a funi</h2>
+    <h2>Corpo appeso a funi</h2>
     <h3>Caso 1 — fune verticale</h3>
     <p>Un corpo di massa <em>m</em> sospeso a una sola fune verticale: la tensione bilancia il peso.</p>
     <div class="formula">T = m g</div>
@@ -236,9 +313,10 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <div class="formula">T₁ sin α + T₂ sin β = m g &nbsp;&nbsp;(asse y)</div>
     <p>Risolvendo:</p>
     <div class="formula">T₁ = mg · cos β / sin(α+β) &nbsp;·&nbsp; T₂ = mg · cos α / sin(α+β)</div>
-    <div class="tip">📐 Caso simmetrico (α = β): T = mg / (2 sin α). Più piccolo è l'angolo, più grandi le tensioni — per questo le funi tese quasi orizzontali si spezzano.</div>
+    <div class="tip">Caso simmetrico (α = β): T = mg / (2 sin α). Più piccolo è l'angolo, più grandi le tensioni — per questo le funi tese quasi orizzontali si spezzano.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
@@ -263,23 +341,63 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-funi" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Fune verticale</h3>
+      <p class="testo">Un corpo di massa m = 8 kg è appeso al soffitto tramite un'unica fune verticale. Calcolare la tensione nella fune.</p>
+      <div class="dati"><b>Dati:</b> m = 8 kg · g = 9,81 m/s²</div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">La fune deve bilanciare esattamente il peso: T − mg = 0.</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = mg = 8 · 9,81 = 78,48 N</div></div>
+      <div class="risultato">T ≈ 78,5 N</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Due funi simmetriche</h3>
+      <p class="testo">Un lampadario di massa m = 4 kg è appeso a due funi simmetriche che formano entrambe un angolo α = 45° col soffitto. Calcolare la tensione in ciascuna fune.</p>
+      <div class="dati"><b>Dati:</b> m = 4 kg · α = β = 45° · g = 9,81 m/s²</div>
+      <div class="step"><div class="step-t">Simmetria</div><div class="step-b">Per simmetria T₁ = T₂ = T. Le componenti orizzontali si annullano automaticamente.</div></div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">2 T sin α = mg &nbsp;⇒&nbsp; T = mg / (2 sin α)</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = (4 · 9,81) / (2 · sin 45°) = 39,24 / 1,414 ≈ 27,7 N</div></div>
+      <div class="risultato">T₁ = T₂ ≈ 27,7 N</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Angoli asimmetrici</h3>
+      <p class="testo">Un corpo di 6 kg è appeso a due funi che formano rispettivamente α = 60° (sinistra) e β = 30° (destra) col soffitto. Calcolare T₁ e T₂.</p>
+      <div class="dati"><b>Dati:</b> m = 6 kg · α = 60° · β = 30° · g = 9,81 m/s²</div>
+      <div class="step"><div class="step-t">Sistema di equilibrio</div><div class="step-b">Asse x: T₁ cos α = T₂ cos β<br>Asse y: T₁ sin α + T₂ sin β = mg</div></div>
+      <div class="step"><div class="step-t">Formule risolutive</div><div class="step-b">T₁ = mg · cos β / sin(α+β) &nbsp;·&nbsp; T₂ = mg · cos α / sin(α+β)</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">mg = 58,86 N ; α + β = 90° ; sin 90° = 1<br>T₁ = 58,86 · cos 30° / 1 = 58,86 · 0,866 ≈ 51,0 N<br>T₂ = 58,86 · cos 60° / 1 = 58,86 · 0,5 ≈ 29,4 N</div></div>
+      <div class="risultato">T₁ ≈ 51,0 N &nbsp;·&nbsp; T₂ ≈ 29,4 N</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-funi" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ ORIZZONTALE ============ -->
 <section class="scene" id="orizz" data-title="Piano orizzontale con attrito">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>📏 Piano orizzontale con attrito</h2>
+    <h2>Piano orizzontale con attrito</h2>
     <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> inclinata di <em>θ</em>, e l'attrito <em>fₐ</em>.</p>
     <h3>Equilibrio verticale</h3>
     <div class="formula">N = m g − F sin θ &nbsp;&nbsp;(θ &gt; 0 verso l'alto)</div>
     <h3>Equilibrio orizzontale</h3>
     <p>Il corpo resta fermo finché l'attrito statico bilancia la componente orizzontale:</p>
     <div class="formula">F cos θ ≤ μₛ · N</div>
-    <div class="tip">🔍 Tirando con un angolo verso l'alto si <em>scarica</em> il piano (N diminuisce): esiste un angolo ottimale θ = arctan(μₛ) che minimizza la forza necessaria a mettere in moto il corpo.</div>
+    <div class="tip">Tirando con un angolo verso l'alto si <em>scarica</em> il piano (N diminuisce): esiste un angolo ottimale θ = arctan(μₛ) che minimizza la forza necessaria a mettere in moto il corpo.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
@@ -308,23 +426,64 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-orizz" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Forza orizzontale sotto la soglia di attrito</h3>
+      <p class="testo">Una cassa di 10 kg è ferma su un pavimento con coefficiente di attrito statico μ = 0,3. Si applica una forza orizzontale F = 25 N. Il corpo si muove?</p>
+      <div class="dati"><b>Dati:</b> m = 10 kg · μ = 0,3 · F = 25 N · θ = 0°</div>
+      <div class="step"><div class="step-t">Reazione normale</div><div class="step-b">N = mg = 10 · 9,81 = 98,1 N</div></div>
+      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,3 · 98,1 = 29,4 N</div></div>
+      <div class="step"><div class="step-t">Confronto</div><div class="step-b">F = 25 N &lt; fₐ,max = 29,4 N → il corpo resta fermo, l'attrito si adegua a 25 N.</div></div>
+      <div class="risultato">In equilibrio: fₐ = 25 N (statico, sotto la soglia)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Forza inclinata verso l'alto</h3>
+      <p class="testo">Una cassa di 15 kg è tirata da una fune inclinata di θ = 30° sopra l'orizzontale, con F = 60 N. Coefficiente di attrito statico μ = 0,25. Si muove?</p>
+      <div class="dati"><b>Dati:</b> m = 15 kg · F = 60 N · θ = 30° · μ = 0,25</div>
+      <div class="step"><div class="step-t">Componenti di F</div><div class="step-b">Fₓ = F cos θ = 60 · 0,866 ≈ 51,96 N<br>F_y = F sin θ = 60 · 0,5 = 30 N</div></div>
+      <div class="step"><div class="step-t">Reazione normale</div><div class="step-b">Sull'asse y: N + F_y − mg = 0 ⇒ N = mg − F_y = 147,15 − 30 = 117,15 N</div></div>
+      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,25 · 117,15 ≈ 29,3 N</div></div>
+      <div class="step"><div class="step-t">Confronto</div><div class="step-b">Fₓ = 51,96 N &gt; fₐ,max = 29,3 N → il corpo si muove.</div></div>
+      <div class="risultato">Non in equilibrio: la componente orizzontale supera l'attrito massimo</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Forza massima per l'equilibrio</h3>
+      <p class="testo">Un corpo di 8 kg è appoggiato su un pavimento con μ = 0,4. Qual è la massima forza orizzontale applicabile senza mettere il corpo in movimento?</p>
+      <div class="dati"><b>Dati:</b> m = 8 kg · μ = 0,4</div>
+      <div class="step"><div class="step-t">Condizione limite</div><div class="step-b">Al limite: F = fₐ,max = μ · N = μ · mg</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F_max = 0,4 · 8 · 9,81 = 31,4 N</div></div>
+      <div class="risultato">F_max ≈ 31,4 N</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-orizz" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ INCLINATO ============ -->
 <section class="scene" id="inclin" data-title="Piano inclinato">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>⛰️ Piano inclinato</h2>
+    <h2>Piano inclinato</h2>
     <p>Su un piano inclinato di angolo <em>θ</em> conviene scegliere gli assi <strong>parallelo</strong> e <strong>perpendicolare</strong> al piano. Il peso si scompone in:</p>
     <div class="formula">P<sub>∥</sub> = m g sin θ &nbsp;&nbsp;(lungo il piano, verso il basso)</div>
     <div class="formula">P<sub>⊥</sub> = m g cos θ &nbsp;&nbsp;⇒&nbsp; N = m g cos θ</div>
     <h3>Condizione di equilibrio</h3>
     <p>Senza forze esterne, il corpo resta fermo se l'attrito statico riesce a tenere:</p>
     <div class="formula">tan θ ≤ μₛ &nbsp;&nbsp;⇔&nbsp;&nbsp; θ ≤ θ<sub>lim</sub> = arctan(μₛ)</div>
-    <div class="tip">🧗 È il principio del piano inclinato come "macchina semplice": serve meno forza per sollevare un corpo lungo il piano che verticalmente, percorrendo però una distanza maggiore.</div>
+    <div class="tip">È il principio del piano inclinato come "macchina semplice": serve meno forza per sollevare un corpo lungo il piano che verticalmente, percorrendo però una distanza maggiore.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
@@ -354,14 +513,52 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-inclin" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Equilibrio senza attrito</h3>
+      <p class="testo">Un corpo di 5 kg è posto su un piano inclinato di θ = 30° senza attrito. Quale forza F, parallela al piano e diretta verso l'alto, occorre applicare per tenerlo in equilibrio?</p>
+      <div class="dati"><b>Dati:</b> m = 5 kg · θ = 30° · μ = 0</div>
+      <div class="step"><div class="step-t">Componente del peso lungo il piano</div><div class="step-b">P∥ = mg sin θ = 5 · 9,81 · 0,5 = 24,53 N</div></div>
+      <div class="step"><div class="step-t">Equilibrio parallelo</div><div class="step-b">F − P∥ = 0 ⇒ F = P∥</div></div>
+      <div class="risultato">F ≈ 24,5 N verso l'alto lungo il piano</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Equilibrio con attrito, senza forza applicata</h3>
+      <p class="testo">Un corpo di 8 kg è su un piano inclinato di θ = 25° con μ = 0,35. È in equilibrio senza altre forze?</p>
+      <div class="dati"><b>Dati:</b> m = 8 kg · θ = 25° · μ = 0,35</div>
+      <div class="step"><div class="step-t">Forze in gioco</div><div class="step-b">P∥ = mg sin θ = 8 · 9,81 · sin 25° = 33,2 N<br>N = mg cos θ = 8 · 9,81 · cos 25° = 71,1 N</div></div>
+      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,35 · 71,1 = 24,9 N</div></div>
+      <div class="step"><div class="step-t">Confronto</div><div class="step-b">P∥ = 33,2 N &gt; fₐ,max = 24,9 N → il corpo scivola verso il basso.</div></div>
+      <div class="risultato">Non in equilibrio: scivola verso il basso</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Angolo limite di attrito</h3>
+      <p class="testo">Determinare l'angolo massimo θ_lim di un piano inclinato oltre il quale un corpo (con μ = 0,5) inizia a scivolare, indipendentemente dalla massa.</p>
+      <div class="dati"><b>Dati:</b> μ = 0,5</div>
+      <div class="step"><div class="step-t">Condizione al limite</div><div class="step-b">All'angolo critico: mg sin θ = μ mg cos θ ⇒ tan θ = μ</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">θ_lim = arctan(0,5) ≈ 26,57°</div></div>
+      <div class="risultato">θ_lim ≈ 26,6° (indipendente da m)</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-inclin" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ MOLLA ============ -->
 <section class="scene" id="molla" data-title="Forze elastiche — legge di Hooke">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>🌀 Forze elastiche — legge di Hooke</h2>
+    <h2>Forze elastiche — legge di Hooke</h2>
     <p>Una molla di costante elastica <em>k</em> deformata di <em>Δx</em> esercita una forza di <strong>richiamo</strong>:</p>
     <div class="formula">F<sub>el</sub> = − k · Δx &nbsp;&nbsp;(modulo: |F<sub>el</sub>| = k |Δx|)</div>
     <h3>(a) Molla verticale con massa appesa</h3>
@@ -372,9 +569,10 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <div class="formula">|k · Δx| ≤ μₛ · m g</div>
     <h3>(c) Molla su piano inclinato (senza attrito)</h3>
     <div class="formula">k · Δx = m g sin θ</div>
-    <div class="tip">🪀 La costante <em>k</em> si misura in N/m: dice di quanti newton aumenta la forza elastica per ogni metro di deformazione.</div>
+    <div class="tip">La costante <em>k</em> si misura in N/m: dice di quanti newton aumenta la forza elastica per ogni metro di deformazione.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <div class="sim-layout">
       <div class="sim-pane">
@@ -406,14 +604,53 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-molla" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Molla verticale con corpo appeso</h3>
+      <p class="testo">Una molla di costante k = 200 N/m è fissata al soffitto. Si appende un corpo di 1,5 kg. Qual è l'allungamento all'equilibrio?</p>
+      <div class="dati"><b>Dati:</b> k = 200 N/m · m = 1,5 kg · g = 9,81 m/s²</div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">La forza elastica bilancia il peso: k · Δx = mg</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">Δx = mg / k = (1,5 · 9,81) / 200 = 14,72 / 200 = 0,0736 m = 7,36 cm</div></div>
+      <div class="risultato">Δx ≈ 7,4 cm</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Molla orizzontale con attrito</h3>
+      <p class="testo">Un corpo di 3 kg su un piano orizzontale (μ = 0,4) è collegato a una molla (k = 150 N/m) fissata a una parete. La molla è allungata di 5 cm. Il corpo resta fermo?</p>
+      <div class="dati"><b>Dati:</b> m = 3 kg · k = 150 N/m · Δx = 0,05 m · μ = 0,4</div>
+      <div class="step"><div class="step-t">Forza elastica</div><div class="step-b">|Fₑₗ| = k · Δx = 150 · 0,05 = 7,5 N (verso la parete)</div></div>
+      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ · mg = 0,4 · 3 · 9,81 ≈ 11,77 N</div></div>
+      <div class="step"><div class="step-t">Confronto</div><div class="step-b">|Fₑₗ| = 7,5 N &lt; fₐ,max = 11,77 N → il corpo resta fermo, l'attrito equilibra la molla.</div></div>
+      <div class="risultato">In equilibrio: fₐ ≈ 7,5 N (diretto in verso opposto alla molla)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Molla su piano inclinato liscio</h3>
+      <p class="testo">Una molla (k = 180 N/m) tira un corpo di 2 kg lungo un piano inclinato liscio di θ = 30°, mantenendolo fermo. Qual è l'allungamento della molla?</p>
+      <div class="dati"><b>Dati:</b> m = 2 kg · k = 180 N/m · θ = 30° · μ = 0</div>
+      <div class="step"><div class="step-t">Componente parallela del peso</div><div class="step-b">P∥ = mg sin θ = 2 · 9,81 · 0,5 = 9,81 N</div></div>
+      <div class="step"><div class="step-t">Equilibrio parallelo</div><div class="step-b">Fₑₗ = P∥ ⇒ k · Δx = mg sin θ</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">Δx = 9,81 / 180 = 0,0545 m ≈ 5,45 cm</div></div>
+      <div class="risultato">Δx ≈ 5,5 cm</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-molla" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ MOMENTO ============ -->
 <section class="scene" id="momento" data-title="Momento di una forza">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>🔧 Momento di una forza</h2>
+    <h2>Momento di una forza</h2>
     <p>Il <strong>momento</strong> di una forza <em>F</em> rispetto a un punto O misura la sua capacità di far <strong>ruotare</strong> il corpo attorno a O:</p>
     <div class="formula">M = F · d = F · r · sin φ</div>
     <p>dove <em>d</em> è il <strong>braccio</strong> — la distanza perpendicolare dalla retta d'azione di F al punto O — <em>r</em> è la distanza dal punto di applicazione e <em>φ</em> l'angolo tra F e il segmento OP.</p>
@@ -422,10 +659,11 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <div class="formula">M = r × F &nbsp;&nbsp;(prodotto vettoriale)</div>
     <h3>Unità di misura</h3>
     <div class="formula">[M] = N · m</div>
-    <div class="tip">🔩 Con φ = 90° il braccio coincide con r e il momento è massimo. Con φ = 0° la forza punta verso O: il braccio è nullo e non c'è rotazione.</div>
-    <div class="warn">⚠️ Il momento M (N·m) ha le stesse dimensioni del lavoro (J = N·m), ma è un vettore perpendicolare al piano di rotazione, mentre il lavoro è uno scalare.</div>
+    <div class="tip">Con φ = 90° il braccio coincide con r e il momento è massimo. Con φ = 0° la forza punta verso O: il braccio è nullo e non c'è rotazione.</div>
+    <div class="warn">Il momento M (N·m) ha le stesse dimensioni del lavoro (J = N·m), ma è un vettore perpendicolare al piano di rotazione, mentre il lavoro è uno scalare.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <p class="lead">Regola forza, distanza e angolo. Il <strong>braccio</strong> d è la linea tratteggiata rossa tra O e la retta d'azione di F.</p>
     <div class="sim-layout">
@@ -451,14 +689,51 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-momento" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Momento con forza perpendicolare</h3>
+      <p class="testo">Una forza F = 40 N è applicata perpendicolarmente a una chiave inglese lunga r = 0,25 m. Calcolare il momento della forza rispetto al bullone.</p>
+      <div class="dati"><b>Dati:</b> F = 40 N · r = 0,25 m · φ = 90°</div>
+      <div class="step"><div class="step-t">Formula</div><div class="step-b">M = F · r · sin φ</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">M = 40 · 0,25 · sin 90° = 40 · 0,25 · 1 = 10 N·m</div></div>
+      <div class="risultato">M = 10 N·m (antiorario, positivo)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Momento con forza inclinata</h3>
+      <p class="testo">Una forza F = 25 N è applicata all'estremo di un'asta lunga r = 0,8 m formando un angolo φ = 60° con l'asta. Calcolare il momento rispetto al perno.</p>
+      <div class="dati"><b>Dati:</b> F = 25 N · r = 0,8 m · φ = 60°</div>
+      <div class="step"><div class="step-t">Braccio</div><div class="step-b">d = r · sin φ = 0,8 · sin 60° = 0,8 · 0,866 ≈ 0,693 m</div></div>
+      <div class="step"><div class="step-t">Momento</div><div class="step-b">M = F · d = 25 · 0,693 ≈ 17,3 N·m</div></div>
+      <div class="risultato">M ≈ 17,3 N·m</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Forza necessaria per un dato momento</h3>
+      <p class="testo">Per svitare un bullone occorre un momento M = 30 N·m. Se la chiave è lunga r = 0,4 m e si tira perpendicolarmente al manico, quale forza si deve applicare?</p>
+      <div class="dati"><b>Dati:</b> M = 30 N·m · r = 0,4 m · φ = 90°</div>
+      <div class="step"><div class="step-t">Formula inversa</div><div class="step-b">F = M / (r · sin φ) = M / r &nbsp;(con φ = 90°)</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F = 30 / 0,4 = 75 N</div></div>
+      <div class="risultato">F = 75 N</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-momento" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ LEVA ============ -->
 <section class="scene" id="leva" data-title="La leva">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>⚖️ La leva</h2>
+    <h2>La leva</h2>
     <p>La <strong>leva</strong> è una macchina semplice: un'asta rigida che ruota attorno a un punto fisso, il <strong>fulcro</strong>. Una forza <strong>motrice</strong> F₁ equilibra una forza <strong>resistente</strong> F₂.</p>
     <h3>Condizione di equilibrio</h3>
     <p>I momenti delle due forze rispetto al fulcro devono essere uguali:</p>
@@ -469,9 +744,10 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <p><strong>I genere</strong> — fulcro tra le due forze (forbici, bilancia, altalena). VM può essere &gt; o &lt; 1.<br>
     <strong>II genere</strong> — resistenza tra fulcro e motrice (carriola, schiaccianoci). VM sempre &gt; 1: <em>vantaggiosa</em>.<br>
     <strong>III genere</strong> — motrice tra fulcro e resistenza (pinzette, avambraccio). VM sempre &lt; 1: <em>svantaggiosa</em>, ma amplifica lo spostamento.</p>
-    <div class="tip">⚖️ Leva di I genere con d₁ = d₂: è la bilancia a bracci uguali, in equilibrio quando F₁ = F₂.</div>
+    <div class="tip">Leva di I genere con d₁ = d₂: è la bilancia a bracci uguali, in equilibrio quando F₁ = F₂.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <p class="lead">Scegli il genere di leva e regola la forza motrice e i bracci. F₂ è la resistenza che mantiene l'equilibrio.</p>
     <div class="sim-layout">
@@ -505,23 +781,63 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-leva" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Leva di I genere</h3>
+      <p class="testo">Una leva di I genere (fulcro tra le due forze) ha bracci d₁ = 1,2 m (forza motrice) e d₂ = 0,4 m (resistenza). Applicando F₁ = 30 N, quale resistenza F₂ si può equilibrare?</p>
+      <div class="dati"><b>Dati:</b> F₁ = 30 N · d₁ = 1,2 m · d₂ = 0,4 m</div>
+      <div class="step"><div class="step-t">Legge della leva</div><div class="step-b">F₁ · d₁ = F₂ · d₂ ⇒ F₂ = F₁ · d₁ / d₂</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F₂ = 30 · 1,2 / 0,4 = 36 / 0,4 = 90 N</div></div>
+      <div class="step"><div class="step-t">Vantaggio meccanico</div><div class="step-b">VM = d₁ / d₂ = 1,2 / 0,4 = 3 → la leva triplica la forza</div></div>
+      <div class="risultato">F₂ = 90 N &nbsp;·&nbsp; VM = 3 (leva vantaggiosa)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Carriola (leva di II genere)</h3>
+      <p class="testo">Una carriola ha il carico (m = 30 kg) posto a d₂ = 0,5 m dalla ruota (fulcro); i manici sono a d₁ = 1,5 m. Che forza serve per sollevare il carico?</p>
+      <div class="dati"><b>Dati:</b> m = 30 kg · d₁ = 1,5 m · d₂ = 0,5 m</div>
+      <div class="step"><div class="step-t">Peso del carico</div><div class="step-b">F₂ = mg = 30 · 9,81 ≈ 294,3 N</div></div>
+      <div class="step"><div class="step-t">Legge della leva</div><div class="step-b">F₁ = F₂ · d₂ / d₁ = 294,3 · 0,5 / 1,5 ≈ 98,1 N</div></div>
+      <div class="risultato">F₁ ≈ 98,1 N (un terzo del peso: VM = 3)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Leva di III genere (avambraccio)</h3>
+      <p class="testo">Il bicipite si inserisce a d₁ = 5 cm dal gomito (fulcro); un peso di 2 kg è tenuto in mano a d₂ = 35 cm dal gomito. Che forza deve sviluppare il bicipite?</p>
+      <div class="dati"><b>Dati:</b> m = 2 kg · d₁ = 0,05 m · d₂ = 0,35 m</div>
+      <div class="step"><div class="step-t">Peso da tenere</div><div class="step-b">F₂ = mg = 2 · 9,81 = 19,62 N</div></div>
+      <div class="step"><div class="step-t">Forza muscolare</div><div class="step-b">F₁ = F₂ · d₂ / d₁ = 19,62 · 0,35 / 0,05 = 137,3 N</div></div>
+      <div class="step"><div class="step-t">Osservazione</div><div class="step-b">VM = 0,05/0,35 ≈ 0,14 → la leva è svantaggiosa in forza (perde un fattore ~7) ma vantaggiosa in velocità e ampiezza di movimento.</div></div>
+      <div class="risultato">F_bicipite ≈ 137 N (circa 7 × il peso sollevato)</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-leva" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ TRAVE ============ -->
 <section class="scene" id="trave" data-title="Trave su due appoggi">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>🏗️ Trave su due appoggi</h2>
+    <h2>Trave su due appoggi</h2>
     <p>Una trave orizzontale di lunghezza <em>L</em> poggia su due vincoli: una <strong>cerniera</strong> in A (blocca traslazione orizzontale e verticale) e un <strong>carrello</strong> in B (trasmette solo la reazione verticale). Un carico <em>P</em> è applicato a distanza <em>a</em> da A.</p>
     <h3>Calcolo delle reazioni</h3>
     <p>Scrivendo l'equilibrio dei momenti rispetto ad A (ΣM_A = 0), la reazione R_A scompare perché ha braccio nullo:</p>
     <div class="formula">R_B · L = P · a &nbsp;⇒&nbsp; R_B = P · a / L</div>
     <p>Dall'equilibrio verticale (ΣF_y = 0):</p>
     <div class="formula">R_A = P − R_B = P · (L − a) / L</div>
-    <div class="tip">📐 Carico in mezzeria (a = L/2): le reazioni si dividono equamente, R_A = R_B = P/2. Più il carico si avvicina a un appoggio, più quell'appoggio si carica.</div>
+    <div class="tip">Carico in mezzeria (a = L/2): le reazioni si dividono equamente, R_A = R_B = P/2. Più il carico si avvicina a un appoggio, più quell'appoggio si carica.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <p class="lead">Trascina il carico lungo la trave (oppure usa i cursori) e osserva come si ripartiscono le reazioni.</p>
     <div class="sim-layout">
@@ -549,14 +865,53 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-trave" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Carico in mezzeria</h3>
+      <p class="testo">Una trave di lunghezza L = 4 m poggia su due appoggi (cerniera in A, carrello in B). Un carico P = 800 N è applicato al centro. Calcolare le reazioni R_A e R_B.</p>
+      <div class="dati"><b>Dati:</b> L = 4 m · P = 800 N · a = 2 m (in mezzeria)</div>
+      <div class="step"><div class="step-t">Equilibrio dei momenti attorno ad A</div><div class="step-b">R_B · L − P · a = 0 ⇒ R_B = P · a / L = 800 · 2 / 4 = 400 N</div></div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A + R_B = P ⇒ R_A = 800 − 400 = 400 N</div></div>
+      <div class="risultato">R_A = R_B = 400 N (metà del carico ciascuna)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Carico decentrato</h3>
+      <p class="testo">Trave L = 6 m, carico P = 1200 N applicato a distanza a = 2 m dall'appoggio A. Calcolare R_A e R_B.</p>
+      <div class="dati"><b>Dati:</b> L = 6 m · P = 1200 N · a = 2 m</div>
+      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">R_B · L = P · a ⇒ R_B = 1200 · 2 / 6 = 400 N</div></div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A = P − R_B = 1200 − 400 = 800 N</div></div>
+      <div class="step"><div class="step-t">Osservazione</div><div class="step-b">L'appoggio più vicino al carico ne sopporta la quota maggiore (2/3 del totale).</div></div>
+      <div class="risultato">R_A = 800 N &nbsp;·&nbsp; R_B = 400 N</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Due carichi sulla stessa trave</h3>
+      <p class="testo">Trave L = 4 m con due carichi: P₁ = 500 N a 1 m da A e P₂ = 800 N a 3 m da A. Calcolare le reazioni.</p>
+      <div class="dati"><b>Dati:</b> L = 4 m · P₁ = 500 N a a₁ = 1 m · P₂ = 800 N a a₂ = 3 m</div>
+      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">R_B · L − P₁ · a₁ − P₂ · a₂ = 0<br>R_B = (500 · 1 + 800 · 3) / 4 = (500 + 2400) / 4 = 725 N</div></div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A = P₁ + P₂ − R_B = 500 + 800 − 725 = 575 N</div></div>
+      <div class="step"><div class="step-t">Verifica</div><div class="step-b">R_A + R_B = 575 + 725 = 1300 N = P₁ + P₂ ✓</div></div>
+      <div class="risultato">R_A = 575 N &nbsp;·&nbsp; R_B = 725 N</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-trave" class="quiz-block"></div>
+  </div>
 </section>
 
 <!-- ============ CORPO RIGIDO ============ -->
 <section class="scene" id="rigido" data-title="Equilibrio del corpo rigido">
-  <p class="sec-label">Teoria</p>
+  <nav class="subnav">
+    <button data-sub="teoria" class="active">Teoria</button>
+    <button data-sub="sim">Simulazione</button>
+    <button data-sub="eserc">Esercizi</button>
+    <button data-sub="quiz">Quiz</button>
+  </nav>
+  <div class="subscene active" data-sub="teoria">
   <div class="card">
-    <h2>🔲 Equilibrio del corpo rigido</h2>
+    <h2>Equilibrio del corpo rigido</h2>
     <p>Un corpo rigido è in equilibrio se e solo se sono soddisfatte <strong>tutte e tre</strong> le condizioni:</p>
     <div class="formula">Σ F<sub>x</sub> = 0 &nbsp;·&nbsp; Σ F<sub>y</sub> = 0 &nbsp;·&nbsp; Σ M<sub>O</sub> = 0</div>
     <p>Le prime due impediscono la <strong>traslazione</strong>, la terza la <strong>rotazione</strong>. L'equazione dei momenti vale per <em>qualsiasi</em> polo O: conviene sceglierlo dove agisce una forza incognita, così quella forza sparisce dall'equazione.</p>
@@ -565,9 +920,10 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
     <div class="formula">x<sub>G</sub> = Σ(mᵢ xᵢ) / M<sub>tot</sub></div>
     <h3>Diagramma del corpo libero (DCL)</h3>
     <p>Per risolvere un problema di equilibrio: <strong>1.</strong> isola il corpo · <strong>2.</strong> disegna tutte le forze (peso, carichi, reazioni vincolari) · <strong>3.</strong> scegli il polo · <strong>4.</strong> scrivi le 3 equazioni · <strong>5.</strong> risolvi.</p>
-    <div class="tip">💡 Se ΣF = 0 ma ΣM ≠ 0, il centro di massa non accelera ma il corpo <em>ruota</em>: una coppia di forze non equilibrata produce solo rotazione.</div>
+    <div class="tip">Se ΣF = 0 ma ΣM ≠ 0, il centro di massa non accelera ma il corpo <em>ruota</em>: una coppia di forze non equilibrata produce solo rotazione.</div>
   </div>
-  <p class="sec-label">Simulazione</p>
+  </div>
+  <div class="subscene" data-sub="sim">
   <div class="card sim-block">
     <p class="lead">Asta incernierata in A. Regola la forza esterna F finché il momento residuo ΣM_A si annulla: allora la rotazione è impedita.</p>
     <div class="sim-layout">
@@ -597,7 +953,42 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
       </div>
     </div>
   </div>
-  <div id="qz-rigido" class="quiz-block"></div>
+  </div>
+  <div class="subscene" data-sub="eserc">
+    <div class="esercizio">
+      <h3>Esercizio 1 — Asta orizzontale con fune verticale</h3>
+      <p class="testo">Un'asta rigida omogenea di massa m = 6 kg e lunghezza L = 2 m è incernierata all'estremo A. All'estremo B una fune verticale la tiene orizzontale. Calcolare la tensione T nella fune.</p>
+      <div class="dati"><b>Dati:</b> m = 6 kg · L = 2 m · G al centro</div>
+      <div class="step"><div class="step-t">Peso dell'asta</div><div class="step-b">P = mg = 6 · 9,81 = 58,86 N applicato in G (centro, distanza L/2 = 1 m da A)</div></div>
+      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">T · L − P · (L/2) = 0 ⇒ T = P / 2</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = 58,86 / 2 ≈ 29,4 N</div></div>
+      <div class="risultato">T ≈ 29,4 N</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 2 — Scala appoggiata al muro</h3>
+      <p class="testo">Una scala di massa m = 15 kg e lunghezza L = 5 m è appoggiata a un muro liscio (senza attrito). Coefficiente di attrito col pavimento μ = 0,4. Qual è l'angolo minimo θ_min col pavimento perché la scala non scivoli?</p>
+      <div class="dati"><b>Dati:</b> m = 15 kg · L = 5 m · μ = 0,4 · muro liscio</div>
+      <div class="step"><div class="step-t">Forze sulla scala</div><div class="step-b">Peso P al centro; reazione N_p e attrito fₐ al piede; reazione orizzontale N_m dal muro (liscio).</div></div>
+      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">N_p = mg</div></div>
+      <div class="step"><div class="step-t">Momenti attorno al piede</div><div class="step-b">N_m · L sin θ − mg · (L/2) cos θ = 0 ⇒ N_m = mg / (2 tan θ)</div></div>
+      <div class="step"><div class="step-t">Equilibrio orizzontale (al limite)</div><div class="step-b">N_m = fₐ,max = μ · mg ⇒ mg / (2 tan θ) = μ mg<br>⇒ tan θ_min = 1 / (2μ) = 1 / 0,8 = 1,25<br>⇒ θ_min = arctan(1,25) ≈ 51,3°</div></div>
+      <div class="risultato">θ_min ≈ 51,3° (indipendente dalla massa)</div>
+    </div>
+
+    <div class="esercizio">
+      <h3>Esercizio 3 — Cartello sospeso a mensola</h3>
+      <p class="testo">Un cartello di 8 kg è appeso all'estremo B di una mensola orizzontale AB (L = 1,5 m) incernierata al muro in A. Un tirante inclinato di θ = 40° va da B a un punto del muro sopra A. Calcolare la tensione T nel tirante.</p>
+      <div class="dati"><b>Dati:</b> m = 8 kg · L = 1,5 m · θ = 40° (angolo del tirante con la mensola)</div>
+      <div class="step"><div class="step-t">Peso del cartello</div><div class="step-b">P = mg = 8 · 9,81 = 78,48 N (verso il basso, applicato in B)</div></div>
+      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">T sin θ · L − P · L = 0 ⇒ T = P / sin θ</div></div>
+      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = 78,48 / sin 40° = 78,48 / 0,643 ≈ 122,1 N</div></div>
+      <div class="risultato">T ≈ 122 N</div>
+    </div>
+  </div>
+  <div class="subscene" data-sub="quiz">
+    <div id="qz-rigido" class="quiz-block"></div>
+  </div>
 </section>
 
 </main>
@@ -647,6 +1038,19 @@ function showTab(name){
 }
 navBtns.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 document.querySelectorAll('.home-card').forEach(c=>c.addEventListener('click',()=>showTab(c.dataset.go)));
+
+/* ===== Sub-tab navigation ===== */
+document.querySelectorAll('nav.subnav').forEach(sub=>{
+  const btns=sub.querySelectorAll('button');
+  const container=sub.parentElement;
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    const sel=b.dataset.sub;
+    btns.forEach(bb=>bb.classList.toggle('active', bb===b));
+    container.querySelectorAll(':scope > .subscene').forEach(s=>{
+      s.classList.toggle('active', s.dataset.sub===sel);
+    });
+  }));
+});
 
 /* ===== Slider value bind ===== */
 function bindRange(id, valId, fmt){
@@ -1618,7 +2022,7 @@ function renderQuiz(s){
       <div class="quiz-exp" id="qexp-${s}" style="display:none"></div>
       <button class="quiz-next" id="qnxt-${s}" style="display:none" onclick="nextQuiz('${s}')">${st.idx+1<total?'Prossima domanda →':'Vedi il risultato finale →'}</button>`;
   }
-  el.innerHTML=`<div class="card"><h2>🧩 Quiz</h2>${body}</div>`;
+  el.innerHTML=`<div class="card"><h2>Quiz</h2>${body}</div>`;
 }
 function answerQuiz(s,chosen){
   const st=qState[s]; if(st.answered) return; st.answered=true;
