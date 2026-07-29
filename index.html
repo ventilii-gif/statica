@@ -421,6 +421,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <div class="it"><span class="l">P = mg</span><span class="v" id="orP">—</span> N</div>
           <div class="it"><span class="l">N</span><span class="v" id="orN">—</span> N</div>
           <div class="it"><span class="l">Fₓ</span><span class="v" id="orFx">—</span> N</div>
+          <div class="it"><span class="l">fₐ attuale</span><span class="v" id="orFa">—</span> N</div>
           <div class="it"><span class="l">μ·N max</span><span class="v" id="orMax">—</span> N</div>
         </div>
         <div class="eqs" id="orStat">—</div>
@@ -479,6 +480,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <div class="it"><span class="l">P<sub>∥</sub></span><span class="v" id="inPp">—</span> N</div>
           <div class="it"><span class="l">P<sub>⊥</sub> = N</span><span class="v" id="inN">—</span> N</div>
           <div class="it"><span class="l">fₐ richiesto</span><span class="v" id="inFa">—</span> N</div>
+          <div class="it"><span class="l">fₐ attuale</span><span class="v" id="inFaAtt">—</span> N</div>
           <div class="it"><span class="l">μ·N max</span><span class="v" id="inMax">—</span> N</div>
           <div class="it"><span class="l">θ<sub>lim</sub></span><span class="v" id="inLim">—</span>°</div>
         </div>
@@ -944,6 +946,10 @@ function renderOrizz(){
   document.getElementById('orP').textContent=W.toFixed(1);
   document.getElementById('orN').textContent=N.toFixed(1);
   document.getElementById('orFx').textContent=Fx.toFixed(1);
+  // attrito effettivo: |fa| col verso (in equilibrio vale |Fx|, altrimenti è saturo a μN)
+  const faAbs=Math.abs(fa);
+  document.getElementById('orFa').textContent=
+    faAbs<0.05?'0.0':faAbs.toFixed(1)+(fa>0?' →':' ←');
   document.getElementById('orMax').textContent=fMax.toFixed(1);
   const stat=document.getElementById('orStat');
   if(F<0.01){stat.className='eqs ok';stat.textContent='✓ Corpo fermo (nessuna forza applicata)';}
@@ -999,6 +1005,10 @@ function renderInclin(){
   document.getElementById('inPp').textContent=Pp.toFixed(1);
   document.getElementById('inN').textContent=N.toFixed(1);
   document.getElementById('inFa').textContent=fNeeded.toFixed(1);
+  // attrito effettivo: pari al richiesto se basta, altrimenti saturo a μN
+  const faAtt=Math.min(fNeeded,fMax);
+  document.getElementById('inFaAtt').textContent=
+    faAtt<0.05?'0.0':faAtt.toFixed(1)+(along>0?' ↗':' ↘');
   document.getElementById('inMax').textContent=fMax.toFixed(1);
   document.getElementById('inLim').textContent=lim.toFixed(1);
   const stat=document.getElementById('inStat');
@@ -1082,6 +1092,7 @@ function renderMolla(){
     html=ground+wall+sp+body+vP+vN+vFe+vFa;
     read.innerHTML=`<div class="it"><span class="l">Δx</span><span class="v">${(dx*100).toFixed(1)}</span> cm</div>
       <div class="it"><span class="l">|Fₑₗ| = k|Δx|</span><span class="v">${Math.abs(Fel).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">fₐ attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(fa>0?' →':' ←')}</span> N</div>
       <div class="it"><span class="l">μ·mg max</span><span class="v">${fMaxA.toFixed(2)}</span> N</div>`;
     if(Math.abs(dx)<0.001){stat.className='eqs ok';stat.textContent='✓ Molla a riposo: nessuna forza orizzontale';}
     else if(ok){stat.className='eqs ok';stat.textContent="✓ Equilibrio: l'attrito statico tiene il corpo fermo";}
@@ -1132,6 +1143,7 @@ function renderMolla(){
     read.innerHTML=`<div class="it"><span class="l">P sin θ</span><span class="v">${Pp.toFixed(2)}</span> N</div>
       <div class="it"><span class="l">Fₑₗ = k·Δx</span><span class="v">${Fel.toFixed(2)}</span> N</div>
       <div class="it"><span class="l">fₐ richiesto</span><span class="v">${Math.abs(along).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">fₐ attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(along>0?' ↗':' ↘')}</span> N</div>
       <div class="it"><span class="l">μ·N max</span><span class="v">${fMax.toFixed(2)}</span> N</div>`;
     if(ok){
       const ratio=fMax>0?Math.abs(along)/fMax:0;
