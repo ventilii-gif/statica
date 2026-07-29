@@ -197,12 +197,32 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   padding:.55rem .85rem;margin:.7rem 0 0;border-radius:0 8px 8px 0;
   font-weight:600;color:var(--primary-d);font-size:.95em}
 
+/* ===== Suggerimenti progressivi ===== */
+.ex-hint{background:#fffbf0;border-left:3px solid #f9a825;padding:.5rem .85rem;
+  margin:.45rem 0;border-radius:0 8px 8px 0;font-size:.88em;color:#6b5300;
+  animation:hintIn .25s ease}
+@keyframes hintIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ex-hint .h-lab{display:block;font-size:.8em;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:#a37800;margin-bottom:.12rem}
+.ex-actions{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem;align-items:center}
+.ex-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;
+  padding:.4rem .85rem;font-size:.84em;cursor:pointer;font-family:inherit;
+  color:var(--primary-d);font-weight:600;transition:background .15s,border-color .15s}
+.ex-btn:hover{background:var(--primary-l);border-color:var(--primary)}
+.ex-btn.sol{background:var(--primary);border-color:var(--primary);color:#fff}
+.ex-btn.sol:hover{background:var(--primary-d)}
+.ex-count{font-size:.79em;color:var(--muted);margin-left:.1rem}
+.ex-sol{animation:hintIn .25s ease}
+.eserc-intro{color:var(--muted);font-size:.9em;margin:0 0 .9rem}
+
 /* ===== PRINT MODE ===== */
 .print-only{display:none}
 @media print{
   nav.main,.btn-print,.sim-block,.quiz-block,.home-grid,nav.subnav{display:none!important}
   .subscene{display:block!important}
   .esercizio{page-break-inside:avoid;box-shadow:none;border:1px solid #ccc}
+  .ex-actions,.ex-hint,.eserc-intro{display:none!important}
+  .ex-sol{display:block!important}
   header{position:static;border-bottom:2px solid #000;padding:.4rem 0}
   header h1{font-size:1.3rem}
   html,body{background:#fff;font-size:11pt}
@@ -351,34 +371,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Fune verticale</h3>
-      <p class="testo">Un corpo di massa m = 8 kg è appeso al soffitto tramite un'unica fune verticale. Calcolare la tensione nella fune.</p>
-      <div class="dati"><b>Dati:</b> m = 8 kg · g = 9,81 m/s²</div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">La fune deve bilanciare esattamente il peso: T − mg = 0.</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = mg = 8 · 9,81 = 78,48 N</div></div>
-      <div class="risultato">T ≈ 78,5 N</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Due funi simmetriche</h3>
-      <p class="testo">Un lampadario di massa m = 4 kg è appeso a due funi simmetriche che formano entrambe un angolo α = 45° col soffitto. Calcolare la tensione in ciascuna fune.</p>
-      <div class="dati"><b>Dati:</b> m = 4 kg · α = β = 45° · g = 9,81 m/s²</div>
-      <div class="step"><div class="step-t">Simmetria</div><div class="step-b">Per simmetria T₁ = T₂ = T. Le componenti orizzontali si annullano automaticamente.</div></div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">2 T sin α = mg &nbsp;⇒&nbsp; T = mg / (2 sin α)</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = (4 · 9,81) / (2 · sin 45°) = 39,24 / 1,414 ≈ 27,7 N</div></div>
-      <div class="risultato">T₁ = T₂ ≈ 27,7 N</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Angoli asimmetrici</h3>
-      <p class="testo">Un corpo di 6 kg è appeso a due funi che formano rispettivamente α = 60° (sinistra) e β = 30° (destra) col soffitto. Calcolare T₁ e T₂.</p>
-      <div class="dati"><b>Dati:</b> m = 6 kg · α = 60° · β = 30° · g = 9,81 m/s²</div>
-      <div class="step"><div class="step-t">Sistema di equilibrio</div><div class="step-b">Asse x: T₁ cos α = T₂ cos β<br>Asse y: T₁ sin α + T₂ sin β = mg</div></div>
-      <div class="step"><div class="step-t">Formule risolutive</div><div class="step-b">T₁ = mg · cos β / sin(α+β) &nbsp;·&nbsp; T₂ = mg · cos α / sin(α+β)</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">mg = 58,86 N ; α + β = 90° ; sin 90° = 1<br>T₁ = 58,86 · cos 30° / 1 = 58,86 · 0,866 ≈ 51,0 N<br>T₂ = 58,86 · cos 60° / 1 = 58,86 · 0,5 ≈ 29,4 N</div></div>
-      <div class="risultato">T₁ ≈ 51,0 N &nbsp;·&nbsp; T₂ ≈ 29,4 N</div>
-    </div>
+    <div id="ex-funi" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-funi" class="quiz-block"></div>
@@ -436,35 +429,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Forza orizzontale sotto la soglia di attrito</h3>
-      <p class="testo">Una cassa di 10 kg è ferma su un pavimento con coefficiente di attrito statico μ = 0,3. Si applica una forza orizzontale F = 25 N. Il corpo si muove?</p>
-      <div class="dati"><b>Dati:</b> m = 10 kg · μ = 0,3 · F = 25 N · θ = 0°</div>
-      <div class="step"><div class="step-t">Reazione normale</div><div class="step-b">N = mg = 10 · 9,81 = 98,1 N</div></div>
-      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,3 · 98,1 = 29,4 N</div></div>
-      <div class="step"><div class="step-t">Confronto</div><div class="step-b">F = 25 N &lt; fₐ,max = 29,4 N → il corpo resta fermo, l'attrito si adegua a 25 N.</div></div>
-      <div class="risultato">In equilibrio: fₐ = 25 N (statico, sotto la soglia)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Forza inclinata verso l'alto</h3>
-      <p class="testo">Una cassa di 15 kg è tirata da una fune inclinata di θ = 30° sopra l'orizzontale, con F = 60 N. Coefficiente di attrito statico μ = 0,25. Si muove?</p>
-      <div class="dati"><b>Dati:</b> m = 15 kg · F = 60 N · θ = 30° · μ = 0,25</div>
-      <div class="step"><div class="step-t">Componenti di F</div><div class="step-b">Fₓ = F cos θ = 60 · 0,866 ≈ 51,96 N<br>F_y = F sin θ = 60 · 0,5 = 30 N</div></div>
-      <div class="step"><div class="step-t">Reazione normale</div><div class="step-b">Sull'asse y: N + F_y − mg = 0 ⇒ N = mg − F_y = 147,15 − 30 = 117,15 N</div></div>
-      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,25 · 117,15 ≈ 29,3 N</div></div>
-      <div class="step"><div class="step-t">Confronto</div><div class="step-b">Fₓ = 51,96 N &gt; fₐ,max = 29,3 N → il corpo si muove.</div></div>
-      <div class="risultato">Non in equilibrio: la componente orizzontale supera l'attrito massimo</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Forza massima per l'equilibrio</h3>
-      <p class="testo">Un corpo di 8 kg è appoggiato su un pavimento con μ = 0,4. Qual è la massima forza orizzontale applicabile senza mettere il corpo in movimento?</p>
-      <div class="dati"><b>Dati:</b> m = 8 kg · μ = 0,4</div>
-      <div class="step"><div class="step-t">Condizione limite</div><div class="step-b">Al limite: F = fₐ,max = μ · N = μ · mg</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F_max = 0,4 · 8 · 9,81 = 31,4 N</div></div>
-      <div class="risultato">F_max ≈ 31,4 N</div>
-    </div>
+    <div id="ex-orizz" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-orizz" class="quiz-block"></div>
@@ -523,33 +488,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Equilibrio senza attrito</h3>
-      <p class="testo">Un corpo di 5 kg è posto su un piano inclinato di θ = 30° senza attrito. Quale forza F, parallela al piano e diretta verso l'alto, occorre applicare per tenerlo in equilibrio?</p>
-      <div class="dati"><b>Dati:</b> m = 5 kg · θ = 30° · μ = 0</div>
-      <div class="step"><div class="step-t">Componente del peso lungo il piano</div><div class="step-b">P∥ = mg sin θ = 5 · 9,81 · 0,5 = 24,53 N</div></div>
-      <div class="step"><div class="step-t">Equilibrio parallelo</div><div class="step-b">F − P∥ = 0 ⇒ F = P∥</div></div>
-      <div class="risultato">F ≈ 24,5 N verso l'alto lungo il piano</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Equilibrio con attrito, senza forza applicata</h3>
-      <p class="testo">Un corpo di 8 kg è su un piano inclinato di θ = 25° con μ = 0,35. È in equilibrio senza altre forze?</p>
-      <div class="dati"><b>Dati:</b> m = 8 kg · θ = 25° · μ = 0,35</div>
-      <div class="step"><div class="step-t">Forze in gioco</div><div class="step-b">P∥ = mg sin θ = 8 · 9,81 · sin 25° = 33,2 N<br>N = mg cos θ = 8 · 9,81 · cos 25° = 71,1 N</div></div>
-      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ N = 0,35 · 71,1 = 24,9 N</div></div>
-      <div class="step"><div class="step-t">Confronto</div><div class="step-b">P∥ = 33,2 N &gt; fₐ,max = 24,9 N → il corpo scivola verso il basso.</div></div>
-      <div class="risultato">Non in equilibrio: scivola verso il basso</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Angolo limite di attrito</h3>
-      <p class="testo">Determinare l'angolo massimo θ_lim di un piano inclinato oltre il quale un corpo (con μ = 0,5) inizia a scivolare, indipendentemente dalla massa.</p>
-      <div class="dati"><b>Dati:</b> μ = 0,5</div>
-      <div class="step"><div class="step-t">Condizione al limite</div><div class="step-b">All'angolo critico: mg sin θ = μ mg cos θ ⇒ tan θ = μ</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">θ_lim = arctan(0,5) ≈ 26,57°</div></div>
-      <div class="risultato">θ_lim ≈ 26,6° (indipendente da m)</div>
-    </div>
+    <div id="ex-inclin" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-inclin" class="quiz-block"></div>
@@ -614,34 +553,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Molla verticale con corpo appeso</h3>
-      <p class="testo">Una molla di costante k = 200 N/m è fissata al soffitto. Si appende un corpo di 1,5 kg. Qual è l'allungamento all'equilibrio?</p>
-      <div class="dati"><b>Dati:</b> k = 200 N/m · m = 1,5 kg · g = 9,81 m/s²</div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">La forza elastica bilancia il peso: k · Δx = mg</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">Δx = mg / k = (1,5 · 9,81) / 200 = 14,72 / 200 = 0,0736 m = 7,36 cm</div></div>
-      <div class="risultato">Δx ≈ 7,4 cm</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Molla orizzontale con attrito</h3>
-      <p class="testo">Un corpo di 3 kg su un piano orizzontale (μ = 0,4) è collegato a una molla (k = 150 N/m) fissata a una parete. La molla è allungata di 5 cm. Il corpo resta fermo?</p>
-      <div class="dati"><b>Dati:</b> m = 3 kg · k = 150 N/m · Δx = 0,05 m · μ = 0,4</div>
-      <div class="step"><div class="step-t">Forza elastica</div><div class="step-b">|Fₑₗ| = k · Δx = 150 · 0,05 = 7,5 N (verso la parete)</div></div>
-      <div class="step"><div class="step-t">Attrito massimo</div><div class="step-b">fₐ,max = μ · mg = 0,4 · 3 · 9,81 ≈ 11,77 N</div></div>
-      <div class="step"><div class="step-t">Confronto</div><div class="step-b">|Fₑₗ| = 7,5 N &lt; fₐ,max = 11,77 N → il corpo resta fermo, l'attrito equilibra la molla.</div></div>
-      <div class="risultato">In equilibrio: fₐ ≈ 7,5 N (diretto in verso opposto alla molla)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Molla su piano inclinato liscio</h3>
-      <p class="testo">Una molla (k = 180 N/m) tira un corpo di 2 kg lungo un piano inclinato liscio di θ = 30°, mantenendolo fermo. Qual è l'allungamento della molla?</p>
-      <div class="dati"><b>Dati:</b> m = 2 kg · k = 180 N/m · θ = 30° · μ = 0</div>
-      <div class="step"><div class="step-t">Componente parallela del peso</div><div class="step-b">P∥ = mg sin θ = 2 · 9,81 · 0,5 = 9,81 N</div></div>
-      <div class="step"><div class="step-t">Equilibrio parallelo</div><div class="step-b">Fₑₗ = P∥ ⇒ k · Δx = mg sin θ</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">Δx = 9,81 / 180 = 0,0545 m ≈ 5,45 cm</div></div>
-      <div class="risultato">Δx ≈ 5,5 cm</div>
-    </div>
+    <div id="ex-molla" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-molla" class="quiz-block"></div>
@@ -699,32 +611,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Momento con forza perpendicolare</h3>
-      <p class="testo">Una forza F = 40 N è applicata perpendicolarmente a una chiave inglese lunga r = 0,25 m. Calcolare il momento della forza rispetto al bullone.</p>
-      <div class="dati"><b>Dati:</b> F = 40 N · r = 0,25 m · φ = 90°</div>
-      <div class="step"><div class="step-t">Formula</div><div class="step-b">M = F · r · sin φ</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">M = 40 · 0,25 · sin 90° = 40 · 0,25 · 1 = 10 N·m</div></div>
-      <div class="risultato">M = 10 N·m (antiorario, positivo)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Momento con forza inclinata</h3>
-      <p class="testo">Una forza F = 25 N è applicata all'estremo di un'asta lunga r = 0,8 m formando un angolo φ = 60° con l'asta. Calcolare il momento rispetto al perno.</p>
-      <div class="dati"><b>Dati:</b> F = 25 N · r = 0,8 m · φ = 60°</div>
-      <div class="step"><div class="step-t">Braccio</div><div class="step-b">d = r · sin φ = 0,8 · sin 60° = 0,8 · 0,866 ≈ 0,693 m</div></div>
-      <div class="step"><div class="step-t">Momento</div><div class="step-b">M = F · d = 25 · 0,693 ≈ 17,3 N·m</div></div>
-      <div class="risultato">M ≈ 17,3 N·m</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Forza necessaria per un dato momento</h3>
-      <p class="testo">Per svitare un bullone occorre un momento M = 30 N·m. Se la chiave è lunga r = 0,4 m e si tira perpendicolarmente al manico, quale forza si deve applicare?</p>
-      <div class="dati"><b>Dati:</b> M = 30 N·m · r = 0,4 m · φ = 90°</div>
-      <div class="step"><div class="step-t">Formula inversa</div><div class="step-b">F = M / (r · sin φ) = M / r &nbsp;(con φ = 90°)</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F = 30 / 0,4 = 75 N</div></div>
-      <div class="risultato">F = 75 N</div>
-    </div>
+    <div id="ex-momento" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-momento" class="quiz-block"></div>
@@ -791,34 +678,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Leva di I genere</h3>
-      <p class="testo">Una leva di I genere (fulcro tra le due forze) ha bracci d₁ = 1,2 m (forza motrice) e d₂ = 0,4 m (resistenza). Applicando F₁ = 30 N, quale resistenza F₂ si può equilibrare?</p>
-      <div class="dati"><b>Dati:</b> F₁ = 30 N · d₁ = 1,2 m · d₂ = 0,4 m</div>
-      <div class="step"><div class="step-t">Legge della leva</div><div class="step-b">F₁ · d₁ = F₂ · d₂ ⇒ F₂ = F₁ · d₁ / d₂</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">F₂ = 30 · 1,2 / 0,4 = 36 / 0,4 = 90 N</div></div>
-      <div class="step"><div class="step-t">Vantaggio meccanico</div><div class="step-b">VM = d₁ / d₂ = 1,2 / 0,4 = 3 → la leva triplica la forza</div></div>
-      <div class="risultato">F₂ = 90 N &nbsp;·&nbsp; VM = 3 (leva vantaggiosa)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Carriola (leva di II genere)</h3>
-      <p class="testo">Una carriola ha il carico (m = 30 kg) posto a d₂ = 0,5 m dalla ruota (fulcro); i manici sono a d₁ = 1,5 m. Che forza serve per sollevare il carico?</p>
-      <div class="dati"><b>Dati:</b> m = 30 kg · d₁ = 1,5 m · d₂ = 0,5 m</div>
-      <div class="step"><div class="step-t">Peso del carico</div><div class="step-b">F₂ = mg = 30 · 9,81 ≈ 294,3 N</div></div>
-      <div class="step"><div class="step-t">Legge della leva</div><div class="step-b">F₁ = F₂ · d₂ / d₁ = 294,3 · 0,5 / 1,5 ≈ 98,1 N</div></div>
-      <div class="risultato">F₁ ≈ 98,1 N (un terzo del peso: VM = 3)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Leva di III genere (avambraccio)</h3>
-      <p class="testo">Il bicipite si inserisce a d₁ = 5 cm dal gomito (fulcro); un peso di 2 kg è tenuto in mano a d₂ = 35 cm dal gomito. Che forza deve sviluppare il bicipite?</p>
-      <div class="dati"><b>Dati:</b> m = 2 kg · d₁ = 0,05 m · d₂ = 0,35 m</div>
-      <div class="step"><div class="step-t">Peso da tenere</div><div class="step-b">F₂ = mg = 2 · 9,81 = 19,62 N</div></div>
-      <div class="step"><div class="step-t">Forza muscolare</div><div class="step-b">F₁ = F₂ · d₂ / d₁ = 19,62 · 0,35 / 0,05 = 137,3 N</div></div>
-      <div class="step"><div class="step-t">Osservazione</div><div class="step-b">VM = 0,05/0,35 ≈ 0,14 → la leva è svantaggiosa in forza (perde un fattore ~7) ma vantaggiosa in velocità e ampiezza di movimento.</div></div>
-      <div class="risultato">F_bicipite ≈ 137 N (circa 7 × il peso sollevato)</div>
-    </div>
+    <div id="ex-leva" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-leva" class="quiz-block"></div>
@@ -875,34 +735,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Carico in mezzeria</h3>
-      <p class="testo">Una trave di lunghezza L = 4 m poggia su due appoggi (cerniera in A, carrello in B). Un carico P = 800 N è applicato al centro. Calcolare le reazioni R_A e R_B.</p>
-      <div class="dati"><b>Dati:</b> L = 4 m · P = 800 N · a = 2 m (in mezzeria)</div>
-      <div class="step"><div class="step-t">Equilibrio dei momenti attorno ad A</div><div class="step-b">R_B · L − P · a = 0 ⇒ R_B = P · a / L = 800 · 2 / 4 = 400 N</div></div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A + R_B = P ⇒ R_A = 800 − 400 = 400 N</div></div>
-      <div class="risultato">R_A = R_B = 400 N (metà del carico ciascuna)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Carico decentrato</h3>
-      <p class="testo">Trave L = 6 m, carico P = 1200 N applicato a distanza a = 2 m dall'appoggio A. Calcolare R_A e R_B.</p>
-      <div class="dati"><b>Dati:</b> L = 6 m · P = 1200 N · a = 2 m</div>
-      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">R_B · L = P · a ⇒ R_B = 1200 · 2 / 6 = 400 N</div></div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A = P − R_B = 1200 − 400 = 800 N</div></div>
-      <div class="step"><div class="step-t">Osservazione</div><div class="step-b">L'appoggio più vicino al carico ne sopporta la quota maggiore (2/3 del totale).</div></div>
-      <div class="risultato">R_A = 800 N &nbsp;·&nbsp; R_B = 400 N</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Due carichi sulla stessa trave</h3>
-      <p class="testo">Trave L = 4 m con due carichi: P₁ = 500 N a 1 m da A e P₂ = 800 N a 3 m da A. Calcolare le reazioni.</p>
-      <div class="dati"><b>Dati:</b> L = 4 m · P₁ = 500 N a a₁ = 1 m · P₂ = 800 N a a₂ = 3 m</div>
-      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">R_B · L − P₁ · a₁ − P₂ · a₂ = 0<br>R_B = (500 · 1 + 800 · 3) / 4 = (500 + 2400) / 4 = 725 N</div></div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">R_A = P₁ + P₂ − R_B = 500 + 800 − 725 = 575 N</div></div>
-      <div class="step"><div class="step-t">Verifica</div><div class="step-b">R_A + R_B = 575 + 725 = 1300 N = P₁ + P₂ ✓</div></div>
-      <div class="risultato">R_A = 575 N &nbsp;·&nbsp; R_B = 725 N</div>
-    </div>
+    <div id="ex-trave" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-trave" class="quiz-block"></div>
@@ -965,36 +798,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
   </div>
   <div class="subscene" data-sub="eserc">
-    <div class="esercizio">
-      <h3>Esercizio 1 — Asta orizzontale con fune verticale</h3>
-      <p class="testo">Un'asta rigida omogenea di massa m = 6 kg e lunghezza L = 2 m è incernierata all'estremo A. All'estremo B una fune verticale la tiene orizzontale. Calcolare la tensione T nella fune.</p>
-      <div class="dati"><b>Dati:</b> m = 6 kg · L = 2 m · G al centro</div>
-      <div class="step"><div class="step-t">Peso dell'asta</div><div class="step-b">P = mg = 6 · 9,81 = 58,86 N applicato in G (centro, distanza L/2 = 1 m da A)</div></div>
-      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">T · L − P · (L/2) = 0 ⇒ T = P / 2</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = 58,86 / 2 ≈ 29,4 N</div></div>
-      <div class="risultato">T ≈ 29,4 N</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 2 — Scala appoggiata al muro</h3>
-      <p class="testo">Una scala di massa m = 15 kg e lunghezza L = 5 m è appoggiata a un muro liscio (senza attrito). Coefficiente di attrito col pavimento μ = 0,4. Qual è l'angolo minimo θ_min col pavimento perché la scala non scivoli?</p>
-      <div class="dati"><b>Dati:</b> m = 15 kg · L = 5 m · μ = 0,4 · muro liscio</div>
-      <div class="step"><div class="step-t">Forze sulla scala</div><div class="step-b">Peso P al centro; reazione N_p e attrito fₐ al piede; reazione orizzontale N_m dal muro (liscio).</div></div>
-      <div class="step"><div class="step-t">Equilibrio verticale</div><div class="step-b">N_p = mg</div></div>
-      <div class="step"><div class="step-t">Momenti attorno al piede</div><div class="step-b">N_m · L sin θ − mg · (L/2) cos θ = 0 ⇒ N_m = mg / (2 tan θ)</div></div>
-      <div class="step"><div class="step-t">Equilibrio orizzontale (al limite)</div><div class="step-b">N_m = fₐ,max = μ · mg ⇒ mg / (2 tan θ) = μ mg<br>⇒ tan θ_min = 1 / (2μ) = 1 / 0,8 = 1,25<br>⇒ θ_min = arctan(1,25) ≈ 51,3°</div></div>
-      <div class="risultato">θ_min ≈ 51,3° (indipendente dalla massa)</div>
-    </div>
-
-    <div class="esercizio">
-      <h3>Esercizio 3 — Cartello sospeso a mensola</h3>
-      <p class="testo">Un cartello di 8 kg è appeso all'estremo B di una mensola orizzontale AB (L = 1,5 m) incernierata al muro in A. Un tirante inclinato di θ = 40° va da B a un punto del muro sopra A. Calcolare la tensione T nel tirante.</p>
-      <div class="dati"><b>Dati:</b> m = 8 kg · L = 1,5 m · θ = 40° (angolo del tirante con la mensola)</div>
-      <div class="step"><div class="step-t">Peso del cartello</div><div class="step-b">P = mg = 8 · 9,81 = 78,48 N (verso il basso, applicato in B)</div></div>
-      <div class="step"><div class="step-t">Momenti attorno ad A</div><div class="step-b">T sin θ · L − P · L = 0 ⇒ T = P / sin θ</div></div>
-      <div class="step"><div class="step-t">Calcolo</div><div class="step-b">T = 78,48 / sin 40° = 78,48 / 0,643 ≈ 122,1 N</div></div>
-      <div class="risultato">T ≈ 122 N</div>
-    </div>
+    <div id="ex-rigido" class="eserc-block"></div>
   </div>
   <div class="subscene" data-sub="quiz">
     <div id="qz-rigido" class="quiz-block"></div>
@@ -1784,6 +1588,476 @@ function makeDrag(svgId,onStart,onMove){
   );
 })();
 
+/* ============ ESERCIZI — motore con suggerimenti progressivi ============ */
+const ESERCIZI={
+funi:[
+ {t:'Fune verticale',
+  p:'Un corpo di massa m = 8 kg è appeso al soffitto tramite un\'unica fune verticale. Calcolare la tensione nella fune.',
+  d:'m = 8 kg · g = 9,81 m/s²',
+  s:['Disegna il diagramma del corpo libero: quali forze agiscono sul corpo? Solo due, verticali e opposte.',
+     'Il corpo è fermo, quindi la risultante è nulla: T − mg = 0.',
+     'Sostituisci i numeri: T = 8 · 9,81.'],
+  st:[['Equilibrio verticale','La fune deve bilanciare esattamente il peso: T − mg = 0.'],
+      ['Calcolo','T = mg = 8 · 9,81 = 78,48 N']],
+  r:'T ≈ 78,5 N'},
+ {t:'Due funi simmetriche',
+  p:'Un lampadario di massa m = 4 kg è appeso a due funi simmetriche che formano entrambe un angolo α = 45° col soffitto. Calcolare la tensione in ciascuna fune.',
+  d:'m = 4 kg · α = β = 45° · g = 9,81 m/s²',
+  s:['La configurazione è simmetrica: cosa puoi dire di T₁ rispetto a T₂?',
+     'Se T₁ = T₂ = T, le componenti orizzontali si cancellano da sole. Resta solo l\'equazione verticale.',
+     'Ogni fune contribuisce con T sin α in verticale, e ce ne sono due: 2 T sin α = mg.'],
+  st:[['Simmetria','Per simmetria T₁ = T₂ = T. Le componenti orizzontali si annullano automaticamente.'],
+      ['Equilibrio verticale','2 T sin α = mg &nbsp;⇒&nbsp; T = mg / (2 sin α)'],
+      ['Calcolo','T = (4 · 9,81) / (2 · sin 45°) = 39,24 / 1,414 ≈ 27,7 N']],
+  r:'T₁ = T₂ ≈ 27,7 N'},
+ {t:'Angoli asimmetrici',
+  p:'Un corpo di 6 kg è appeso a due funi che formano rispettivamente α = 60° (sinistra) e β = 30° (destra) col soffitto. Calcolare T₁ e T₂.',
+  d:'m = 6 kg · α = 60° · β = 30° · g = 9,81 m/s²',
+  s:['Ora la simmetria non c\'è più: servono due equazioni, una per asse.',
+     'Asse x: T₁ cos α = T₂ cos β. Asse y: T₁ sin α + T₂ sin β = mg.',
+     'Risolvendo il sistema si ottiene T₁ = mg cos β / sin(α+β). Nota che α + β = 90°, quindi sin(α+β) = 1.'],
+  st:[['Sistema di equilibrio','Asse x: T₁ cos α = T₂ cos β<br>Asse y: T₁ sin α + T₂ sin β = mg'],
+      ['Formule risolutive','T₁ = mg · cos β / sin(α+β)<br>T₂ = mg · cos α / sin(α+β)'],
+      ['Calcolo','mg = 58,86 N ; α + β = 90° ; sin 90° = 1<br>T₁ = 58,86 · cos 30° = 58,86 · 0,866 ≈ 51,0 N<br>T₂ = 58,86 · cos 60° = 58,86 · 0,5 ≈ 29,4 N']],
+  r:'T₁ ≈ 51,0 N &nbsp;·&nbsp; T₂ ≈ 29,4 N'},
+ {t:'Fune che si spezza',
+  p:'Due funi simmetriche sostengono un corpo di 10 kg. Ogni fune resiste al massimo a 200 N. Qual è l\'angolo minimo α col soffitto sotto il quale le funi si spezzano?',
+  d:'m = 10 kg · T_max = 200 N per fune',
+  s:['Parti dalla formula del caso simmetrico: T = mg / (2 sin α).',
+     'Le funi si spezzano quando T raggiunge 200 N. Imponi T = T_max e ricava sin α.',
+     'sin α = mg / (2 T_max). Calcola il valore e poi l\'arcoseno.'],
+  st:[['Formula del caso simmetrico','T = mg / (2 sin α)'],
+      ['Condizione limite','Imponendo T = T_max: sin α = mg / (2 T_max)'],
+      ['Calcolo','mg = 98,1 N<br>sin α = 98,1 / (2 · 200) = 98,1 / 400 = 0,2453<br>α = arcsin(0,2453) ≈ 14,2°'],
+      ['Interpretazione','Sotto i 14,2° la tensione supera i 200 N: più le funi sono orizzontali, più si caricano.']],
+  r:'α_min ≈ 14,2° (sotto quest\'angolo le funi cedono)'},
+ {t:'Una fune orizzontale e una obliqua',
+  p:'Un corpo di 5 kg è tenuto da una fune obliqua che forma α = 50° col soffitto e da una fune orizzontale legata alla parete. Calcolare la tensione in entrambe.',
+  d:'m = 5 kg · α = 50° · fune 2 orizzontale',
+  s:['La fune orizzontale non ha componente verticale: chi regge il peso, allora?',
+     'Asse y: solo T₁ sin α può bilanciare mg, quindi T₁ sin α = mg.',
+     'Trovato T₁, usa l\'asse x: T₁ cos α = T₂.'],
+  st:[['Equilibrio verticale','La fune orizzontale non ha componente y, quindi tutto il peso è retto dalla fune obliqua:<br>T₁ sin α = mg'],
+      ['Calcolo di T₁','T₁ = 49,05 / sin 50° = 49,05 / 0,766 ≈ 64,0 N'],
+      ['Equilibrio orizzontale','T₂ = T₁ cos α = 64,0 · cos 50° = 64,0 · 0,643 ≈ 41,2 N']],
+  r:'T₁ ≈ 64,0 N (obliqua) &nbsp;·&nbsp; T₂ ≈ 41,2 N (orizzontale)'}
+],
+orizz:[
+ {t:'Forza orizzontale sotto la soglia',
+  p:'Una cassa di 10 kg è ferma su un pavimento con coefficiente di attrito statico μ = 0,3. Si applica una forza orizzontale F = 25 N. Il corpo si muove?',
+  d:'m = 10 kg · μ = 0,3 · F = 25 N · θ = 0°',
+  s:['L\'attrito statico non ha un valore fisso: ha un valore massimo. Qual è?',
+     'Prima ti serve N. Con forza orizzontale, sull\'asse y ci sono solo peso e reazione: N = mg.',
+     'Confronta F con fₐ,max = μN: se F è minore, il corpo resta fermo.'],
+  st:[['Reazione normale','N = mg = 10 · 9,81 = 98,1 N'],
+      ['Attrito massimo','fₐ,max = μ N = 0,3 · 98,1 = 29,4 N'],
+      ['Confronto','F = 25 N &lt; fₐ,max = 29,4 N → il corpo resta fermo, l\'attrito si adegua a 25 N.']],
+  r:'In equilibrio: fₐ = 25 N (statico, sotto la soglia)'},
+ {t:'Forza inclinata verso l\'alto',
+  p:'Una cassa di 15 kg è tirata da una fune inclinata di θ = 30° sopra l\'orizzontale, con F = 60 N. Coefficiente di attrito statico μ = 0,25. Si muove?',
+  d:'m = 15 kg · F = 60 N · θ = 30° · μ = 0,25',
+  s:['Scomponi F nelle due componenti: quale spinge, quale solleva?',
+     'Attenzione: la componente verticale F_y alleggerisce il corpo, quindi N non è più mg.',
+     'Asse y: N + F_y − mg = 0. Trovato N, calcola fₐ,max e confrontalo con F_x.'],
+  st:[['Componenti di F','Fₓ = F cos θ = 60 · 0,866 ≈ 51,96 N<br>F_y = F sin θ = 60 · 0,5 = 30 N'],
+      ['Reazione normale','Sull\'asse y: N + F_y − mg = 0 ⇒ N = mg − F_y = 147,15 − 30 = 117,15 N'],
+      ['Attrito massimo','fₐ,max = μ N = 0,25 · 117,15 ≈ 29,3 N'],
+      ['Confronto','Fₓ = 51,96 N &gt; fₐ,max = 29,3 N → il corpo si muove.']],
+  r:'Non in equilibrio: la componente orizzontale supera l\'attrito massimo'},
+ {t:'Forza massima per l\'equilibrio',
+  p:'Un corpo di 8 kg è appoggiato su un pavimento con μ = 0,4. Qual è la massima forza orizzontale applicabile senza mettere il corpo in movimento?',
+  d:'m = 8 kg · μ = 0,4',
+  s:['Il corpo è sul punto di muoversi quando l\'attrito lavora al massimo.',
+     'Imponi F = fₐ,max = μN, con N = mg.'],
+  st:[['Condizione limite','Al limite: F = fₐ,max = μ · N = μ · mg'],
+      ['Calcolo','F_max = 0,4 · 8 · 9,81 = 31,4 N']],
+  r:'F_max ≈ 31,4 N'},
+ {t:'Forza inclinata verso il basso',
+  p:'Una cassa di 20 kg è spinta con F = 80 N inclinata di θ = 20° verso il basso (come spingere un carrello). Con μ = 0,3, la cassa si muove?',
+  d:'m = 20 kg · F = 80 N · θ = −20° · μ = 0,3',
+  s:['Rispetto all\'esercizio 2 cambia il segno della componente verticale: ora F preme verso il basso.',
+     'Asse y: N = mg + F sin20° — la cassa risulta più "pesante" e l\'attrito aumenta.',
+     'Calcola N, poi fₐ,max, poi confronta con F cos20°.'],
+  st:[['Componenti di F','Fₓ = 80 · cos 20° = 80 · 0,940 ≈ 75,2 N<br>F_y = 80 · sin 20° = 80 · 0,342 ≈ 27,4 N (verso il basso)'],
+      ['Reazione normale','N = mg + F_y = 196,2 + 27,4 = 223,6 N'],
+      ['Attrito massimo','fₐ,max = 0,3 · 223,6 ≈ 67,1 N'],
+      ['Confronto','Fₓ = 75,2 N &gt; 67,1 N → la cassa si muove.'],
+      ['Osservazione','Spingere verso il basso è controproducente: aumenta N e quindi l\'attrito. Meglio tirare verso l\'alto.']],
+  r:'Si muove (ma di poco: spingere in basso penalizza)'},
+ {t:'Coefficiente di attrito incognito',
+  p:'Una cassa di 12 kg inizia a muoversi esattamente quando la forza orizzontale applicata raggiunge 47 N. Determinare il coefficiente di attrito statico.',
+  d:'m = 12 kg · F_limite = 47 N',
+  s:['Il momento in cui inizia a muoversi è la condizione di attrito massimo.',
+     'Imponi F = μ mg e ricava μ.'],
+  st:[['Condizione di distacco','Al limite: F = fₐ,max = μ · mg'],
+      ['Formula inversa','μ = F / (mg)'],
+      ['Calcolo','μ = 47 / (12 · 9,81) = 47 / 117,72 ≈ 0,399']],
+  r:'μ ≈ 0,40'}
+],
+inclin:[
+ {t:'Equilibrio senza attrito',
+  p:'Un corpo di 5 kg è posto su un piano inclinato di θ = 30° senza attrito. Quale forza F, parallela al piano e diretta verso l\'alto, occorre applicare per tenerlo in equilibrio?',
+  d:'m = 5 kg · θ = 30° · μ = 0',
+  s:['Scegli assi paralleli e perpendicolari al piano: il peso si scompone in due parti.',
+     'La componente che tende a far scivolare il corpo è P∥ = mg sin θ.',
+     'Senza attrito, F deve bilanciare da sola tutta P∥.'],
+  st:[['Componente del peso lungo il piano','P∥ = mg sin θ = 5 · 9,81 · 0,5 = 24,53 N'],
+      ['Equilibrio parallelo','F − P∥ = 0 ⇒ F = P∥']],
+  r:'F ≈ 24,5 N verso l\'alto lungo il piano'},
+ {t:'Equilibrio con attrito, senza forza applicata',
+  p:'Un corpo di 8 kg è su un piano inclinato di θ = 25° con μ = 0,35. È in equilibrio senza altre forze?',
+  d:'m = 8 kg · θ = 25° · μ = 0,35',
+  s:['Chi tende a far scendere il corpo? E chi si oppone?',
+     'Calcola P∥ = mg sin θ e N = mg cos θ (attenzione: N non è mg su un piano inclinato).',
+     'Confronta P∥ con fₐ,max = μN.'],
+  st:[['Forze in gioco','P∥ = mg sin θ = 8 · 9,81 · sin 25° = 33,2 N<br>N = mg cos θ = 8 · 9,81 · cos 25° = 71,1 N'],
+      ['Attrito massimo','fₐ,max = μ N = 0,35 · 71,1 = 24,9 N'],
+      ['Confronto','P∥ = 33,2 N &gt; fₐ,max = 24,9 N → il corpo scivola verso il basso.']],
+  r:'Non in equilibrio: scivola verso il basso'},
+ {t:'Angolo limite di attrito',
+  p:'Determinare l\'angolo massimo θ_lim di un piano inclinato oltre il quale un corpo (con μ = 0,5) inizia a scivolare, indipendentemente dalla massa.',
+  d:'μ = 0,5',
+  s:['Scrivi la condizione di equilibrio al limite: mg sin θ = μ mg cos θ.',
+     'Nota che mg si semplifica: ecco perché il risultato non dipende dalla massa.',
+     'Resta tan θ = μ.'],
+  st:[['Condizione al limite','All\'angolo critico: mg sin θ = μ mg cos θ ⇒ tan θ = μ'],
+      ['Calcolo','θ_lim = arctan(0,5) ≈ 26,57°']],
+  r:'θ_lim ≈ 26,6° (indipendente da m)'},
+ {t:'Intervallo di forze per l\'equilibrio',
+  p:'Un corpo di 10 kg sta su un piano inclinato di 30° con μ = 0,2. Entro quali valori può variare una forza F parallela al piano (diretta verso l\'alto) perché il corpo resti fermo?',
+  d:'m = 10 kg · θ = 30° · μ = 0,2',
+  s:['Ci sono due situazioni limite: il corpo sul punto di scendere e il corpo sul punto di salire.',
+     'Se F è piccola, il corpo tende a scendere e l\'attrito spinge verso l\'alto: F + μN = P∥.',
+     'Se F è grande, il corpo tende a salire e l\'attrito spinge verso il basso: F = P∥ + μN.'],
+  st:[['Grandezze di base','P∥ = mg sin 30° = 98,1 · 0,5 = 49,05 N<br>N = mg cos 30° = 98,1 · 0,866 = 84,96 N<br>fₐ,max = 0,2 · 84,96 ≈ 17,0 N'],
+      ['Limite inferiore (sta per scendere)','F_min = P∥ − fₐ,max = 49,05 − 17,0 ≈ 32,1 N'],
+      ['Limite superiore (sta per salire)','F_max = P∥ + fₐ,max = 49,05 + 17,0 ≈ 66,0 N'],
+      ['Interpretazione','L\'attrito crea un intervallo di equilibrio, non un solo valore: è il "gioco" tipico dei sistemi con attrito.']],
+  r:'32,1 N ≤ F ≤ 66,0 N'},
+ {t:'Piano inclinato come macchina semplice',
+  p:'Si vuole caricare un fusto di 60 kg su un camion alto 1,2 m usando una rampa liscia lunga 4 m. Quale forza parallela alla rampa serve, e quanto si guadagna rispetto al sollevamento verticale?',
+  d:'m = 60 kg · h = 1,2 m · L = 4 m · rampa liscia',
+  s:['Non ti serve l\'angolo esplicito: sin θ = h / L.',
+     'La forza lungo il piano è F = mg sin θ = mg · h/L.',
+     'Il "guadagno" è il rapporto tra mg e F.'],
+  st:[['Seno dell\'angolo','sin θ = h / L = 1,2 / 4 = 0,3'],
+      ['Forza necessaria','F = mg sin θ = 60 · 9,81 · 0,3 = 176,6 N'],
+      ['Sollevamento verticale','Senza rampa servirebbe F = mg = 588,6 N'],
+      ['Guadagno','588,6 / 176,6 = 3,33 = L/h → si fa un terzo della forza, ma su una distanza 3,33 volte maggiore. Il lavoro è lo stesso.']],
+  r:'F ≈ 177 N &nbsp;·&nbsp; guadagno 3,33 × (= L/h)'}
+],
+molla:[
+ {t:'Molla verticale con corpo appeso',
+  p:'Una molla di costante k = 200 N/m è fissata al soffitto. Si appende un corpo di 1,5 kg. Qual è l\'allungamento all\'equilibrio?',
+  d:'k = 200 N/m · m = 1,5 kg · g = 9,81 m/s²',
+  s:['All\'equilibrio la molla tira verso l\'alto con la stessa intensità con cui il peso tira verso il basso.',
+     'Scrivi k · Δx = mg e ricava Δx.'],
+  st:[['Equilibrio verticale','La forza elastica bilancia il peso: k · Δx = mg'],
+      ['Calcolo','Δx = mg / k = (1,5 · 9,81) / 200 = 14,72 / 200 = 0,0736 m = 7,36 cm']],
+  r:'Δx ≈ 7,4 cm'},
+ {t:'Molla orizzontale con attrito',
+  p:'Un corpo di 3 kg su un piano orizzontale (μ = 0,4) è collegato a una molla (k = 150 N/m) fissata a una parete. La molla è allungata di 5 cm. Il corpo resta fermo?',
+  d:'m = 3 kg · k = 150 N/m · Δx = 0,05 m · μ = 0,4',
+  s:['La molla allungata tira il corpo verso la parete: quanto vale questa forza?',
+     'Calcola |Fₑₗ| = k·Δx e confrontala con l\'attrito massimo μmg.'],
+  st:[['Forza elastica','|Fₑₗ| = k · Δx = 150 · 0,05 = 7,5 N (verso la parete)'],
+      ['Attrito massimo','fₐ,max = μ · mg = 0,4 · 3 · 9,81 ≈ 11,77 N'],
+      ['Confronto','|Fₑₗ| = 7,5 N &lt; fₐ,max = 11,77 N → il corpo resta fermo, l\'attrito equilibra la molla.']],
+  r:'In equilibrio: fₐ ≈ 7,5 N (opposto alla molla)'},
+ {t:'Molla su piano inclinato liscio',
+  p:'Una molla (k = 180 N/m) tira un corpo di 2 kg lungo un piano inclinato liscio di θ = 30°, mantenendolo fermo. Qual è l\'allungamento della molla?',
+  d:'m = 2 kg · k = 180 N/m · θ = 30° · μ = 0',
+  s:['Sul piano inclinato solo la componente parallela del peso conta per lo scivolamento.',
+     'Senza attrito, la molla deve bilanciare tutta P∥ = mg sin θ.',
+     'Imponi k·Δx = mg sin θ.'],
+  st:[['Componente parallela del peso','P∥ = mg sin θ = 2 · 9,81 · 0,5 = 9,81 N'],
+      ['Equilibrio parallelo','Fₑₗ = P∥ ⇒ k · Δx = mg sin θ'],
+      ['Calcolo','Δx = 9,81 / 180 = 0,0545 m ≈ 5,45 cm']],
+  r:'Δx ≈ 5,5 cm'},
+ {t:'Determinare la costante elastica',
+  p:'Appendendo masse diverse a una molla si misura: con 0,5 kg allungamento 3,2 cm; con 1,2 kg allungamento 7,7 cm. Verificare che la molla segue la legge di Hooke e determinare k.',
+  d:'(m₁, Δx₁) = (0,5 kg; 0,032 m) · (m₂, Δx₂) = (1,2 kg; 0,077 m)',
+  s:['La legge di Hooke dice che il rapporto F/Δx deve essere costante.',
+     'Calcola k in entrambi i casi: k = mg/Δx. Se i due valori coincidono, Hooke è verificata.'],
+  st:[['Primo punto','F₁ = 0,5 · 9,81 = 4,905 N → k₁ = 4,905 / 0,032 ≈ 153,3 N/m'],
+      ['Secondo punto','F₂ = 1,2 · 9,81 = 11,772 N → k₂ = 11,772 / 0,077 ≈ 152,9 N/m'],
+      ['Verifica','I due valori coincidono entro l\'errore di misura → la molla è lineare (legge di Hooke verificata).'],
+      ['Valore medio','k ≈ (153,3 + 152,9)/2 ≈ 153 N/m']],
+  r:'k ≈ 153 N/m &nbsp;·&nbsp; legge di Hooke verificata'},
+ {t:'Due molle in parallelo',
+  p:'Un corpo di 4 kg è sostenuto da due molle verticali identiche (k = 120 N/m ciascuna) attaccate in parallelo allo stesso soffitto. Qual è l\'allungamento?',
+  d:'m = 4 kg · k₁ = k₂ = 120 N/m · in parallelo',
+  s:['In parallelo le due molle si allungano della stessa quantità Δx, ma ognuna fa la sua forza.',
+     'La forza totale è la somma: F_tot = k₁Δx + k₂Δx = (k₁+k₂)·Δx.',
+     'La costante equivalente è quindi k_eq = k₁ + k₂.'],
+  st:[['Costante equivalente','In parallelo: k_eq = k₁ + k₂ = 120 + 120 = 240 N/m'],
+      ['Equilibrio','k_eq · Δx = mg'],
+      ['Calcolo','Δx = (4 · 9,81) / 240 = 39,24 / 240 = 0,1635 m ≈ 16,4 cm'],
+      ['Confronto','Con una sola molla sarebbe stato 32,7 cm: due molle in parallelo dimezzano l\'allungamento.']],
+  r:'Δx ≈ 16,4 cm &nbsp;·&nbsp; k_eq = 240 N/m'}
+],
+momento:[
+ {t:'Momento con forza perpendicolare',
+  p:'Una forza F = 40 N è applicata perpendicolarmente a una chiave inglese lunga r = 0,25 m. Calcolare il momento della forza rispetto al bullone.',
+  d:'F = 40 N · r = 0,25 m · φ = 90°',
+  s:['Quando la forza è perpendicolare al braccio, il braccio effettivo coincide con r.',
+     'M = F · r · sin φ, e sin 90° = 1.'],
+  st:[['Formula','M = F · r · sin φ'],
+      ['Calcolo','M = 40 · 0,25 · sin 90° = 40 · 0,25 · 1 = 10 N·m']],
+  r:'M = 10 N·m (antiorario, positivo)'},
+ {t:'Momento con forza inclinata',
+  p:'Una forza F = 25 N è applicata all\'estremo di un\'asta lunga r = 0,8 m formando un angolo φ = 60° con l\'asta. Calcolare il momento rispetto al perno.',
+  d:'F = 25 N · r = 0,8 m · φ = 60°',
+  s:['Solo la componente perpendicolare della forza fa ruotare. In alternativa: usa il braccio d = r sin φ.',
+     'Calcola prima d, poi M = F · d.'],
+  st:[['Braccio','d = r · sin φ = 0,8 · sin 60° = 0,8 · 0,866 ≈ 0,693 m'],
+      ['Momento','M = F · d = 25 · 0,693 ≈ 17,3 N·m']],
+  r:'M ≈ 17,3 N·m'},
+ {t:'Forza necessaria per un dato momento',
+  p:'Per svitare un bullone occorre un momento M = 30 N·m. Se la chiave è lunga r = 0,4 m e si tira perpendicolarmente al manico, quale forza si deve applicare?',
+  d:'M = 30 N·m · r = 0,4 m · φ = 90°',
+  s:['Inverti la formula del momento rispetto a F.',
+     'Con φ = 90° si semplifica a F = M / r.'],
+  st:[['Formula inversa','F = M / (r · sin φ) = M / r &nbsp;(con φ = 90°)'],
+      ['Calcolo','F = 30 / 0,4 = 75 N']],
+  r:'F = 75 N'},
+ {t:'Due momenti opposti',
+  p:'Su un\'asta incernierata in O agiscono due forze perpendicolari all\'asta: F₁ = 30 N a 0,6 m a sinistra di O (verso il basso) e F₂ = 45 N a 0,35 m a destra di O (verso il basso). L\'asta ruota? In che verso?',
+  d:'F₁ = 30 N a d₁ = 0,6 m (sx) · F₂ = 45 N a d₂ = 0,35 m (dx)',
+  s:['Calcola i due momenti separatamente, poi sommali con il segno giusto.',
+     'Convenzione: antiorario positivo. Una forza verso il basso a sinistra del perno fa ruotare in senso antiorario.',
+     'M₁ = +F₁d₁, M₂ = −F₂d₂. Somma e guarda il segno.'],
+  st:[['Momento di F₁','M₁ = +30 · 0,6 = +18 N·m (antiorario)'],
+      ['Momento di F₂','M₂ = −45 · 0,35 = −15,75 N·m (orario)'],
+      ['Momento risultante','ΣM = 18 − 15,75 = +2,25 N·m'],
+      ['Conclusione','ΣM ≠ 0 → l\'asta ruota, e il segno positivo indica il verso antiorario.']],
+  r:'ΣM = +2,25 N·m → ruota in senso antiorario'},
+ {t:'Posizione per l\'equilibrio',
+  p:'Su un\'asta incernierata in O, una forza F₁ = 50 N agisce perpendicolarmente a 0,4 m a sinistra. A che distanza a destra va applicata una forza F₂ = 80 N (stesso verso) perché l\'asta non ruoti?',
+  d:'F₁ = 50 N a d₁ = 0,4 m (sx) · F₂ = 80 N (dx) · d₂ = ?',
+  s:['Perché non ruoti, i due momenti devono annullarsi: uguali in modulo, opposti in verso.',
+     'Imponi F₁ · d₁ = F₂ · d₂ e ricava d₂.'],
+  st:[['Condizione di equilibrio alla rotazione','ΣM_O = 0 ⇒ F₁ · d₁ = F₂ · d₂'],
+      ['Formula inversa','d₂ = F₁ · d₁ / F₂'],
+      ['Calcolo','d₂ = 50 · 0,4 / 80 = 20 / 80 = 0,25 m'],
+      ['Osservazione','Forza maggiore ⇒ braccio minore. È esattamente il principio della leva.']],
+  r:'d₂ = 0,25 m = 25 cm'}
+],
+leva:[
+ {t:'Leva di I genere',
+  p:'Una leva di I genere (fulcro tra le due forze) ha bracci d₁ = 1,2 m (forza motrice) e d₂ = 0,4 m (resistenza). Applicando F₁ = 30 N, quale resistenza F₂ si può equilibrare?',
+  d:'F₁ = 30 N · d₁ = 1,2 m · d₂ = 0,4 m',
+  s:['La legge della leva uguaglia i momenti rispetto al fulcro.',
+     'F₁ · d₁ = F₂ · d₂ ⇒ ricava F₂.'],
+  st:[['Legge della leva','F₁ · d₁ = F₂ · d₂ ⇒ F₂ = F₁ · d₁ / d₂'],
+      ['Calcolo','F₂ = 30 · 1,2 / 0,4 = 36 / 0,4 = 90 N'],
+      ['Vantaggio meccanico','VM = d₁ / d₂ = 1,2 / 0,4 = 3 → la leva triplica la forza']],
+  r:'F₂ = 90 N &nbsp;·&nbsp; VM = 3 (leva vantaggiosa)'},
+ {t:'Carriola (leva di II genere)',
+  p:'Una carriola ha il carico (m = 30 kg) posto a d₂ = 0,5 m dalla ruota (fulcro); i manici sono a d₁ = 1,5 m. Che forza serve per sollevare il carico?',
+  d:'m = 30 kg · d₁ = 1,5 m · d₂ = 0,5 m',
+  s:['Prima converti la massa in forza peso: quella è la resistenza F₂.',
+     'Poi applica F₁ = F₂ · d₂ / d₁.'],
+  st:[['Peso del carico','F₂ = mg = 30 · 9,81 ≈ 294,3 N'],
+      ['Legge della leva','F₁ = F₂ · d₂ / d₁ = 294,3 · 0,5 / 1,5 ≈ 98,1 N']],
+  r:'F₁ ≈ 98,1 N (un terzo del peso: VM = 3)'},
+ {t:'Leva di III genere (avambraccio)',
+  p:'Il bicipite si inserisce a d₁ = 5 cm dal gomito (fulcro); un peso di 2 kg è tenuto in mano a d₂ = 35 cm dal gomito. Che forza deve sviluppare il bicipite?',
+  d:'m = 2 kg · d₁ = 0,05 m · d₂ = 0,35 m',
+  s:['Qui la forza motrice (muscolo) ha il braccio più corto: aspettati un risultato grande.',
+     'F₁ = F₂ · d₂ / d₁, con F₂ = mg.'],
+  st:[['Peso da tenere','F₂ = mg = 2 · 9,81 = 19,62 N'],
+      ['Forza muscolare','F₁ = F₂ · d₂ / d₁ = 19,62 · 0,35 / 0,05 = 137,3 N'],
+      ['Osservazione','VM = 0,05/0,35 ≈ 0,14 → svantaggiosa in forza (fattore ~7) ma vantaggiosa in velocità e ampiezza di movimento.']],
+  r:'F_bicipite ≈ 137 N (circa 7 × il peso sollevato)'},
+ {t:'Leva con peso proprio dell\'asta',
+  p:'Un\'asta omogenea di 3 kg, lunga 2 m, è incernierata a un estremo (fulcro). Un carico di 10 kg è appeso all\'altro estremo. Che forza verticale verso l\'alto va applicata a metà asta per tenerla orizzontale?',
+  d:'m_asta = 3 kg · L = 2 m · m_carico = 10 kg · F applicata a 1 m dal fulcro',
+  s:['Attenzione: le forze resistenti sono due, il carico e il peso proprio dell\'asta.',
+     'Il peso dell\'asta si considera applicato nel suo centro, cioè a L/2 = 1 m dal fulcro.',
+     'Scrivi ΣM = 0 rispetto al fulcro: F·1 = P_carico·2 + P_asta·1.'],
+  st:[['Forze resistenti','P_carico = 10 · 9,81 = 98,1 N a 2 m dal fulcro<br>P_asta = 3 · 9,81 = 29,43 N a 1 m dal fulcro (centro)'],
+      ['Momenti rispetto al fulcro','F · 1 = P_carico · 2 + P_asta · 1'],
+      ['Calcolo','F · 1 = 98,1 · 2 + 29,43 · 1 = 196,2 + 29,43 = 225,63<br>F = 225,63 N'],
+      ['Osservazione','Ignorare il peso proprio avrebbe dato 196,2 N: un errore del 13%.']],
+  r:'F ≈ 225,6 N'},
+ {t:'Bilancia a bracci uguali e disuguali',
+  p:'Una bilancia a stadera ha il piatto a 8 cm dal fulcro; il contrappeso scorrevole pesa 5 N. A che distanza dal fulcro va posizionato per equilibrare una merce di 1,5 kg?',
+  d:'d_piatto = 0,08 m · m_merce = 1,5 kg · P_contrappeso = 5 N',
+  s:['È una leva di I genere: la merce da un lato, il contrappeso dall\'altro.',
+     'Uguaglia i momenti: P_merce · d_piatto = P_contrappeso · d_contrappeso.'],
+  st:[['Peso della merce','P_merce = 1,5 · 9,81 = 14,715 N'],
+      ['Equilibrio dei momenti','P_merce · d_piatto = P_contrappeso · d_c'],
+      ['Calcolo','d_c = (14,715 · 0,08) / 5 = 1,1772 / 5 = 0,2354 m ≈ 23,5 cm'],
+      ['Principio della stadera','Un contrappeso piccolo che scorre lontano equilibra un peso grande vicino: si pesa leggendo una posizione.']],
+  r:'d_contrappeso ≈ 23,5 cm dal fulcro'}
+],
+trave:[
+ {t:'Carico in mezzeria',
+  p:'Una trave di lunghezza L = 4 m poggia su due appoggi (cerniera in A, carrello in B). Un carico P = 800 N è applicato al centro. Calcolare le reazioni R_A e R_B.',
+  d:'L = 4 m · P = 800 N · a = 2 m (in mezzeria)',
+  s:['Conviene scrivere l\'equilibrio dei momenti rispetto ad A: così R_A sparisce (braccio nullo).',
+     'ΣM_A = 0: R_B · L − P · a = 0.',
+     'Trovata R_B, usa ΣF_y = 0 per ricavare R_A.'],
+  st:[['Equilibrio dei momenti attorno ad A','R_B · L − P · a = 0 ⇒ R_B = P · a / L = 800 · 2 / 4 = 400 N'],
+      ['Equilibrio verticale','R_A + R_B = P ⇒ R_A = 800 − 400 = 400 N']],
+  r:'R_A = R_B = 400 N (metà del carico ciascuna)'},
+ {t:'Carico decentrato',
+  p:'Trave L = 6 m, carico P = 1200 N applicato a distanza a = 2 m dall\'appoggio A. Calcolare R_A e R_B.',
+  d:'L = 6 m · P = 1200 N · a = 2 m',
+  s:['Stessa strategia: momenti rispetto ad A per trovare R_B.',
+     'Poi equilibrio verticale per R_A. Verifica che l\'appoggio più vicino sia il più caricato.'],
+  st:[['Momenti attorno ad A','R_B · L = P · a ⇒ R_B = 1200 · 2 / 6 = 400 N'],
+      ['Equilibrio verticale','R_A = P − R_B = 1200 − 400 = 800 N'],
+      ['Osservazione','L\'appoggio più vicino al carico ne sopporta la quota maggiore (2/3 del totale).']],
+  r:'R_A = 800 N &nbsp;·&nbsp; R_B = 400 N'},
+ {t:'Due carichi sulla stessa trave',
+  p:'Trave L = 4 m con due carichi: P₁ = 500 N a 1 m da A e P₂ = 800 N a 3 m da A. Calcolare le reazioni.',
+  d:'L = 4 m · P₁ = 500 N a a₁ = 1 m · P₂ = 800 N a a₂ = 3 m',
+  s:['Il principio non cambia: somma tutti i momenti rispetto ad A.',
+     'ΣM_A: R_B·L − P₁·a₁ − P₂·a₂ = 0.',
+     'Alla fine verifica sempre che R_A + R_B = P₁ + P₂.'],
+  st:[['Momenti attorno ad A','R_B · L − P₁ · a₁ − P₂ · a₂ = 0<br>R_B = (500 · 1 + 800 · 3) / 4 = (500 + 2400) / 4 = 725 N'],
+      ['Equilibrio verticale','R_A = P₁ + P₂ − R_B = 500 + 800 − 725 = 575 N'],
+      ['Verifica','R_A + R_B = 575 + 725 = 1300 N = P₁ + P₂ ✓']],
+  r:'R_A = 575 N &nbsp;·&nbsp; R_B = 725 N'},
+ {t:'Trave con peso proprio',
+  p:'Una trave omogenea di massa 200 kg e lunghezza 5 m poggia su due appoggi alle estremità. Un carico di 3000 N è applicato a 1,5 m da A. Calcolare le reazioni tenendo conto del peso proprio.',
+  d:'m_trave = 200 kg · L = 5 m · P = 3000 N a 1,5 m da A',
+  s:['Il peso proprio si tratta come un carico aggiuntivo applicato nel centro della trave.',
+     'P_trave = mg, applicato a L/2 = 2,5 m da A.',
+     'Scrivi ΣM_A = 0 includendo entrambi i carichi.'],
+  st:[['Peso proprio','P_trave = 200 · 9,81 = 1962 N applicato a 2,5 m da A'],
+      ['Momenti attorno ad A','R_B · 5 = 3000 · 1,5 + 1962 · 2,5<br>R_B · 5 = 4500 + 4905 = 9405<br>R_B = 1881 N'],
+      ['Equilibrio verticale','R_A = (3000 + 1962) − 1881 = 4962 − 1881 = 3081 N'],
+      ['Verifica','3081 + 1881 = 4962 N = carico totale ✓']],
+  r:'R_A = 3081 N &nbsp;·&nbsp; R_B = 1881 N'},
+ {t:'Posizione del carico da una reazione nota',
+  p:'Su una trave di 8 m con appoggi alle estremità agisce un carico P = 2000 N. Si misura R_A = 1500 N. A che distanza da A si trova il carico?',
+  d:'L = 8 m · P = 2000 N · R_A = 1500 N · a = ?',
+  s:['Prima ricava R_B dall\'equilibrio verticale.',
+     'Poi usa ΣM_A = 0: R_B · L = P · a, invertendo per trovare a.'],
+  st:[['Reazione in B','R_B = P − R_A = 2000 − 1500 = 500 N'],
+      ['Momenti attorno ad A','R_B · L = P · a ⇒ a = R_B · L / P'],
+      ['Calcolo','a = 500 · 8 / 2000 = 4000 / 2000 = 2 m'],
+      ['Coerenza','Il carico è vicino ad A (2 m su 8), infatti R_A è tre volte R_B. ✓']],
+  r:'a = 2 m da A'}
+],
+rigido:[
+ {t:'Asta orizzontale con fune verticale',
+  p:'Un\'asta rigida omogenea di massa m = 6 kg e lunghezza L = 2 m è incernierata all\'estremo A. All\'estremo B una fune verticale la tiene orizzontale. Calcolare la tensione T nella fune.',
+  d:'m = 6 kg · L = 2 m · G al centro',
+  s:['Il peso dell\'asta si considera applicato nel centro di massa G, a metà lunghezza.',
+     'Scegli A come polo: la reazione della cerniera ha braccio nullo e sparisce.',
+     'ΣM_A = 0: T·L − P·(L/2) = 0.'],
+  st:[['Peso dell\'asta','P = mg = 6 · 9,81 = 58,86 N applicato in G (distanza L/2 = 1 m da A)'],
+      ['Momenti attorno ad A','T · L − P · (L/2) = 0 ⇒ T = P / 2'],
+      ['Calcolo','T = 58,86 / 2 ≈ 29,4 N']],
+  r:'T ≈ 29,4 N'},
+ {t:'Scala appoggiata al muro',
+  p:'Una scala di massa m = 15 kg e lunghezza L = 5 m è appoggiata a un muro liscio (senza attrito). Coefficiente di attrito col pavimento μ = 0,4. Qual è l\'angolo minimo θ_min col pavimento perché la scala non scivoli?',
+  d:'m = 15 kg · L = 5 m · μ = 0,4 · muro liscio',
+  s:['Disegna tutte le forze: peso al centro, reazione e attrito al piede, spinta orizzontale del muro liscio.',
+     'Muro liscio significa che il muro può spingere solo perpendicolarmente, cioè orizzontalmente.',
+     'Scrivi ΣM rispetto al piede della scala, poi imponi che l\'attrito sia al massimo.'],
+  st:[['Forze sulla scala','Peso P al centro; reazione N_p e attrito fₐ al piede; reazione orizzontale N_m dal muro (liscio).'],
+      ['Equilibrio verticale','N_p = mg'],
+      ['Momenti attorno al piede','N_m · L sin θ − mg · (L/2) cos θ = 0 ⇒ N_m = mg / (2 tan θ)'],
+      ['Equilibrio orizzontale (al limite)','N_m = fₐ,max = μ · mg ⇒ mg / (2 tan θ) = μ mg<br>⇒ tan θ_min = 1 / (2μ) = 1 / 0,8 = 1,25<br>⇒ θ_min = arctan(1,25) ≈ 51,3°']],
+  r:'θ_min ≈ 51,3° (indipendente dalla massa)'},
+ {t:'Cartello sospeso a mensola',
+  p:'Un cartello di 8 kg è appeso all\'estremo B di una mensola orizzontale AB (L = 1,5 m) incernierata al muro in A. Un tirante che forma θ = 40° con la mensola collega B a un punto del muro sopra A. Calcolare la tensione T nel tirante.',
+  d:'m = 8 kg · L = 1,5 m · θ = 40°',
+  s:['Prendi A come polo così la reazione della cerniera non entra nell\'equazione.',
+     'Del tirante conta solo la componente perpendicolare alla mensola: T sin θ.',
+     'ΣM_A = 0: T sin θ · L = P · L. Nota che L si semplifica.'],
+  st:[['Peso del cartello','P = mg = 8 · 9,81 = 78,48 N (verso il basso, applicato in B)'],
+      ['Momenti attorno ad A','T sin θ · L − P · L = 0 ⇒ T = P / sin θ'],
+      ['Calcolo','T = 78,48 / sin 40° = 78,48 / 0,643 ≈ 122,1 N']],
+  r:'T ≈ 122 N'},
+ {t:'Centro di massa di un sistema',
+  p:'Un\'asta leggera di 1,2 m porta tre masse: 2 kg all\'estremo sinistro (x = 0), 5 kg a x = 0,5 m e 3 kg all\'estremo destro (x = 1,2 m). Dove va posto il fulcro perché il sistema sia in equilibrio?',
+  d:'m₁ = 2 kg a 0 m · m₂ = 5 kg a 0,5 m · m₃ = 3 kg a 1,2 m · asta di massa trascurabile',
+  s:['Il fulcro va nel centro di massa: lì il momento totale del peso è nullo.',
+     'Usa x_G = Σ(mᵢxᵢ) / Σmᵢ.',
+     'Il numeratore è 2·0 + 5·0,5 + 3·1,2.'],
+  st:[['Formula del centro di massa','x_G = (m₁x₁ + m₂x₂ + m₃x₃) / (m₁ + m₂ + m₃)'],
+      ['Numeratore','2 · 0 + 5 · 0,5 + 3 · 1,2 = 0 + 2,5 + 3,6 = 6,1 kg·m'],
+      ['Denominatore','2 + 5 + 3 = 10 kg'],
+      ['Calcolo','x_G = 6,1 / 10 = 0,61 m dall\'estremo sinistro'],
+      ['Verifica','Momenti rispetto a x_G: 2·0,61 + 5·0,11 = 1,22 + 0,55 = 1,77 (antiorario)<br>3·0,59 = 1,77 (orario) → si bilanciano ✓']],
+  r:'Fulcro a x_G = 0,61 m dall\'estremo sinistro'},
+ {t:'Asta inclinata incernierata',
+  p:'Un\'asta omogenea di 12 kg e lunghezza 3 m è incernierata in A al pavimento e forma 55° con l\'orizzontale. Una fune orizzontale legata all\'estremo superiore B la trattiene. Calcolare la tensione della fune.',
+  d:'m = 12 kg · L = 3 m · α = 55° · fune orizzontale in B',
+  s:['Il peso agisce nel centro dell\'asta: qual è il suo braccio orizzontale rispetto ad A?',
+     'Braccio del peso = (L/2)·cos α. Braccio della fune orizzontale = altezza di B = L·sin α.',
+     'ΣM_A = 0: T·L sin α = mg·(L/2) cos α.'],
+  st:[['Peso dell\'asta','P = 12 · 9,81 = 117,72 N applicato al centro (1,5 m lungo l\'asta)'],
+      ['Bracci rispetto ad A','Braccio del peso (orizzontale): (L/2)·cos 55° = 1,5 · 0,574 = 0,861 m<br>Braccio della fune (verticale): L·sin 55° = 3 · 0,819 = 2,457 m'],
+      ['Momenti attorno ad A','T · 2,457 = 117,72 · 0,861 = 101,4<br>T = 101,4 / 2,457 ≈ 41,3 N'],
+      ['Forma compatta','T = mg / (2 tan α) = 117,72 / (2 · 1,428) ≈ 41,2 N ✓']],
+  r:'T ≈ 41,3 N'}
+]
+};
+
+/* ----- Rendering esercizi con suggerimenti progressivi ----- */
+function renderEsercizi(sec){
+  const el=document.getElementById('ex-'+sec);
+  const list=ESERCIZI[sec];
+  if(!el||!list) return;
+  let html='<p class="eserc-intro">Prova a risolvere da solo. Se ti blocchi, chiedi un suggerimento alla volta: la soluzione completa resta disponibile in fondo.</p>';
+  list.forEach((e,i)=>{
+    html+=`<div class="esercizio" data-ex="${i}">
+      <h3>Esercizio ${i+1} — ${e.t}</h3>
+      <p class="testo">${e.p}</p>
+      <div class="dati"><b>Dati:</b> ${e.d}</div>
+      <div class="hints"></div>
+      <div class="sol"></div>
+      <div class="ex-actions">
+        <button class="ex-btn hint-btn">Mostra suggerimento</button>
+        <button class="ex-btn sol sol-btn">Mostra soluzione</button>
+        <span class="ex-count"></span>
+      </div>
+    </div>`;
+  });
+  el.innerHTML=html;
+  el.querySelectorAll('.esercizio').forEach(card=>{
+    const e=list[+card.dataset.ex];
+    const hintsEl=card.querySelector('.hints');
+    const solEl=card.querySelector('.sol');
+    const hintBtn=card.querySelector('.hint-btn');
+    const solBtn=card.querySelector('.sol-btn');
+    const cnt=card.querySelector('.ex-count');
+    let shown=0;
+    const upd=()=>{
+      const tot=e.s.length;
+      cnt.textContent=shown>0?`suggerimento ${shown} di ${tot}`:`${tot} suggerimenti disponibili`;
+      if(shown>=tot){ hintBtn.disabled=true; hintBtn.style.opacity=.45;
+        hintBtn.style.cursor='default'; hintBtn.textContent='Nessun altro suggerimento'; }
+      else if(shown>0) hintBtn.textContent='Suggerimento successivo';
+    };
+    upd();
+    hintBtn.addEventListener('click',()=>{
+      if(shown>=e.s.length) return;
+      const d=document.createElement('div');
+      d.className='ex-hint';
+      d.innerHTML=`<span class="h-lab">Suggerimento ${shown+1}</span>${e.s[shown]}`;
+      hintsEl.appendChild(d);
+      shown++; upd();
+    });
+    solBtn.addEventListener('click',()=>{
+      if(solEl.innerHTML) return;
+      let h='<div class="ex-sol">';
+      e.st.forEach(p=>{ h+=`<div class="step"><div class="step-t">${p[0]}</div><div class="step-b">${p[1]}</div></div>`; });
+      h+=`<div class="risultato">${e.r}</div></div>`;
+      solEl.innerHTML=h;
+      solBtn.disabled=true; solBtn.style.opacity=.45; solBtn.style.cursor='default';
+      solBtn.textContent='Soluzione mostrata';
+    });
+  });
+}
+
 /* ============ QUIZ DATA ============ */
 const QUIZZES={
 funi:[
@@ -2109,6 +2383,12 @@ bindRange('rgM','rgMv'); bindRange('rgF','rgFv'); bindRange('rgAng','rgAngv',v=>
 bindRange('rgXf','rgXfv',v=>v.toFixed(2)+' L');
 
 QSECTIONS.forEach(renderQuiz);
+QSECTIONS.forEach(renderEsercizi);
+
+/* In stampa espande tutte le soluzioni (i suggerimenti restano nascosti dal CSS) */
+window.addEventListener('beforeprint',()=>{
+  document.querySelectorAll('.esercizio .sol-btn').forEach(b=>{ if(!b.disabled) b.click(); });
+});
 
 /* ----- Sticky nav below header ----- */
 const _hdr=document.querySelector('header');
