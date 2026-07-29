@@ -389,7 +389,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <div class="subscene active" data-sub="teoria">
   <div class="card">
     <h2>Piano orizzontale con attrito</h2>
-    <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> inclinata di <em>θ</em>, e l'attrito <em>fₐ</em>.</p>
+    <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> inclinata di <em>θ</em>, e l'attrito <em>f<sub>a</sub></em>.</p>
     <h3>Equilibrio verticale</h3>
     <div class="formula">N = m g − F sin θ &nbsp;&nbsp;(θ &gt; 0 verso l'alto)</div>
     <h3>Equilibrio orizzontale</h3>
@@ -407,7 +407,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
           <span style="color:var(--vF)"><i style="background:var(--vF)"></i>F applicata</span>
-          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>fₐ attrito</span>
+          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>f<sub>a</sub> attrito</span>
         </div>
       </div>
       <div class="ctrl-pane">
@@ -421,8 +421,8 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <div class="it"><span class="l">P = mg</span><span class="v" id="orP">—</span> N</div>
           <div class="it"><span class="l">N</span><span class="v" id="orN">—</span> N</div>
           <div class="it"><span class="l">Fₓ</span><span class="v" id="orFx">—</span> N</div>
-          <div class="it"><span class="l">fₐ attuale</span><span class="v" id="orFa">—</span> N</div>
-          <div class="it"><span class="l">μ·N max</span><span class="v" id="orMax">—</span> N</div>
+          <div class="it"><span class="l">f<sub>a</sub> attuale</span><span class="v" id="orFa">—</span> N</div>
+          <div class="it"><span class="l">f<sub>a max</sub> = μN</span><span class="v" id="orMax">—</span> N</div>
         </div>
         <div class="eqs" id="orStat">—</div>
       </div>
@@ -466,7 +466,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
           <span style="color:var(--vF)"><i style="background:var(--vF)"></i>F</span>
-          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>fₐ</span>
+          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>f<sub>a</sub></span>
         </div>
       </div>
       <div class="ctrl-pane">
@@ -479,9 +479,9 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
         <div class="read">
           <div class="it"><span class="l">P<sub>∥</sub></span><span class="v" id="inPp">—</span> N</div>
           <div class="it"><span class="l">P<sub>⊥</sub> = N</span><span class="v" id="inN">—</span> N</div>
-          <div class="it"><span class="l">fₐ richiesto</span><span class="v" id="inFa">—</span> N</div>
-          <div class="it"><span class="l">fₐ attuale</span><span class="v" id="inFaAtt">—</span> N</div>
-          <div class="it"><span class="l">μ·N max</span><span class="v" id="inMax">—</span> N</div>
+          <div class="it"><span class="l">f<sub>a</sub> richiesto</span><span class="v" id="inFa">—</span> N</div>
+          <div class="it"><span class="l">f<sub>a</sub> attuale</span><span class="v" id="inFaAtt">—</span> N</div>
+          <div class="it"><span class="l">f<sub>a max</sub> = μN</span><span class="v" id="inMax">—</span> N</div>
           <div class="it"><span class="l">θ<sub>lim</sub></span><span class="v" id="inLim">—</span>°</div>
         </div>
         <div class="eqs" id="inStat">—</div>
@@ -530,7 +530,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
           <span style="color:var(--vP)"><i style="background:var(--vP)"></i>P</span>
           <span style="color:var(--vN)"><i style="background:var(--vN)"></i>N</span>
           <span style="color:var(--vFe)"><i style="background:var(--vFe)"></i>F<sub>el</sub></span>
-          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>fₐ</span>
+          <span style="color:var(--vFa)"><i style="background:var(--vFa)"></i>f<sub>a</sub></span>
         </div>
       </div>
       <div class="ctrl-pane">
@@ -1092,8 +1092,8 @@ function renderMolla(){
     html=ground+wall+sp+body+vP+vN+vFe+vFa;
     read.innerHTML=`<div class="it"><span class="l">Δx</span><span class="v">${(dx*100).toFixed(1)}</span> cm</div>
       <div class="it"><span class="l">|Fₑₗ| = k|Δx|</span><span class="v">${Math.abs(Fel).toFixed(2)}</span> N</div>
-      <div class="it"><span class="l">fₐ attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(fa>0?' →':' ←')}</span> N</div>
-      <div class="it"><span class="l">μ·mg max</span><span class="v">${fMaxA.toFixed(2)}</span> N</div>`;
+      <div class="it"><span class="l">f<sub>a</sub> attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(fa>0?' →':' ←')}</span> N</div>
+      <div class="it"><span class="l">f<sub>a max</sub> = μmg</span><span class="v">${fMaxA.toFixed(2)}</span> N</div>`;
     if(Math.abs(dx)<0.001){stat.className='eqs ok';stat.textContent='✓ Molla a riposo: nessuna forza orizzontale';}
     else if(ok){stat.className='eqs ok';stat.textContent="✓ Equilibrio: l'attrito statico tiene il corpo fermo";}
     else{stat.className='eqs no';stat.textContent='✗ Il corpo si muove: la forza elastica supera l\'attrito massimo';}
@@ -1142,9 +1142,9 @@ function renderMolla(){
     html=ground+tri+arc+sp+body+vP+vN+vFe+vFa;
     read.innerHTML=`<div class="it"><span class="l">P sin θ</span><span class="v">${Pp.toFixed(2)}</span> N</div>
       <div class="it"><span class="l">Fₑₗ = k·Δx</span><span class="v">${Fel.toFixed(2)}</span> N</div>
-      <div class="it"><span class="l">fₐ richiesto</span><span class="v">${Math.abs(along).toFixed(2)}</span> N</div>
-      <div class="it"><span class="l">fₐ attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(along>0?' ↗':' ↘')}</span> N</div>
-      <div class="it"><span class="l">μ·N max</span><span class="v">${fMax.toFixed(2)}</span> N</div>`;
+      <div class="it"><span class="l">f<sub>a</sub> richiesto</span><span class="v">${Math.abs(along).toFixed(2)}</span> N</div>
+      <div class="it"><span class="l">f<sub>a</sub> attuale</span><span class="v">${Math.abs(fa)<0.005?'0.00':Math.abs(fa).toFixed(2)+(along>0?' ↗':' ↘')}</span> N</div>
+      <div class="it"><span class="l">f<sub>a max</sub> = μN</span><span class="v">${fMax.toFixed(2)}</span> N</div>`;
     if(ok){
       const ratio=fMax>0?Math.abs(along)/fMax:0;
       if(ratio>0.95&&fMax>0){stat.className='eqs lim';stat.textContent='⚠ Limite di equilibrio (sul punto di slittare)';}
@@ -1660,28 +1660,28 @@ orizz:[
   d:'m = 10 kg · μ = 0,3 · F = 25 N · θ = 0°',
   s:['L\'attrito statico non ha un valore fisso: ha un valore massimo. Qual è?',
      'Prima ti serve N. Con forza orizzontale, sull\'asse y ci sono solo peso e reazione: N = mg.',
-     'Confronta F con fₐ,max = μN: se F è minore, il corpo resta fermo.'],
+     'Confronta F con f<sub>a max</sub> = μN: se F è minore, il corpo resta fermo.'],
   st:[['Reazione normale','N = mg = 10 · 9,81 = 98,1 N'],
-      ['Attrito massimo','fₐ,max = μ N = 0,3 · 98,1 = 29,4 N'],
-      ['Confronto','F = 25 N &lt; fₐ,max = 29,4 N → il corpo resta fermo, l\'attrito si adegua a 25 N.']],
-  r:'In equilibrio: fₐ = 25 N (statico, sotto la soglia)'},
+      ['Attrito massimo','f<sub>a max</sub> = μ N = 0,3 · 98,1 = 29,4 N'],
+      ['Confronto','F = 25 N &lt; f<sub>a max</sub> = 29,4 N → il corpo resta fermo, l\'attrito si adegua a 25 N.']],
+  r:'In equilibrio: f<sub>a</sub> = 25 N (statico, sotto la soglia)'},
  {t:'Forza inclinata verso l\'alto',
   p:'Una cassa di 15 kg è tirata da una fune inclinata di θ = 30° sopra l\'orizzontale, con F = 60 N. Coefficiente di attrito statico μ = 0,25. Si muove?',
   d:'m = 15 kg · F = 60 N · θ = 30° · μ = 0,25',
   s:['Scomponi F nelle due componenti: quale spinge, quale solleva?',
      'Attenzione: la componente verticale F_y alleggerisce il corpo, quindi N non è più mg.',
-     'Asse y: N + F_y − mg = 0. Trovato N, calcola fₐ,max e confrontalo con F_x.'],
+     'Asse y: N + F_y − mg = 0. Trovato N, calcola f<sub>a max</sub> e confrontalo con F_x.'],
   st:[['Componenti di F','Fₓ = F cos θ = 60 · 0,866 ≈ 51,96 N<br>F_y = F sin θ = 60 · 0,5 = 30 N'],
       ['Reazione normale','Sull\'asse y: N + F_y − mg = 0 ⇒ N = mg − F_y = 147,15 − 30 = 117,15 N'],
-      ['Attrito massimo','fₐ,max = μ N = 0,25 · 117,15 ≈ 29,3 N'],
-      ['Confronto','Fₓ = 51,96 N &gt; fₐ,max = 29,3 N → il corpo si muove.']],
+      ['Attrito massimo','f<sub>a max</sub> = μ N = 0,25 · 117,15 ≈ 29,3 N'],
+      ['Confronto','Fₓ = 51,96 N &gt; f<sub>a max</sub> = 29,3 N → il corpo si muove.']],
   r:'Non in equilibrio: la componente orizzontale supera l\'attrito massimo'},
  {t:'Forza massima per l\'equilibrio',
   p:'Un corpo di 8 kg è appoggiato su un pavimento con μ = 0,4. Qual è la massima forza orizzontale applicabile senza mettere il corpo in movimento?',
   d:'m = 8 kg · μ = 0,4',
   s:['Il corpo è sul punto di muoversi quando l\'attrito lavora al massimo.',
-     'Imponi F = fₐ,max = μN, con N = mg.'],
-  st:[['Condizione limite','Al limite: F = fₐ,max = μ · N = μ · mg'],
+     'Imponi F = f<sub>a max</sub> = μN, con N = mg.'],
+  st:[['Condizione limite','Al limite: F = f<sub>a max</sub> = μ · N = μ · mg'],
       ['Calcolo','F_max = 0,4 · 8 · 9,81 = 31,4 N']],
   r:'F_max ≈ 31,4 N'},
  {t:'Forza inclinata verso il basso',
@@ -1689,10 +1689,10 @@ orizz:[
   d:'m = 20 kg · F = 80 N · θ = −20° · μ = 0,3',
   s:['Rispetto all\'esercizio 2 cambia il segno della componente verticale: ora F preme verso il basso.',
      'Asse y: N = mg + F sin20° — la cassa risulta più "pesante" e l\'attrito aumenta.',
-     'Calcola N, poi fₐ,max, poi confronta con F cos20°.'],
+     'Calcola N, poi f<sub>a max</sub>, poi confronta con F cos20°.'],
   st:[['Componenti di F','Fₓ = 80 · cos 20° = 80 · 0,940 ≈ 75,2 N<br>F_y = 80 · sin 20° = 80 · 0,342 ≈ 27,4 N (verso il basso)'],
       ['Reazione normale','N = mg + F_y = 196,2 + 27,4 = 223,6 N'],
-      ['Attrito massimo','fₐ,max = 0,3 · 223,6 ≈ 67,1 N'],
+      ['Attrito massimo','f<sub>a max</sub> = 0,3 · 223,6 ≈ 67,1 N'],
       ['Confronto','Fₓ = 75,2 N &gt; 67,1 N → la cassa si muove.'],
       ['Osservazione','Spingere verso il basso è controproducente: aumenta N e quindi l\'attrito. Meglio tirare verso l\'alto.']],
   r:'Si muove (ma di poco: spingere in basso penalizza)'},
@@ -1701,7 +1701,7 @@ orizz:[
   d:'m = 12 kg · F_limite = 47 N',
   s:['Il momento in cui inizia a muoversi è la condizione di attrito massimo.',
      'Imponi F = μ mg e ricava μ.'],
-  st:[['Condizione di distacco','Al limite: F = fₐ,max = μ · mg'],
+  st:[['Condizione di distacco','Al limite: F = f<sub>a max</sub> = μ · mg'],
       ['Formula inversa','μ = F / (mg)'],
       ['Calcolo','μ = 47 / (12 · 9,81) = 47 / 117,72 ≈ 0,399']],
   r:'μ ≈ 0,40'}
@@ -1721,10 +1721,10 @@ inclin:[
   d:'m = 8 kg · θ = 25° · μ = 0,35',
   s:['Chi tende a far scendere il corpo? E chi si oppone?',
      'Calcola P∥ = mg sin θ e N = mg cos θ (attenzione: N non è mg su un piano inclinato).',
-     'Confronta P∥ con fₐ,max = μN.'],
+     'Confronta P∥ con f<sub>a max</sub> = μN.'],
   st:[['Forze in gioco','P∥ = mg sin θ = 8 · 9,81 · sin 25° = 33,2 N<br>N = mg cos θ = 8 · 9,81 · cos 25° = 71,1 N'],
-      ['Attrito massimo','fₐ,max = μ N = 0,35 · 71,1 = 24,9 N'],
-      ['Confronto','P∥ = 33,2 N &gt; fₐ,max = 24,9 N → il corpo scivola verso il basso.']],
+      ['Attrito massimo','f<sub>a max</sub> = μ N = 0,35 · 71,1 = 24,9 N'],
+      ['Confronto','P∥ = 33,2 N &gt; f<sub>a max</sub> = 24,9 N → il corpo scivola verso il basso.']],
   r:'Non in equilibrio: scivola verso il basso'},
  {t:'Angolo limite di attrito',
   p:'Determinare l\'angolo massimo θ_lim di un piano inclinato oltre il quale un corpo (con μ = 0,5) inizia a scivolare, indipendentemente dalla massa.',
@@ -1741,9 +1741,9 @@ inclin:[
   s:['Ci sono due situazioni limite: il corpo sul punto di scendere e il corpo sul punto di salire.',
      'Se F è piccola, il corpo tende a scendere e l\'attrito spinge verso l\'alto: F + μN = P∥.',
      'Se F è grande, il corpo tende a salire e l\'attrito spinge verso il basso: F = P∥ + μN.'],
-  st:[['Grandezze di base','P∥ = mg sin 30° = 98,1 · 0,5 = 49,05 N<br>N = mg cos 30° = 98,1 · 0,866 = 84,96 N<br>fₐ,max = 0,2 · 84,96 ≈ 17,0 N'],
-      ['Limite inferiore (sta per scendere)','F_min = P∥ − fₐ,max = 49,05 − 17,0 ≈ 32,1 N'],
-      ['Limite superiore (sta per salire)','F_max = P∥ + fₐ,max = 49,05 + 17,0 ≈ 66,0 N'],
+  st:[['Grandezze di base','P∥ = mg sin 30° = 98,1 · 0,5 = 49,05 N<br>N = mg cos 30° = 98,1 · 0,866 = 84,96 N<br>f<sub>a max</sub> = 0,2 · 84,96 ≈ 17,0 N'],
+      ['Limite inferiore (sta per scendere)','F_min = P∥ − f<sub>a max</sub> = 49,05 − 17,0 ≈ 32,1 N'],
+      ['Limite superiore (sta per salire)','F_max = P∥ + f<sub>a max</sub> = 49,05 + 17,0 ≈ 66,0 N'],
       ['Interpretazione','L\'attrito crea un intervallo di equilibrio, non un solo valore: è il "gioco" tipico dei sistemi con attrito.']],
   r:'32,1 N ≤ F ≤ 66,0 N'},
  {t:'Piano inclinato come macchina semplice',
@@ -1773,9 +1773,9 @@ molla:[
   s:['La molla allungata tira il corpo verso la parete: quanto vale questa forza?',
      'Calcola |Fₑₗ| = k·Δx e confrontala con l\'attrito massimo μmg.'],
   st:[['Forza elastica','|Fₑₗ| = k · Δx = 150 · 0,05 = 7,5 N (verso la parete)'],
-      ['Attrito massimo','fₐ,max = μ · mg = 0,4 · 3 · 9,81 ≈ 11,77 N'],
-      ['Confronto','|Fₑₗ| = 7,5 N &lt; fₐ,max = 11,77 N → il corpo resta fermo, l\'attrito equilibra la molla.']],
-  r:'In equilibrio: fₐ ≈ 7,5 N (opposto alla molla)'},
+      ['Attrito massimo','f<sub>a max</sub> = μ · mg = 0,4 · 3 · 9,81 ≈ 11,77 N'],
+      ['Confronto','|Fₑₗ| = 7,5 N &lt; f<sub>a max</sub> = 11,77 N → il corpo resta fermo, l\'attrito equilibra la molla.']],
+  r:'In equilibrio: f<sub>a</sub> ≈ 7,5 N (opposto alla molla)'},
  {t:'Molla su piano inclinato liscio',
   p:'Una molla (k = 180 N/m) tira un corpo di 2 kg lungo un piano inclinato liscio di θ = 30°, mantenendolo fermo. Qual è l\'allungamento della molla?',
   d:'m = 2 kg · k = 180 N/m · θ = 30° · μ = 0',
@@ -1972,10 +1972,10 @@ rigido:[
   s:['Disegna tutte le forze: peso al centro, reazione e attrito al piede, spinta orizzontale del muro liscio.',
      'Muro liscio significa che il muro può spingere solo perpendicolarmente, cioè orizzontalmente.',
      'Scrivi ΣM rispetto al piede della scala, poi imponi che l\'attrito sia al massimo.'],
-  st:[['Forze sulla scala','Peso P al centro; reazione N_p e attrito fₐ al piede; reazione orizzontale N_m dal muro (liscio).'],
+  st:[['Forze sulla scala','Peso P al centro; reazione N_p e attrito f<sub>a</sub> al piede; reazione orizzontale N_m dal muro (liscio).'],
       ['Equilibrio verticale','N_p = mg'],
       ['Momenti attorno al piede','N_m · L sin θ − mg · (L/2) cos θ = 0 ⇒ N_m = mg / (2 tan θ)'],
-      ['Equilibrio orizzontale (al limite)','N_m = fₐ,max = μ · mg ⇒ mg / (2 tan θ) = μ mg<br>⇒ tan θ_min = 1 / (2μ) = 1 / 0,8 = 1,25<br>⇒ θ_min = arctan(1,25) ≈ 51,3°']],
+      ['Equilibrio orizzontale (al limite)','N_m = f<sub>a max</sub> = μ · mg ⇒ mg / (2 tan θ) = μ mg<br>⇒ tan θ_min = 1 / (2μ) = 1 / 0,8 = 1,25<br>⇒ θ_min = arctan(1,25) ≈ 51,3°']],
   r:'θ_min ≈ 51,3° (indipendente dalla massa)'},
  {t:'Cartello sospeso a mensola',
   p:'Un cartello di 8 kg è appeso all\'estremo B di una mensola orizzontale AB (L = 1,5 m) incernierata al muro in A. Un tirante che forma θ = 40° con la mensola collega B a un punto del muro sopra A. Calcolare la tensione T nel tirante.',
