@@ -2619,6 +2619,170 @@ rigido:[
   exp:'ΣF = 0 impedisce la traslazione; con ΣM ≠ 0 resta una coppia che fa ruotare il corpo.'}
 ]};
 
+/* ---- Pool domande aggiuntive (triplicazione) ---- */
+const QUIZZES_EXTRA={
+funi:[
+ {q:"Un corpo di 2 kg è appeso a una fune verticale. La tensione è (g = 9,81):",opts:["19,6 N","2 N","9,81 N","39,2 N"],ans:0,exp:"T = mg = 2·9,81 ≈ 19,6 N."},
+ {q:"Per un corpo appeso a una sola fune verticale, la tensione vale:",opts:["mg","mg/2","2mg","0"],ans:0,exp:"La fune sostiene l'intero peso: T = mg."},
+ {q:"Due funi simmetriche formano 30° col soffitto, m = 4 kg: la tensione in ciascuna è (g = 9,81):",opts:["39,2 N","19,6 N","78,5 N","4 N"],ans:0,exp:"T = mg/(2 sin30°) = 39,24/1 ≈ 39,2 N."},
+ {q:"In un sistema a due funi simmetriche, al diminuire dell'angolo col soffitto le tensioni:",opts:["aumentano","diminuiscono","restano uguali","si annullano"],ans:0,exp:"T = mg/(2 sinα): se α → 0, T → ∞."},
+ {q:"Nel caso di due funi simmetriche (angolo α col soffitto), la tensione è:",opts:["mg/(2 sinα)","mg·2 sinα","mg/(2 cosα)","2mg sinα"],ans:0,exp:"Equilibrio verticale: 2T sinα = mg ⇒ T = mg/(2 sinα)."},
+ {q:"Perché le funi quasi orizzontali si spezzano facilmente?",opts:["la tensione cresce molto al diminuire dell'angolo","sono più lunghe","pesano di più","l'attrito aumenta"],ans:0,exp:"T = mg/(2 sinα): con α piccolo la tensione diventa enorme."},
+ {q:"Per un corpo appeso a due funi con angoli α (sx) e β (dx), l'equilibrio orizzontale è:",opts:["T₁ cosα = T₂ cosβ","T₁ sinα = T₂ sinβ","T₁ = T₂","T₁ + T₂ = mg"],ans:0,exp:"Le componenti orizzontali si bilanciano."},
+ {q:"Per lo stesso sistema a due funi, l'equilibrio verticale è:",opts:["T₁ sinα + T₂ sinβ = mg","T₁ cosα = T₂ cosβ","T₁ = T₂ = mg","T₁ − T₂ = mg"],ans:0,exp:"Le componenti verticali sostengono il peso."},
+ {q:"Un corpo di 5 kg appeso a una fune verticale: la tensione è (g = 9,81):",opts:["49 N","5 N","9,8 N","98 N"],ans:0,exp:"T = 5·9,81 ≈ 49 N."},
+ {q:"Due funi simmetriche a 45° col soffitto, m = 10 kg: tensione in ciascuna (g = 9,81):",opts:["69,4 N","49 N","98,1 N","139 N"],ans:0,exp:"T = mg/(2 sin45°) = 98,1/1,414 ≈ 69,4 N."},
+ {q:"Per un corpo in equilibrio appeso a funi, la risultante delle forze è:",opts:["nulla","massima","uguale al peso","sempre verticale"],ans:0,exp:"Equilibrio: Σ F = 0."},
+ {q:"Appeso a una fune verticale, se la massa raddoppia la tensione:",opts:["raddoppia","si dimezza","resta uguale","quadruplica"],ans:0,exp:"T = mg: proporzionale alla massa."},
+ {q:"Due funi simmetriche a 60° col soffitto, m = 6 kg: tensione in ciascuna (g = 9,81):",opts:["34,0 N","29,4 N","58,9 N","68 N"],ans:0,exp:"T = mg/(2 sin60°) = 58,9/1,732 ≈ 34,0 N."},
+ {q:"Se l'angolo tra una fune e il soffitto è molto piccolo, la tensione è:",opts:["molto grande","molto piccola","uguale a mg","nulla"],ans:0,exp:"T = mg/(2 sinα) cresce al diminuire di α."},
+ {q:"In una sola fune verticale che regge un peso, la tensione è diretta:",opts:["verticale, verso l'alto","orizzontale","verso il basso","a 45°"],ans:0,exp:"La fune tira verso l'alto, opposta al peso."},
+ {q:"Con due funi non simmetriche, la fune più vicina alla verticale sopporta:",opts:["una tensione maggiore","una tensione minore","la stessa tensione","nessuna tensione"],ans:0,exp:"Sostiene una quota maggiore del peso."},
+ {q:"Un corpo di 3 kg appeso a una fune verticale (g = 9,81): tensione:",opts:["29,4 N","3 N","9,8 N","30 N"],ans:0,exp:"T = 3·9,81 ≈ 29,4 N."},
+ {q:"Due funi simmetriche a 45°, m = 2 kg: tensione in ciascuna (g = 9,81):",opts:["13,9 N","19,6 N","9,8 N","27,7 N"],ans:0,exp:"T = mg/(2 sin45°) = 19,62/1,414 ≈ 13,9 N."},
+ {q:"La condizione di equilibrio di un punto materiale è:",opts:["risultante delle forze nulla","solo il peso nullo","una forza dominante","momento massimo"],ans:0,exp:"Equilibrio del punto: Σ F = 0."},
+ {q:"Due funi quasi verticali reggono un quadro: ciascuna ha una tensione circa:",opts:["mg/2","mg","2mg","nulla"],ans:0,exp:"Quasi verticali: ognuna sostiene circa metà del peso."}
+],
+orizz:[
+ {q:"Su un piano orizzontale, tirando con forza orizzontale, la reazione normale N è:",opts:["mg","mg − F","mg + F","0"],ans:0,exp:"La forza non ha componente verticale: N = mg."},
+ {q:"Un corpo resta fermo (attrito statico μ_s) finché:",opts:["F ≤ μ_s·N","F > μ_s·N","F = 0","N = 0"],ans:0,exp:"Soglia di scivolamento: F ≤ μ_s·N."},
+ {q:"m = 5 kg, μ_s = 0,4: la forza d'attrito statico massima è (g = 9,81):",opts:["19,6 N","2 N","49 N","0,4 N"],ans:0,exp:"f_max = μ_s·mg = 0,4·49 ≈ 19,6 N."},
+ {q:"Tirando il corpo con un angolo verso l'alto, la normale N:",opts:["diminuisce","aumenta","resta mg","diventa nulla"],ans:0,exp:"N = mg − F sinθ: la componente verticale alleggerisce il corpo."},
+ {q:"L'angolo che minimizza la forza per trainare un corpo è:",opts:["arctan(μ_s)","arcsin(μ_s)","45°","arccos(μ_s)"],ans:0,exp:"θ_ottimale = arctan(μ_s)."},
+ {q:"La forza d'attrito statico massima vale:",opts:["μ_s·N","μ_s/N","N/μ_s","μ_s·mg·sinθ"],ans:0,exp:"f_s,max = μ_s·N."},
+ {q:"m = 10 kg, μ_s = 0,3: forza orizzontale minima per muoverlo (g = 9,81):",opts:["29,4 N","3 N","98,1 N","0,3 N"],ans:0,exp:"F = μ_s·mg = 0,3·98,1 ≈ 29,4 N."},
+ {q:"Finché il corpo è fermo, l'attrito statico:",opts:["si adatta alla forza applicata","è sempre al massimo","è nullo","è costante"],ans:0,exp:"Vale esattamente quanto serve, fino al valore massimo."},
+ {q:"Con forza orizzontale (θ = 0), perché N = mg?",opts:["la forza è tutta orizzontale","la forza solleva il corpo","l'attrito è nullo","il peso è nullo"],ans:0,exp:"Nessuna componente verticale della forza: N bilancia solo mg."},
+ {q:"L'attrito dinamico rispetto all'attrito statico massimo è di solito:",opts:["minore","maggiore","uguale","nullo"],ans:0,exp:"Una volta in moto, l'attrito cala leggermente."},
+ {q:"Un corpo fermo, senza forze orizzontali applicate: la forza d'attrito vale:",opts:["0","μ_s·mg","mg","μ_s"],ans:0,exp:"Senza spinta non c'è attrito (si oppone solo se serve)."},
+ {q:"La relazione N = mg − F sinθ vale quando la forza:",opts:["tira verso l'alto con angolo θ","è orizzontale","spinge verso il basso","è nulla"],ans:0,exp:"La componente verticale F sinθ riduce la normale."},
+ {q:"Spingendo con un angolo verso il basso, la normale N:",opts:["aumenta","diminuisce","resta mg","si annulla"],ans:0,exp:"N = mg + F sinθ: la spinta carica di più il piano."},
+ {q:"Il coefficiente di attrito μ è una grandezza:",opts:["adimensionale","in newton","in m/s","in kg"],ans:0,exp:"È un rapporto tra forze: numero puro."},
+ {q:"m = 4 kg, μ_s = 0,5: massima forza orizzontale senza far muovere il corpo (g = 9,81):",opts:["19,6 N","2 N","39,2 N","0,5 N"],ans:0,exp:"F_max = μ_s·mg = 0,5·39,24 ≈ 19,6 N."},
+ {q:"La forza d'attrito è sempre diretta:",opts:["opposta alla tendenza al moto","nel verso del moto","verticale","nulla"],ans:0,exp:"Si oppone al movimento o alla sua tendenza."},
+ {q:"Raddoppiando la massa (stesso μ_s), l'attrito massimo:",opts:["raddoppia","si dimezza","resta uguale","quadruplica"],ans:0,exp:"f = μ_s·mg: proporzionale alla massa."},
+ {q:"Un corpo in equilibrio su piano orizzontale: la somma delle forze verticali è:",opts:["nulla (N = mg)","N = 2mg","N = mg/2","mg verso l'alto"],ans:0,exp:"Equilibrio verticale: N − mg = 0."},
+ {q:"m = 8 kg, μ_s = 0,25: forza d'attrito statico massima (g = 9,81):",opts:["19,6 N","2 N","78,5 N","0,25 N"],ans:0,exp:"f_max = 0,25·8·9,81 ≈ 19,6 N."},
+ {q:"Tirare un corpo con un angolo (anziché orizzontalmente) conviene perché:",opts:["riduce la normale e quindi l'attrito","aumenta il peso","annulla l'attrito","non cambia nulla"],ans:0,exp:"La componente verticale alleggerisce il corpo: meno attrito."}
+],
+inclin:[
+ {q:"La componente del peso lungo un piano inclinato di angolo θ è:",opts:["mg·sinθ","mg·cosθ","mg·tanθ","mg"],ans:0,exp:"P∥ = mg sinθ."},
+ {q:"La componente del peso perpendicolare al piano (uguale alla normale) è:",opts:["mg·cosθ","mg·sinθ","mg","mg/cosθ"],ans:0,exp:"P⊥ = N = mg cosθ."},
+ {q:"Senza attrito, la forza lungo il piano che tiene fermo il corpo è:",opts:["mg·sinθ","mg·cosθ","mg","0"],ans:0,exp:"Deve bilanciare P∥ = mg sinθ."},
+ {q:"m = 10 kg, θ = 30°, piano liscio: forza d'equilibrio lungo il piano (g = 9,81):",opts:["49 N","85 N","98,1 N","10 N"],ans:0,exp:"F = mg sin30° = 98,1·0,5 ≈ 49 N."},
+ {q:"L'angolo limite di scivolamento su un piano scabro è:",opts:["arctan(μ_s)","arcsin(μ_s)","arccos(μ_s)","45°"],ans:0,exp:"θ_lim = arctan(μ_s)."},
+ {q:"Aumentando l'angolo θ del piano, la componente mg·sinθ:",opts:["aumenta","diminuisce","resta uguale","si annulla"],ans:0,exp:"sinθ cresce con θ."},
+ {q:"Aumentando l'angolo θ, la normale mg·cosθ:",opts:["diminuisce","aumenta","resta uguale","raddoppia"],ans:0,exp:"cosθ cala al crescere di θ."},
+ {q:"m = 5 kg, θ = 30°: la reazione normale N è (g = 9,81):",opts:["42,5 N","24,5 N","49 N","5 N"],ans:0,exp:"N = mg cos30° = 49·0,866 ≈ 42,5 N."},
+ {q:"Un corpo è in equilibrio su un piano scabro se:",opts:["mg sinθ ≤ μ_s·mg cosθ","mg sinθ > μ_s·mg cosθ","sempre","mai"],ans:0,exp:"L'attrito deve bastare a bilanciare P∥."},
+ {q:"La condizione di equilibrio su piano scabro si riduce a:",opts:["tanθ ≤ μ_s","sinθ ≤ μ_s","cosθ ≤ μ_s","θ ≤ μ_s"],ans:0,exp:"Dividendo per mg cosθ: tanθ ≤ μ_s."},
+ {q:"m = 8 kg, θ = 20°, liscio: componente lungo il piano (g = 9,81):",opts:["26,8 N","73,8 N","78,5 N","8 N"],ans:0,exp:"mg sin20° = 78,5·0,342 ≈ 26,8 N."},
+ {q:"Su un piano orizzontale (θ = 0), la componente del peso lungo il piano è:",opts:["nulla","mg","mg/2","massima"],ans:0,exp:"sin0° = 0."},
+ {q:"Su una parete verticale (θ = 90°), la componente del peso lungo il piano è:",opts:["mg (tutto il peso)","0","mg/2","mg cosθ"],ans:0,exp:"sin90° = 1: P∥ = mg."},
+ {q:"L'angolo limite di scivolamento dipende dalla massa?",opts:["no, solo da μ_s","sì, cresce con m","sì, cala con m","solo da g"],ans:0,exp:"tanθ_lim = μ_s: la massa si semplifica."},
+ {q:"Con μ_s = 0,5, l'angolo limite di scivolamento è:",opts:["26,6°","30°","45°","60°"],ans:0,exp:"θ_lim = arctan(0,5) ≈ 26,6°."},
+ {q:"m = 4 kg, θ = 45°, liscio: componente lungo il piano (g = 9,81):",opts:["27,7 N","39,2 N","55,5 N","4 N"],ans:0,exp:"mg sin45° = 39,24·0,707 ≈ 27,7 N."},
+ {q:"Su un piano inclinato liscio, un corpo lasciato libero:",opts:["scivola verso il basso","resta fermo","sale","è in equilibrio"],ans:0,exp:"Senza attrito nulla bilancia P∥."},
+ {q:"La forza che tiene fermo un corpo su un piano liscio è diretta:",opts:["lungo il piano, verso l'alto","verticale","orizzontale","perpendicolare al piano"],ans:0,exp:"Deve opporsi a P∥, che è lungo il piano verso il basso."},
+ {q:"Se l'angolo θ supera l'angolo limite, il corpo:",opts:["scivola","resta fermo","sale","è in equilibrio"],ans:0,exp:"L'attrito non basta più: il corpo scivola."},
+ {q:"m = 2 kg, θ = 60°, liscio: forza d'equilibrio lungo il piano (g = 9,81):",opts:["17,0 N","9,8 N","19,6 N","2 N"],ans:0,exp:"mg sin60° = 19,62·0,866 ≈ 17,0 N."}
+],
+molla:[
+ {q:"La legge di Hooke è:",opts:["F = −k·Δx","F = k/Δx","F = k·Δx²","F = m·Δx"],ans:0,exp:"La forza elastica è proporzionale e opposta all'allungamento."},
+ {q:"Molla k = 200 N/m con massa m = 2 kg appesa: allungamento (g = 9,81):",opts:["9,8 cm","0,098 cm","98 cm","2 cm"],ans:0,exp:"Δx = mg/k = 19,62/200 ≈ 0,098 m = 9,8 cm."},
+ {q:"All'equilibrio di una massa appesa a una molla, la forza elastica eguaglia:",opts:["il peso","l'attrito","la normale","zero"],ans:0,exp:"k·Δx = mg."},
+ {q:"Raddoppiando la massa appesa a una molla, l'allungamento:",opts:["raddoppia","si dimezza","resta uguale","quadruplica"],ans:0,exp:"Δx = mg/k: proporzionale alla massa."},
+ {q:"L'unità di misura della costante elastica k è:",opts:["N/m","N·m","N","m/N"],ans:0,exp:"F = k·Δx ⇒ k = F/Δx in N/m."},
+ {q:"k = 100 N/m, allungamento Δx = 0,1 m: forza elastica:",opts:["10 N","100 N","0,1 N","1000 N"],ans:0,exp:"F = k·Δx = 100·0,1 = 10 N."},
+ {q:"A parità di peso, una molla più rigida (k grande) si allunga:",opts:["meno","di più","uguale","non si allunga"],ans:0,exp:"Δx = mg/k: k grande ⇒ Δx piccolo."},
+ {q:"m = 5 kg, k = 500 N/m: allungamento (g = 9,81):",opts:["9,8 cm","0,098 cm","98 cm","0,01 cm"],ans:0,exp:"Δx = 49,05/500 ≈ 0,098 m = 9,8 cm."},
+ {q:"Il segno meno nella legge di Hooke indica che la forza elastica è:",opts:["opposta allo spostamento","nel verso dello spostamento","costante","nulla"],ans:0,exp:"È una forza di richiamo."},
+ {q:"Due molle uguali in parallelo hanno costante equivalente:",opts:["2k (più rigide)","k/2","k","4k"],ans:0,exp:"Le rigidezze si sommano: k_eq = 2k."},
+ {q:"Due molle uguali in serie hanno costante equivalente:",opts:["k/2 (più cedevoli)","2k","k","4k"],ans:0,exp:"In serie: 1/k_eq = 1/k + 1/k ⇒ k_eq = k/2."},
+ {q:"k = 400 N/m, forza applicata 20 N: allungamento:",opts:["5 cm","0,05 cm","50 cm","8000 cm"],ans:0,exp:"Δx = F/k = 20/400 = 0,05 m = 5 cm."},
+ {q:"Togliendo la massa appesa, la molla:",opts:["torna alla lunghezza di riposo","resta allungata","si spezza","si accorcia oltre il riposo"],ans:0,exp:"La forza elastica riporta la molla a riposo."},
+ {q:"La forza elastica è proporzionale:",opts:["all'allungamento","al quadrato dell'allungamento","alla massa","al tempo"],ans:0,exp:"F = k·Δx: lineare nell'allungamento."},
+ {q:"m = 1 kg, k = 50 N/m: allungamento (g = 9,81):",opts:["19,6 cm","0,196 cm","196 cm","2 cm"],ans:0,exp:"Δx = 9,81/50 ≈ 0,196 m = 19,6 cm."},
+ {q:"Una massa su piano scabro trattenuta da una molla: all'equilibrio la forza elastica è bilanciata da:",opts:["l'attrito statico","il peso","la normale","nulla"],ans:0,exp:"Orizzontalmente: k·Δx = f_a."},
+ {q:"k = 250 N/m, allungamento 4 cm: forza elastica:",opts:["10 N","1000 N","0,16 N","62,5 N"],ans:0,exp:"F = 250·0,04 = 10 N."},
+ {q:"Dimezzando k (molla più cedevole), a parità di peso l'allungamento:",opts:["raddoppia","si dimezza","resta uguale","si annulla"],ans:0,exp:"Δx = mg/k: k dimezzato ⇒ Δx doppio."},
+ {q:"m = 3 kg, k = 300 N/m: allungamento (g = 9,81):",opts:["9,8 cm","0,098 cm","98 cm","0,3 cm"],ans:0,exp:"Δx = 29,43/300 ≈ 0,098 m = 9,8 cm."},
+ {q:"L'equilibrio di una massa su molla verticale è descritto da:",opts:["k·Δx = mg","k·Δx = mg·sinθ","k = mg","Δx = k·mg"],ans:0,exp:"La forza elastica eguaglia il peso."}
+],
+momento:[
+ {q:"Il momento di una forza rispetto a un polo vale:",opts:["M = F·d (d = braccio)","M = F/d","M = F + d","M = F·d²"],ans:0,exp:"Momento = forza × braccio."},
+ {q:"L'unità di misura del momento di una forza è:",opts:["N·m","N/m","N","m/N"],ans:0,exp:"Forza (N) × braccio (m)."},
+ {q:"Una forza di 20 N con braccio 0,5 m produce un momento:",opts:["10 N·m","40 N·m","20,5 N·m","0,025 N·m"],ans:0,exp:"M = 20·0,5 = 10 N·m."},
+ {q:"Il braccio di una forza è:",opts:["la distanza perpendicolare tra retta d'azione e polo","la lunghezza della forza","la massa","l'angolo"],ans:0,exp:"È la distanza perpendicolare dalla retta d'azione al polo."},
+ {q:"Una forza la cui retta d'azione passa per il polo ha momento:",opts:["nullo","massimo","F·r","negativo"],ans:0,exp:"Braccio zero ⇒ momento nullo."},
+ {q:"Il momento M = F·r·sinφ è massimo quando φ vale:",opts:["90°","0°","45°","180°"],ans:0,exp:"sinφ = 1 per φ = 90° (forza perpendicolare)."},
+ {q:"Per convenzione, un momento che tende a far ruotare in senso antiorario è:",opts:["positivo","negativo","nullo","massimo"],ans:0,exp:"Antiorario = positivo (convenzione usuale)."},
+ {q:"Un corpo non ruota se la somma dei momenti è:",opts:["nulla","massima","positiva","negativa"],ans:0,exp:"Equilibrio rotazionale: Σ M = 0."},
+ {q:"F = 50 N applicata a 0,8 m dal polo con φ = 30°: momento:",opts:["20 N·m","40 N·m","34,6 N·m","4 N·m"],ans:0,exp:"M = 50·0,8·sin30° = 50·0,8·0,5 = 20 N·m."},
+ {q:"Raddoppiando il braccio (stessa forza), il momento:",opts:["raddoppia","si dimezza","resta uguale","quadruplica"],ans:0,exp:"M = F·d: proporzionale al braccio."},
+ {q:"Per svitare un bullone conviene usare una chiave:",opts:["lunga (braccio maggiore)","corta","leggera","pesante"],ans:0,exp:"Braccio più lungo ⇒ momento maggiore a parità di forza."},
+ {q:"Due forze uguali, opposte e non allineate formano:",opts:["una coppia","una risultante grande","equilibrio completo","nessun momento"],ans:0,exp:"Una coppia produce solo rotazione."},
+ {q:"Il teorema di Varignon afferma che:",opts:["il momento della risultante uguaglia la somma dei momenti","l'attrito è costante","la molla è lineare","il baricentro è centrale"],ans:0,exp:"Momento della risultante = somma dei momenti delle componenti."},
+ {q:"F = 100 N con braccio 0,2 m: momento:",opts:["20 N·m","500 N·m","100,2 N·m","0,002 N·m"],ans:0,exp:"M = 100·0,2 = 20 N·m."},
+ {q:"Se Σ F = 0 ma Σ M ≠ 0, il corpo:",opts:["ruota","trasla","resta fermo","accelera il baricentro"],ans:0,exp:"Una coppia non equilibrata produce solo rotazione."},
+ {q:"Il momento di una forza dipende:",opts:["dalla forza e dal braccio","solo dalla forza","solo dalla massa","dal tempo"],ans:0,exp:"M = F·d."}
+],
+leva:[
+ {q:"La condizione di equilibrio di una leva è:",opts:["F₁·d₁ = F₂·d₂","F₁·F₂ = d₁·d₂","F₁ + d₁ = F₂ + d₂","F₁·d₂ = F₂·d₁"],ans:0,exp:"Uguaglianza dei momenti rispetto al fulcro."},
+ {q:"Il vantaggio meccanico di una leva è:",opts:["il rapporto d₁/d₂ tra i bracci","il prodotto F₁·F₂","la somma dei bracci","sempre maggiore di 1"],ans:0,exp:"VM = d₁/d₂ = F₂/F₁."},
+ {q:"In una leva vantaggiosa, il braccio della potenza è:",opts:["maggiore di quello della resistenza","minore","uguale","nullo"],ans:0,exp:"Braccio della potenza più lungo ⇒ VM > 1."},
+ {q:"In una leva di primo genere il fulcro è:",opts:["tra potenza e resistenza","all'estremità","dalla parte della resistenza","assente"],ans:0,exp:"Fulcro al centro: come l'altalena o le forbici."},
+ {q:"La bilancia a bracci uguali è una leva:",opts:["di primo genere","di secondo genere","di terzo genere","senza fulcro"],ans:0,exp:"Fulcro centrale, bracci uguali: VM = 1."},
+ {q:"Resistenza 90 N a 0,2 m dal fulcro, potenza a 0,6 m: forza motrice necessaria:",opts:["30 N","270 N","90 N","18 N"],ans:0,exp:"F₁ = 90·0,2/0,6 = 30 N."},
+ {q:"Un vantaggio meccanico VM = 3 significa che la forza richiesta è:",opts:["un terzo della resistenza","il triplo","uguale","nulla"],ans:0,exp:"VM = F_res/F_mot = 3 ⇒ F_mot = F_res/3."},
+ {q:"La carriola è una leva di:",opts:["secondo genere","primo genere","terzo genere","nessun genere"],ans:0,exp:"Resistenza tra fulcro (ruota) e potenza: vantaggiosa."},
+ {q:"L'avambraccio con il bicipite è una leva di:",opts:["terzo genere","primo genere","secondo genere","indifferente"],ans:0,exp:"Potenza tra fulcro (gomito) e resistenza: svantaggiosa."},
+ {q:"In una leva di secondo genere la resistenza è:",opts:["tra fulcro e potenza","oltre la potenza","nel fulcro","assente"],ans:0,exp:"Resistenza al centro: sempre vantaggiosa."},
+ {q:"Potenza 50 N a 0,8 m, resistenza a 0,4 m dal fulcro: resistenza equilibrata:",opts:["100 N","25 N","50 N","200 N"],ans:0,exp:"F₂ = 50·0,8/0,4 = 100 N."},
+ {q:"In una leva svantaggiosa la forza motrice è:",opts:["maggiore della resistenza","minore","uguale","nulla"],ans:0,exp:"VM < 1: serve più forza."},
+ {q:"Una leva amplifica la forza quando:",opts:["il braccio della potenza è maggiore","i bracci sono uguali","la resistenza è nulla","il fulcro è centrale"],ans:0,exp:"d₁ > d₂ ⇒ VM > 1."},
+ {q:"Raddoppiando il braccio della potenza (resistenza e suo braccio invariati), la forza necessaria:",opts:["si dimezza","raddoppia","resta uguale","si annulla"],ans:0,exp:"F₁ = F₂·d₂/d₁: d₁ doppio ⇒ F₁ dimezzata."},
+ {q:"Il vantaggio meccanico di una leva è una grandezza:",opts:["adimensionale","in newton","in metri","in N·m"],ans:0,exp:"È un rapporto: numero puro."},
+ {q:"In una leva di terzo genere il vantaggio meccanico è:",opts:["minore di 1","maggiore di 1","uguale a 1","infinito"],ans:0,exp:"Braccio della potenza minore: VM < 1 (svantaggiosa)."}
+],
+trave:[
+ {q:"Un carico di 800 N al centro di una trave su due appoggi: ogni appoggio regge:",opts:["400 N","800 N","200 N","1600 N"],ans:0,exp:"Per simmetria, metà del carico ciascuno."},
+ {q:"Le condizioni di equilibrio di una trave sono:",opts:["Σ F = 0 e Σ M = 0","solo Σ F = 0","solo Σ M = 0","Σ F = mg"],ans:0,exp:"Equilibrio di traslazione e di rotazione."},
+ {q:"Se il carico è più vicino all'appoggio A, la reazione R_A è:",opts:["maggiore di R_B","minore di R_B","uguale a R_B","nulla"],ans:0,exp:"L'appoggio più vicino sostiene di più."},
+ {q:"Per una trave di peso trascurabile con un carico P, la somma delle reazioni è:",opts:["R_A + R_B = P","R_A − R_B = P","R_A·R_B = P","R_A = R_B = P"],ans:0,exp:"Equilibrio verticale."},
+ {q:"Trave L = 4 m, carico 600 N a 1 m da A: reazione R_B:",opts:["150 N","450 N","600 N","300 N"],ans:0,exp:"R_B = P·a/L = 600·1/4 = 150 N."},
+ {q:"Trave L = 4 m, carico 600 N a 1 m da A: reazione R_A:",opts:["450 N","150 N","600 N","300 N"],ans:0,exp:"R_A = P − R_B = 600 − 150 = 450 N."},
+ {q:"L'equazione dei momenti si può scrivere rispetto a un polo:",opts:["qualsiasi (conviene su un appoggio)","solo il centro","solo A","solo il baricentro"],ans:0,exp:"Vale per qualunque polo."},
+ {q:"Scegliere il polo su un appoggio serve a:",opts:["eliminare quella reazione incognita dall'equazione","aumentare il momento","trovare il peso","nulla"],ans:0,exp:"La reazione in quel punto ha braccio nullo."},
+ {q:"Carico 1000 N a metà di una trave su due appoggi: ogni reazione vale:",opts:["500 N","1000 N","250 N","750 N"],ans:0,exp:"Per simmetria: metà del carico."},
+ {q:"Trave L = 6 m, carico 900 N a 2 m da A: reazione R_B:",opts:["300 N","600 N","900 N","450 N"],ans:0,exp:"R_B = 900·2/6 = 300 N."},
+ {q:"Trave L = 6 m, carico 900 N a 2 m da A: reazione R_A:",opts:["600 N","300 N","900 N","450 N"],ans:0,exp:"R_A = 900 − 300 = 600 N."},
+ {q:"Le reazioni di una trave appoggiata (carichi verso il basso) sono dirette:",opts:["verso l'alto","verso il basso","orizzontali","nulle"],ans:0,exp:"Gli appoggi spingono verso l'alto."},
+ {q:"Se il carico è esattamente sopra un appoggio, l'altro appoggio regge:",opts:["nulla","metà del carico","tutto il carico","il doppio"],ans:0,exp:"Tutto il carico grava sull'appoggio sottostante."},
+ {q:"Per una trave con più carichi, le reazioni si trovano con:",opts:["Σ F = 0 e Σ M = 0","solo pesando","la legge di Hooke","il coefficiente μ_s"],ans:0,exp:"Due equazioni di equilibrio."},
+ {q:"Carico 400 N a 3/4 della lunghezza da A: reazione R_B:",opts:["300 N","100 N","400 N","200 N"],ans:0,exp:"R_B = P·a/L = 400·0,75 = 300 N."},
+ {q:"Raddoppiando il carico centrato su una trave, le reazioni:",opts:["raddoppiano","si dimezzano","restano uguali","si annullano"],ans:0,exp:"Sono proporzionali al carico."}
+],
+rigido:[
+ {q:"Un corpo rigido è in equilibrio se e solo se:",opts:["Σ Fx = 0, Σ Fy = 0 e Σ M = 0","solo Σ F = 0","solo Σ M = 0","Σ F = mg"],ans:0,exp:"Tre condizioni: niente traslazione né rotazione."},
+ {q:"Le condizioni Σ Fx = 0 e Σ Fy = 0 impediscono:",opts:["la traslazione","la rotazione","la deformazione","la caduta"],ans:0,exp:"Impediscono lo spostamento del baricentro."},
+ {q:"La condizione Σ M = 0 impedisce:",opts:["la rotazione","la traslazione","la caduta","l'attrito"],ans:0,exp:"Equilibrio rotazionale."},
+ {q:"Il peso di un corpo si considera applicato:",opts:["nel centro di massa","in un estremo","nel punto di appoggio","ovunque"],ans:0,exp:"Nel baricentro (centro di massa)."},
+ {q:"Se Σ F = 0 ma Σ M ≠ 0, il corpo:",opts:["ruota senza traslare","trasla","è in equilibrio","cade"],ans:0,exp:"Una coppia non equilibrata produce rotazione pura."},
+ {q:"Per due masse uguali, il centro di massa si trova:",opts:["a metà tra le due","sulla più grande","fuori dal segmento","indefinito"],ans:0,exp:"x_G è il punto medio per masse uguali."},
+ {q:"Il diagramma del corpo libero (DCL) serve a:",opts:["rappresentare tutte le forze sul corpo","misurare la massa","calcolare il tempo","disegnare la traiettoria"],ans:0,exp:"Isola il corpo e mostra tutte le forze agenti."},
+ {q:"Masse di 2 kg a x = 0 e 2 kg a x = 1 m: il centro di massa è a:",opts:["0,5 m","0 m","1 m","0,25 m"],ans:0,exp:"x_G = (2·0 + 2·1)/4 = 0,5 m."},
+ {q:"Nell'equazione dei momenti per un corpo rigido, il polo:",opts:["può essere scelto liberamente","deve essere il centro","deve essere un estremo","non esiste"],ans:0,exp:"Il risultato non dipende dalla scelta del polo."},
+ {q:"Una scala appoggiata a un muro liscio: il muro esercita una reazione:",opts:["orizzontale","verticale","lungo la scala","nulla"],ans:0,exp:"Un muro liscio spinge solo perpendicolarmente (orizzontale)."},
+ {q:"Masse di 1 kg a x = 0 e 3 kg a x = 4 m: il centro di massa è a:",opts:["3 m","2 m","4 m","1 m"],ans:0,exp:"x_G = (1·0 + 3·4)/4 = 12/4 = 3 m."},
+ {q:"Per risolvere un problema di equilibrio conviene scegliere il polo:",opts:["dove agisce una forza incognita","al centro sempre","dove non ci sono forze","a caso"],ans:0,exp:"Così quella forza sparisce dall'equazione dei momenti."},
+ {q:"Un corpo appeso è in equilibrio stabile quando il baricentro è:",opts:["il più basso possibile","il più alto possibile","spostato di lato","indifferente"],ans:0,exp:"Energia potenziale minima ⇒ baricentro basso."},
+ {q:"Nelle equazioni di equilibrio del corpo rigido, il momento si misura in:",opts:["N·m","N","m","kg"],ans:0,exp:"Forza per braccio: N·m."},
+ {q:"Tre masse uguali ai vertici di un triangolo: il centro di massa è:",opts:["nel baricentro del triangolo","in un vertice","fuori dal triangolo","su un lato"],ans:0,exp:"Per simmetria coincide col baricentro geometrico."},
+ {q:"Una coppia di forze (Σ F = 0) produce:",opts:["solo rotazione","solo traslazione","equilibrio","caduta"],ans:0,exp:"Due forze uguali e opposte non allineate: rotazione pura."}
+]
+};;
+
 /* ============ QUIZ ENGINE ============ */
 const QSECTIONS=['funi','orizz','inclin','molla','momento','leva','trave','rigido','riepilogo'];
 const TOPIC_KEYS=QSECTIONS.filter(k=>k!=='riepilogo');
@@ -2626,10 +2790,10 @@ const QUIZ_ENDONLY={riepilogo:true};
 const QUIZ_DRAW={riepilogo:15};           /* domande estratte; i pool valgono 3× */
 const QUIZ_DRAW_DEFAULT=8;
 const qState={};
-function poolFor(s){ return s==='riepilogo' ? [].concat(...TOPIC_KEYS.map(k=>QUIZZES[k]||[]), QUIZZES.riepilogo||[]) : (QUIZZES[s]||[]); }
+function poolFor(s){ return s==='riepilogo' ? [].concat(...TOPIC_KEYS.map(k=>poolFor(k)), QUIZZES.riepilogo||[]) : (QUIZZES[s]||[]).concat(QUIZZES_EXTRA[s]||[]); }
 function shuffle(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function drawCount(s){ const pool=poolFor(s).length; return Math.max(1, Math.min(pool, QUIZ_DRAW[s]||QUIZ_DRAW_DEFAULT)); }
-function freshQuiz(s){ return {idx:0,done:false,answers:[],order:shuffle(poolFor(s).length).slice(0,drawCount(s))}; }
+function freshQuiz(s){ const pool=poolFor(s), ord=shuffle(pool.length).slice(0,drawCount(s)); return {idx:0,done:false,answers:[],order:ord,opt:ord.map(qi=>shuffle(pool[qi].opts.length))}; }
 QSECTIONS.forEach(s=>{ qState[s]=freshQuiz(s); });
 function quizScore(s){ const qs=poolFor(s), st=qState[s]; let n=0; st.order.forEach((qi,pos)=>{ if(st.answers[pos]===qs[qi].ans) n++; }); return n; }
 function renderQuiz(s){
@@ -2641,11 +2805,11 @@ function renderQuiz(s){
     const score=quizScore(s), r=score/total, mi=r<=0.3?0:r<=0.5?1:r<=0.8?2:r<=0.94?3:4;
     let review='';
     if(endOnly){
-      review='<div class="quiz-review">'+order.map((qi,pos)=>{ const q=qs[qi], ch=st.answers[pos], ok=ch===q.ans;
+      review='<div class="quiz-review">'+order.map((qi,pos)=>{ const q=qs[qi], omap=st.opt[pos], ch=st.answers[pos], ok=ch===q.ans, chD=ch==null?-1:omap.indexOf(ch), ansD=omap.indexOf(q.ans);
         return `<div class="qr-item ${ok?'ok':'no'}">
           <div class="qr-q">${pos+1}. ${q.q}</div>
-          <div class="qr-a">${ok?IC.check:IC.cross}<span>La tua risposta: <b>${ch==null?'nessuna':(('ABCD'[ch])+') '+q.opts[ch])}</b></span></div>
-          ${ok?'':`<div class="qr-correct">${IC.check}<span>Corretta: <b>${'ABCD'[q.ans]}) ${q.opts[q.ans]}</b></span></div>`}
+          <div class="qr-a">${ok?IC.check:IC.cross}<span>La tua risposta: <b>${ch==null?'nessuna':(('ABCD'[chD])+') '+q.opts[ch])}</b></span></div>
+          ${ok?'':`<div class="qr-correct">${IC.check}<span>Corretta: <b>${'ABCD'[ansD]}) ${q.opts[q.ans]}</b></span></div>`}
           <div class="qr-exp">${q.exp}</div>
         </div>`; }).join('')+'</div>';
     }
@@ -2655,11 +2819,11 @@ function renderQuiz(s){
       <button class="quiz-restart" onclick="restartQuiz('${s}')">${IC.reset}<span>Ricomincia quiz</span></button>
     </div>${review}`;
   } else {
-    const q=qs[order[st.idx]], pct=st.idx/total*100, given=st.answers[st.idx], answered=given!=null, correct=answered&&given===q.ans;
-    const opts=q.opts.map((o,i)=>{ let cls='quiz-btn';
-      if(answered){ if(endOnly){ if(i===given) cls+=' chosen'; } else { if(i===q.ans) cls+=' correct'; else if(i===given) cls+=' wrong'; } }
+    const q=qs[order[st.idx]], omap=st.opt[st.idx], pct=st.idx/total*100, given=st.answers[st.idx], answered=given!=null, correct=answered&&given===q.ans;
+    const opts=omap.map((oi,disp)=>{ let cls='quiz-btn';
+      if(answered){ if(endOnly){ if(oi===given) cls+=' chosen'; } else { if(oi===q.ans) cls+=' correct'; else if(oi===given) cls+=' wrong'; } }
       const dis=(answered&&!endOnly)?' disabled':'';
-      return `<button class="${cls}"${dis} onclick="answerQuiz('${s}',${i})">${'ABCD'[i]}) ${o}</button>`; }).join('');
+      return `<button class="${cls}"${dis} onclick="answerQuiz('${s}',${oi})">${'ABCD'[disp]}) ${q.opts[oi]}</button>`; }).join('');
     const counter=endOnly?`Risposte: ${st.answers.filter(a=>a!=null).length}/${total}`:`Punteggio: ${quizScore(s)}`;
     const note=endOnly?`<p class="quiz-note-end">Le correzioni compaiono alla fine. Puoi tornare indietro con «Precedente»: le risposte restano quelle che hai dato.</p>`
       :(answered?`<div class="quiz-exp ${correct?'ok':'no'}"><strong>${correct?IC.check+'Corretto!':IC.cross+'Sbagliato.'}</strong> ${q.exp}</div>`:'');
