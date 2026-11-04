@@ -3,44 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#eef3f8">
+<meta name="color-scheme" content="light dark">
 <title>Equilibrio dei corpi · Fisica</title>
+<link rel="stylesheet" href="katex/katex.min.css">
+<script defer src="katex/katex.min.js"></script>
 <style>
+/* ===== Design system condiviso (DESIGN_SYSTEM.md) ===== */
 :root{
-  --bg:#f7f8fa;--surface:#fff;--surface2:#f9fafc;
-  --primary:#1565c0;--primary-d:#0d47a1;--primary-l:rgba(21,101,192,.08);
-  --text:#1a1a2e;--muted:#6b7280;--border:#e0e4ed;
-  --radius:12px;
-  --vT:#1565c0;--vP:#e53935;--vN:#2e7d32;--vF:#f57c00;--vFa:#7b1fa2;--vFe:#00897b;--vM:#c62828;
+  /* superfici */
+  --bg:#eef3f8;--card:#ffffff;--surface2:#f4f8fc;--border:#dbe4ee;
+  --text:#16202b;--text-soft:#52606d;
+  /* brand: un unico blu per tutte le app */
+  --accent:#1565c0;--accent-d:#0d47a1;--accent-2:#00897b;--accent-soft:rgba(21,101,192,.09);
+  /* stato (sempre con icona + testo, mai solo colore) */
+  --correct:#1b7f4b;--wrong:#c0392b;--warn:#ef6c00;
+  /* raggi, ombre, spazi */
+  --radius:14px;--shadow:0 6px 24px rgba(16,32,43,.09);--space:clamp(12px,2.5vw,20px);
+  /* palette grafici/vettori — Okabe–Ito (distinguibile da chi ha daltonismo) */
+  --vT:#0072B2;--vP:#D55E00;--vN:#009E73;--vF:#E69F00;--vFa:#CC79A7;--vFe:#56B4E9;--vM:#525b66;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:var(--bg);color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+  font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:clamp(15px,2.3vw,16.5px);line-height:1.6}
 
 /* ===== Header ===== */
-header{background:var(--surface);border-bottom:1px solid var(--border);
+header{background:var(--card);border-bottom:1px solid var(--border);
   padding:.75rem 1rem;position:sticky;top:0;z-index:10;
   display:flex;align-items:center;justify-content:space-between;gap:.6rem}
 .header-brand{display:flex;flex-direction:column;gap:.05rem}
 header h1{font-size:clamp(1.15rem,3.8vw,1.45rem);color:var(--text);
   font-weight:800;letter-spacing:-.02em;line-height:1.15}
-.header-sub{font-size:.75em;color:var(--muted);font-weight:400;line-height:1.3}
+.header-sub{font-size:.75em;color:var(--text-soft);font-weight:400;line-height:1.3}
 .btn-print{background:var(--surface2);border:1px solid var(--border);
-  color:var(--primary-d);border-radius:8px;padding:.4rem .8rem;font-size:.82em;
+  color:var(--accent-d);border-radius:8px;padding:.4rem .8rem;font-size:.82em;
   cursor:pointer;font-family:inherit;font-weight:600;transition:background .15s,border-color .15s;white-space:nowrap}
-.btn-print:hover{background:var(--primary-l);border-color:var(--primary)}
+.btn-print:hover{background:var(--accent-soft);border-color:var(--accent)}
 
 /* ===== Nav ===== */
-nav.main{background:var(--surface);border-bottom:1px solid var(--border);
+nav.main{background:var(--card);border-bottom:1px solid var(--border);
   position:sticky;z-index:5;overflow-x:auto;display:flex;gap:.35rem;
   padding:.5rem .7rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 nav.main button{flex:0 0 auto;background:var(--surface2);border:1px solid var(--border);
-  border-radius:999px;padding:.4rem .85rem;font-size:.84em;color:var(--muted);
+  border-radius:999px;padding:.4rem .85rem;font-size:.84em;color:var(--text-soft);
   cursor:pointer;white-space:nowrap;font-family:inherit;min-height:36px;
   transition:background .15s,border-color .15s,color .15s}
-nav.main button:hover:not(.active){background:var(--primary-l);color:var(--text)}
-nav.main button.active{background:var(--primary);border-color:var(--primary);
+nav.main button:hover:not(.active){background:var(--accent-soft);color:var(--text)}
+nav.main button.active{background:var(--accent);border-color:var(--accent);
   color:#fff;font-weight:600}
 
 /* ===== Layout ===== */
@@ -48,20 +59,20 @@ main{padding:1.1rem 1rem 2.5rem;max-width:960px;margin:0 auto}
 section.scene{display:none}
 section.scene.active{display:block}
 .sec-label{font-size:.71em;font-weight:700;letter-spacing:.09em;
-  color:var(--muted);text-transform:uppercase;margin:.1rem 0 .4rem}
+  color:var(--text-soft);text-transform:uppercase;margin:.1rem 0 .4rem}
 
 /* ===== Cards ===== */
-.card{background:var(--surface);border:1px solid var(--border);
+.card{background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:1.15rem 1.2rem;margin-bottom:1.1rem;
   box-shadow:0 1px 2px rgba(20,30,60,.04)}
 .card h2{margin:0 0 .55rem;color:var(--text);font-size:1.14em;font-weight:700;
   letter-spacing:-.01em}
-.card h3{margin:.9rem 0 .3rem;color:var(--primary-d);font-size:.97em;font-weight:600}
+.card h3{margin:.9rem 0 .3rem;color:var(--accent-d);font-size:.97em;font-weight:600}
 .card p{margin:.35rem 0;color:var(--text)}
-.lead{color:var(--muted);font-size:.92em;margin:.1rem 0 .7rem}
+.lead{color:var(--text-soft);font-size:.92em;margin:.1rem 0 .7rem}
 
 /* ===== Formulas ===== */
-.formula{background:var(--primary-l);border-left:3px solid var(--primary);
+.formula{background:var(--accent-soft);border-left:3px solid var(--accent);
   padding:.6rem .9rem;margin:.5rem 0;border-radius:0 8px 8px 0;
   font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:1.05em;
   overflow-x:auto;white-space:nowrap;line-height:1.9}
@@ -78,19 +89,19 @@ section.scene.active{display:block}
 /* ===== Controls ===== */
 .ctrl{display:grid;gap:.55rem;margin:0 0 .7rem}
 .ctrl label{display:flex;align-items:center;gap:.6rem;font-size:.89em}
-.ctrl label .nm{color:var(--muted);min-width:6.2em;font-size:.92em}
-.ctrl label input[type=range]{flex:1;min-width:0;min-height:26px;accent-color:var(--primary)}
+.ctrl label .nm{color:var(--text-soft);min-width:6.2em;font-size:.92em}
+.ctrl label input[type=range]{flex:1;min-width:0;min-height:26px;accent-color:var(--accent)}
 .ctrl label .v{min-width:3.9em;text-align:right;font-weight:700;
-  color:var(--primary-d);font-variant-numeric:tabular-nums;font-size:.95em}
+  color:var(--accent-d);font-variant-numeric:tabular-nums;font-size:.95em}
 .ctrl select{padding:.42rem .6rem;border:1px solid var(--border);border-radius:8px;
-  font-size:.93em;background:var(--surface);width:100%;color:var(--text);font-family:inherit}
+  font-size:.93em;background:var(--card);width:100%;color:var(--text);font-family:inherit}
 
 /* ===== Readouts ===== */
 .read{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));
   gap:.42rem;margin:.55rem 0;font-size:.86em}
 .read .it{background:var(--surface2);padding:.42rem .58rem;border-radius:8px;
   border:1px solid var(--border)}
-.read .it .l{color:var(--muted);font-size:.77em;display:block;margin-bottom:.12rem}
+.read .it .l{color:var(--text-soft);font-size:.77em;display:block;margin-bottom:.12rem}
 .read .it .v{font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
 
 /* ===== Status badge ===== */
@@ -115,25 +126,25 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
 
 /* ===== Home grid ===== */
 .home-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.75rem}
-.home-card{background:var(--surface);border:1px solid var(--border);
+.home-card{background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:.95rem 1rem;cursor:pointer;text-align:left;
   font-size:1em;font-family:inherit;color:inherit;
   box-shadow:0 1px 2px rgba(20,30,60,.04);
   transition:border-color .18s,box-shadow .18s,transform .14s}
-.home-card:hover{border-color:var(--primary);
+.home-card:hover{border-color:var(--accent);
   box-shadow:0 4px 14px rgba(21,101,192,.12);transform:translateY(-2px)}
 .ico{width:2rem;height:2rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  color:var(--primary);opacity:.85}
+  color:var(--accent);opacity:.85}
 .ico svg{width:1.5rem;height:1.5rem}
-.home-card strong{color:var(--primary-d);display:block;margin-bottom:.12rem;font-size:.97em}
-.home-card span{color:var(--muted);font-size:.85em}
+.home-card strong{color:var(--accent-d);display:block;margin-bottom:.12rem;font-size:.97em}
+.home-card span{color:var(--text-soft);font-size:.85em}
 
 /* ===== Quiz ===== */
 .quiz-hd{display:flex;justify-content:space-between;align-items:center;
   margin-bottom:.45rem;font-size:.83em}
 .quiz-bar-wrap{background:#e3e7ef;border-radius:999px;height:6px;
   margin-bottom:.9rem;overflow:hidden}
-.quiz-bar-fill{background:var(--primary);height:100%;border-radius:999px;
+.quiz-bar-fill{background:var(--accent);height:100%;border-radius:999px;
   transition:width .4s cubic-bezier(.4,0,.2,1)}
 .quiz-q{font-weight:600;margin:.2rem 0 .75rem;line-height:1.45;font-size:.95em}
 .quiz-opts{display:grid;gap:.38rem;margin-bottom:.45rem}
@@ -141,7 +152,7 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   padding:.5rem .85rem;text-align:left;cursor:pointer;font-size:.87em;
   font-family:inherit;color:var(--text);line-height:1.38;
   transition:background .12s,border-color .12s}
-.quiz-btn:not(:disabled):hover{background:var(--primary-l);border-color:var(--primary)}
+.quiz-btn:not(:disabled):hover{background:var(--accent-soft);border-color:var(--accent)}
 .quiz-btn:disabled{cursor:default}
 .quiz-btn.correct{background:#d4edd6!important;border-color:#388e3c!important;
   color:#1b5e20;font-weight:600}
@@ -150,15 +161,55 @@ svg.sim.grab:active,svg.sim.grab.dragging{cursor:grabbing}
   line-height:1.5;margin:.45rem 0}
 .quiz-exp.ok{background:#eaf6ec;border-left:3px solid #388e3c;color:#1b5e20}
 .quiz-exp.no{background:#fdeaea;border-left:3px solid #c62828;color:#b71c1c}
-.quiz-next,.quiz-restart{background:var(--primary);color:#fff;border:0;border-radius:8px;
+.quiz-restart{display:inline-flex;align-items:center;justify-content:center;gap:.42em}
+/* Quiz riepilogativo: correzione alla fine */
+.quiz-note-end{font-size:.8em;color:var(--text-soft);margin:0 0 .6rem;font-style:italic}
+.quiz-btn.chosen{background:var(--accent-soft)!important;border-color:var(--accent)!important;color:var(--accent-d);font-weight:600}
+.quiz-nav-row{display:flex;gap:.5rem;align-items:center;justify-content:space-between;margin-top:.4rem}
+.quiz-prev{background:var(--surface2);border:1.5px solid var(--border);color:var(--accent-d);border-radius:8px;
+  padding:.46rem 1rem;font-size:.87em;cursor:pointer;font-family:inherit;transition:background .15s,border-color .15s}
+.quiz-prev:hover{background:var(--accent-soft);border-color:var(--accent)}
+.quiz-next:disabled{opacity:.5;cursor:default}
+.quiz-review{margin-top:1rem;display:grid;gap:.6rem}
+.qr-item{border:1px solid var(--border);border-left:3px solid var(--border);border-radius:8px;
+  padding:.6rem .85rem;background:var(--surface2);font-size:.9em}
+.qr-item.ok{border-left-color:var(--correct)}
+.qr-item.no{border-left-color:var(--wrong)}
+.qr-q{font-weight:600;margin-bottom:.35rem;color:var(--text)}
+.qr-a,.qr-correct{display:flex;align-items:flex-start;gap:.35em;margin:.15rem 0}
+.qr-item.ok .qr-a{color:var(--correct)}
+.qr-item.no .qr-a{color:var(--wrong)}
+.qr-correct{color:var(--correct)}
+.qr-exp{color:var(--text-soft);font-size:.95em;margin-top:.35rem}
+/* Verifica numerica esercizi */
+.ex-verify{margin:.6rem 0 .2rem;padding:.65rem .8rem;border:1px dashed var(--border);border-radius:10px;background:var(--surface2)}
+.ver-lab{font-size:.86em;font-weight:700;color:var(--accent-d);margin:0 0 .5rem}
+.ver-inputs{display:flex;flex-wrap:wrap;gap:.55rem .9rem;margin-bottom:.55rem}
+.ver-field{display:inline-flex;align-items:center;gap:.35em;font-size:.9em}
+.ver-name{color:var(--text-soft);font-family:var(--mono)}
+.ver-in{width:5.6em;padding:.3rem .45rem;border:1.5px solid var(--border);border-radius:7px;background:var(--card);
+  color:var(--text);font-family:var(--mono);font-size:.95em;min-height:40px}
+.ver-in.ok{border-color:var(--correct);background:color-mix(in srgb,var(--correct) 12%,transparent)}
+.ver-in.no{border-color:var(--wrong);background:color-mix(in srgb,var(--wrong) 12%,transparent)}
+.ver-unit{color:var(--text-soft);font-size:.9em;font-family:var(--mono)}
+.ver-fb{display:inline-flex;width:1.05em}
+.ver-fb.ok{color:var(--correct)}
+.ver-fb.no{color:var(--wrong)}
+.ver-row{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.ver-result{display:inline-flex;align-items:center;gap:.3em;font-size:.88em;font-weight:600}
+.ver-result.ok{color:var(--correct)}
+.ver-result.no{color:var(--wrong)}
+.ver-note{font-size:.78em;color:var(--text-soft);margin:.4rem 0 0}
+@media print{.ex-verify{display:none!important}}
+.quiz-next,.quiz-restart{background:var(--accent);color:#fff;border:0;border-radius:8px;
   padding:.46rem 1.15rem;font-size:.87em;cursor:pointer;font-family:inherit;
   transition:background .15s}
 .quiz-next{margin-top:.25rem}
-.quiz-next:hover,.quiz-restart:hover{background:var(--primary-d)}
+.quiz-next:hover,.quiz-restart:hover{background:var(--accent-d)}
 .quiz-done{text-align:center;padding:.7rem 0}
-.quiz-score-big{font-size:2.2em;font-weight:800;color:var(--primary-d);
+.quiz-score-big{font-size:2.2em;font-weight:800;color:var(--accent-d);
   display:block;margin-bottom:.25rem}
-.quiz-msg{color:var(--muted);margin:.15rem 0 .8rem;font-size:.92em}
+.quiz-msg{color:var(--text-soft);margin:.15rem 0 .8rem;font-size:.92em}
 
 @media(max-width:520px){
   main{padding:.8rem .7rem 2rem}
@@ -171,31 +222,31 @@ nav.subnav{display:flex;gap:.3rem;margin-bottom:1rem;
   border-bottom:1px solid var(--border);overflow-x:auto;padding-bottom:0}
 nav.subnav button{flex:0 0 auto;background:transparent;border:0;
   border-bottom:2.5px solid transparent;padding:.55rem .95rem;
-  font-size:.9em;color:var(--muted);cursor:pointer;font-family:inherit;
+  font-size:.9em;color:var(--text-soft);cursor:pointer;font-family:inherit;
   font-weight:600;transition:color .15s,border-color .15s;margin-bottom:-1px;
   border-radius:0}
 nav.subnav button:hover{color:var(--text)}
-nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)}
+nav.subnav button.active{color:var(--accent);border-bottom-color:var(--accent)}
 .subscene{display:none}
 .subscene.active{display:block}
 
 /* ===== Esercizi svolti ===== */
-.esercizio{background:var(--surface);border:1px solid var(--border);
+.esercizio{background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:1rem 1.15rem;margin-bottom:.9rem;
   box-shadow:0 1px 2px rgba(20,30,60,.04)}
-.esercizio h3{color:var(--primary);font-size:.97em;font-weight:700;
+.esercizio h3{color:var(--accent);font-size:.97em;font-weight:700;
   margin:0 0 .4rem;letter-spacing:-.005em}
 .esercizio .testo{color:var(--text);margin:.3rem 0 .65rem;font-size:.95em}
 .esercizio .dati{background:var(--surface2);border:1px solid var(--border);
   border-radius:8px;padding:.55rem .8rem;margin:.5rem 0;font-size:.87em;
-  color:var(--muted);font-family:"Cambria Math",Georgia,serif}
+  color:var(--text-soft);font-family:"Cambria Math",Georgia,serif}
 .esercizio .dati b{color:var(--text);font-weight:600}
 .esercizio .step{margin:.5rem 0;padding-left:.6rem;border-left:2px solid var(--border)}
 .esercizio .step-t{font-weight:600;color:var(--text);font-size:.89em;margin-bottom:.15rem}
-.esercizio .step-b{color:var(--muted);font-size:.87em}
-.esercizio .risultato{background:rgba(21,101,192,.08);border-left:3px solid var(--primary);
+.esercizio .step-b{color:var(--text-soft);font-size:.87em}
+.esercizio .risultato{background:rgba(21,101,192,.08);border-left:3px solid var(--accent);
   padding:.55rem .85rem;margin:.7rem 0 0;border-radius:0 8px 8px 0;
-  font-weight:600;color:var(--primary-d);font-size:.95em}
+  font-weight:600;color:var(--accent-d);font-size:.95em}
 
 /* ===== Suggerimenti progressivi ===== */
 .ex-hint{background:#fffbf0;border-left:3px solid #f9a825;padding:.5rem .85rem;
@@ -207,18 +258,19 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
 .ex-actions{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.7rem;align-items:center}
 .ex-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;
   padding:.4rem .85rem;font-size:.84em;cursor:pointer;font-family:inherit;
-  color:var(--primary-d);font-weight:600;transition:background .15s,border-color .15s}
-.ex-btn:hover{background:var(--primary-l);border-color:var(--primary)}
-.ex-btn.sol{background:var(--primary);border-color:var(--primary);color:#fff}
-.ex-btn.sol:hover{background:var(--primary-d)}
-.ex-count{font-size:.79em;color:var(--muted);margin-left:.1rem}
+  color:var(--accent-d);font-weight:600;transition:background .15s,border-color .15s}
+.ex-btn:hover{background:var(--accent-soft);border-color:var(--accent)}
+.ex-btn.sol{background:var(--accent);border-color:var(--accent);color:#fff}
+.ex-btn.sol:hover{background:var(--accent-d)}
+.ex-count{font-size:.79em;color:var(--text-soft);margin-left:.1rem}
 .ex-sol{animation:hintIn .25s ease}
-.eserc-intro{color:var(--muted);font-size:.9em;margin:0 0 .9rem}
+.eserc-intro{color:var(--text-soft);font-size:.9em;margin:0 0 .9rem}
 
 /* ===== PRINT MODE ===== */
 .print-only{display:none}
 @media print{
-  nav.main,.btn-print,.sim-block,.quiz-block,.home-grid,nav.subnav{display:none!important}
+  nav.main,.btn-print,.sim-block,.quiz-block,.home-grid,nav.subnav,
+  .progress,#homeBtn,#themeBtn,.header-actions,footer.app-foot,.card-badge{display:none!important}
   .subscene{display:block!important}
   .esercizio{page-break-inside:avoid;box-shadow:none;border:1px solid #ccc}
   .ex-actions,.ex-hint,.eserc-intro{display:none!important}
@@ -237,15 +289,150 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   .print-only{display:block}
   .lead{display:none}
 }
+
+/* ===== Simulazione cinematica: grafici e playback ===== */
+.sim-graphs{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:.55rem}
+@media(max-width:560px){.sim-graphs{grid-template-columns:1fr}}
+.graph-box{min-width:0}
+.graph-box .g-cap{font-size:.72em;color:var(--text-soft);font-weight:600;margin:0 0 .15rem;text-align:center}
+svg.graph{width:100%;height:auto;background:#fcfdff;border:1px solid var(--border);border-radius:8px;display:block}
+svg#svgCad{height:430px;width:auto;max-width:100%;margin:0 auto}
+/* Formule KaTeX */
+.formula .katex-display{margin:0;text-align:left}
+.formula .katex{font-size:1.12em}
+.mathi{white-space:nowrap}
+.katex{line-height:1.2}
+.playbar{display:flex;align-items:center;gap:.5rem;margin-top:.7rem;flex-wrap:wrap}
+.play-btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:.42rem .9rem;
+  font-size:.86em;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s;min-height:34px}
+.play-btn:hover{background:var(--accent-d)}
+.play-btn.sec{background:var(--surface2);color:var(--accent-d);border:1.5px solid var(--border)}
+.play-btn.sec:hover{background:var(--accent-soft);border-color:var(--accent)}
+.playbar .scrub{flex:1;min-width:110px;accent-color:var(--accent);min-height:26px}
+.playbar .tlab{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent-d);
+  font-size:.85em;min-width:4.4em;text-align:right}
+.sim-mode{display:flex;gap:.3rem;margin-bottom:.6rem;flex-wrap:wrap}
+.sim-mode button{flex:1 1 auto;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;
+  padding:.4rem .5rem;font-size:.8em;color:var(--text-soft);cursor:pointer;font-family:inherit;font-weight:600;
+  transition:background .15s,border-color .15s,color .15s;min-height:34px}
+.sim-mode button:hover:not(.active){background:var(--accent-soft);color:var(--text)}
+.sim-mode button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+/* Nota storica */
+.story h3 .yr{font-size:.8em;color:var(--text-soft);font-weight:600;font-variant-numeric:tabular-nums}
+.gtable{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.85em}
+.gtable th,.gtable td{border:1px solid var(--border);padding:.32rem .5rem;text-align:center}
+.gtable th{background:var(--surface2);color:var(--text);font-weight:600}
+.gtable td{color:var(--text-soft);font-variant-numeric:tabular-nums}
+@media print{.sim-graphs,.playbar,.sim-mode{display:none!important}}
+
+/* ===== Pulsante tema ===== */
+.header-actions{display:flex;align-items:center;gap:.5rem}
+.btn-theme{background:var(--surface2);border:1px solid var(--border);color:var(--accent-d);
+  border-radius:8px;padding:.35rem .55rem;font-size:1.05em;line-height:1;cursor:pointer;
+  min-height:36px;transition:background .15s,border-color .15s}
+.btn-theme:hover{background:var(--accent-soft);border-color:var(--accent)}
+
+/* ===== Tema notte (versione scura) ===== */
+:root[data-theme="dark"]{
+  --bg:#0d1620;--card:#16232f;--surface2:#1b2b39;--border:#24384a;
+  --text:#e7eef5;--text-soft:#9fb0c0;
+  --accent:#4fc3f7;--accent-d:#7fd3fb;--accent-2:#4db6ac;--accent-soft:rgba(79,195,247,.16);
+  --correct:#66bb6a;--wrong:#ef5350;--warn:#ffa726;
+  --shadow:0 6px 24px rgba(0,0,0,.38);
+  --vT:#38a1db;--vP:#ef7f52;--vN:#2bb58a;--vF:#f0b03a;--vFa:#d98cbc;--vFe:#7cc7ef;--vM:#c4ccd6;
+}
+:root[data-theme="dark"] svg.sim,
+:root[data-theme="dark"] svg.graph{background:#111825}
+:root[data-theme="dark"] .quiz-bar-wrap{background:#2a3446}
+:root[data-theme="dark"] .tip{background:rgba(102,187,106,.13);border-left-color:#66bb6a;color:#c3e6c7}
+:root[data-theme="dark"] .warn{background:rgba(255,183,77,.12);border-left-color:#ffb74d;color:#efd9ab}
+:root[data-theme="dark"] .ex-hint{background:rgba(255,183,77,.09);border-left-color:#ffb74d;color:#e8d3a4}
+:root[data-theme="dark"] .ex-hint .h-lab{color:#ffc879}
+:root[data-theme="dark"] .quiz-btn.correct{background:rgba(102,187,106,.24)!important;border-color:#66bb6a!important;color:#c8e6c9}
+:root[data-theme="dark"] .quiz-btn.wrong{background:rgba(239,83,80,.22)!important;border-color:#ef5350!important;color:#ffcdd2}
+:root[data-theme="dark"] .quiz-exp.ok{background:rgba(102,187,106,.14);border-left-color:#66bb6a;color:#c8e6c9}
+:root[data-theme="dark"] .quiz-exp.no{background:rgba(239,83,80,.14);border-left-color:#ef5350;color:#ffcdd2}
+:root[data-theme="dark"] .esercizio .risultato{background:rgba(91,157,217,.14)}
+:root[data-theme="dark"] .home-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.45)}
+:root[data-theme="dark"] .card{box-shadow:0 1px 2px rgba(0,0,0,.25)}
+:root[data-theme="dark"] .eqs.ok{background:rgba(102,187,106,.22);color:#c8e6c9}
+:root[data-theme="dark"] .eqs.no{background:rgba(239,83,80,.22);color:#ffcdd2}
+:root[data-theme="dark"] .eqs.lim{background:rgba(255,167,38,.22);color:#ffe0b2}
+
+/* ===== Icone SVG (al posto delle emoji) ===== */
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-.14em;flex:0 0 auto}
+.play-btn,.btn-print{display:inline-flex;align-items:center;justify-content:center;gap:.42em}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--surface2);
+  border:1px solid var(--border);color:var(--accent-d);border-radius:10px;min-width:44px;min-height:44px;
+  padding:.4rem;cursor:pointer;transition:background .15s,border-color .15s}
+.icon-btn:hover{background:var(--accent-soft);border-color:var(--accent)}
+.icon-btn .ic{width:1.15em;height:1.15em}
+nav.subnav button{display:inline-flex;align-items:center;gap:.4em}
+
+/* ===== Header comune + barra di progresso ===== */
+header{gap:.7rem}
+.header-brand{flex:1 1 auto;min-width:0}
+.progress{display:flex;align-items:center;gap:.45rem}
+.progress-track{width:clamp(64px,13vw,120px);height:8px;border-radius:999px;background:var(--surface2);
+  border:1px solid var(--border);overflow:hidden}
+.progress-track>span{display:block;height:100%;background:var(--accent);border-radius:999px;
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+.progress-lab{font-family:var(--mono);font-size:.76em;color:var(--text-soft);font-weight:600;min-width:2.4em;text-align:right}
+@media(max-width:640px){.progress{display:none}}
+
+/* ===== Badge di completamento sulle card ===== */
+.home-card{position:relative}
+.card-badge{position:absolute;top:.6rem;right:.65rem;display:inline-flex;align-items:center;gap:.28em;
+  font-size:.7em;font-weight:700;padding:.16em .55em;border-radius:999px;
+  background:var(--surface2);border:1px solid var(--border);color:var(--text-soft)}
+.card-badge .ic{width:.95em;height:.95em}
+.card-badge.is-done{background:color-mix(in srgb,var(--correct) 15%,transparent);border-color:var(--correct);color:var(--correct)}
+.card-badge .bi{display:inline-flex}
+.card-badge .bi-done,.card-badge .lab-done{display:none}
+.card-badge.is-done .bi-todo,.card-badge.is-done .lab-todo{display:none}
+.card-badge.is-done .bi-done{display:inline-flex}
+.card-badge.is-done .lab-done{display:inline}
+
+/* ===== Footer comune ===== */
+footer.app-foot{max-width:960px;margin:1.6rem auto 0;padding:1.1rem 1rem;color:var(--text-soft);
+  font-size:.85em;text-align:center;border-top:1px solid var(--border)}
+
+/* ===== Feedback quiz con icona + testo ===== */
+.fb-ic{width:1.05em;height:1.05em;vertical-align:-.16em;margin-right:.2em;flex:0 0 auto}
+.quiz-done-ic{width:2.4em;height:2.4em;color:var(--accent);display:block;margin:0 auto .3rem}
+
+/* ===== Numeri/unità in monospace (design system) ===== */
+.read .it .v,.tlab,.ctrl label .v,.progress-lab,.esercizio .dati{font-family:var(--mono)}
+
+/* ===== Accessibilità e mobile ===== */
+:where(a,button,input,[tabindex]):focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+nav.main button,nav.subnav button,.play-btn,.icon-btn,.btn-print,.quiz-btn,.ex-btn,.sim-mode button{min-height:44px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
 </style>
 </head>
 <body>
+<script>try{var _t=localStorage.getItem("statica-theme");if(!_t)_t=(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-theme",_t);}catch(e){}</script>
 <header>
+  <button class="icon-btn" id="homeBtn" aria-label="Vai alla home" title="Home">
+    <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.7 8 3l5.5 4.7"/><path d="M4 7.2v5.8h8V7.2"/></svg>
+  </button>
   <div class="header-brand">
     <h1>Equilibrio dei corpi</h1>
-    <p class="header-sub">Appunti interattivi di meccanica — simulazioni e teoria</p>
+    <p class="header-sub">Statica interattiva — simulazioni, teoria ed esercizi</p>
   </div>
-  <button class="btn-print" onclick="window.print()">Stampa teoria</button>
+  <div class="header-actions">
+    <div class="progress" role="progressbar" aria-label="Avanzamento quiz" aria-valuemin="0" aria-valuemax="9" aria-valuenow="0" id="progress" title="Quiz completati">
+      <div class="progress-track"><span id="progressFill" style="width:0%"></span></div>
+      <span class="progress-lab" id="progressLab">0/9</span>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="Cambia tema" title="Cambia tema"></button>
+    <button class="btn-print icon-btn" onclick="window.print()" aria-label="Stampa la teoria" title="Stampa teoria">
+      <svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 6V2.7h7V6"/><path d="M4.5 11H2.6V6.4h10.8V11H11.5"/><rect x="4.7" y="9.8" width="6.6" height="3.6"/></svg>
+    </button>
+  </div>
 </header>
 <nav class="main" id="mainNav">
   <button data-tab="intro" class="active">Introduzione</button>
@@ -257,6 +444,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <button data-tab="leva">Leva</button>
   <button data-tab="trave">Trave</button>
   <button data-tab="rigido">Corpo rigido</button>
+  <button data-tab="quiz">Quiz finale</button>
 </nav>
 <main>
 
@@ -272,7 +460,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
       <li><strong>Esercizi</strong> — problemi svolti passo per passo, con formule e calcoli espliciti</li>
       <li><strong>Quiz</strong> — domande a risposta multipla per verificare la comprensione</li>
     </ul>
-    <div class="formula">Σ F = 0 &nbsp;·&nbsp; Σ M = 0</div>
+    <div class="formula" data-tex="\sum \vec F = 0 \qquad \sum M = 0"></div>
     <p class="lead">Due equazioni vettoriali che, dai tempi di Archimede in poi, hanno spiegato ponti, gru, bilance e — con l'aggiunta della dinamica — l'intero moto dei corpi.</p>
   </div>
 
@@ -282,7 +470,7 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
 
     <h3>Archimede di Siracusa (287 – 212 a.C.)</h3>
     <p>Fonda la statica come scienza. Nel trattato <em>Sull'equilibrio dei piani</em> enuncia la <strong>legge della leva</strong>:</p>
-    <div class="formula">F₁ · d₁ = F₂ · d₂</div>
+    <div class="formula" data-tex="F_1\,d_1 = F_2\,d_2"></div>
     <p>Sua la frase attribuita: <em>«Datemi un punto d'appoggio e solleverò il mondo»</em>. Introduce il concetto di <strong>baricentro</strong> per figure piane e definisce implicitamente il momento di una forza.</p>
 
     <h3>Erone di Alessandria (I sec. d.C.)</h3>
@@ -333,14 +521,14 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
     <h2>Corpo appeso a funi</h2>
     <h3>Caso 1 — fune verticale</h3>
     <p>Un corpo di massa <em>m</em> sospeso a una sola fune verticale: la tensione bilancia il peso.</p>
-    <div class="formula">T = m g</div>
+    <div class="formula" data-tex="T = m\,g"></div>
     <h3>Caso 2 — due funi inclinate</h3>
     <p>Se le funi formano angoli <em>α</em> e <em>β</em> col soffitto, l'equilibrio dà il sistema:</p>
-    <div class="formula">T₁ cos α = T₂ cos β &nbsp;&nbsp;(asse x)</div>
-    <div class="formula">T₁ sin α + T₂ sin β = m g &nbsp;&nbsp;(asse y)</div>
+    <div class="formula" data-tex="T_1\cos\alpha = T_2\cos\beta \quad (\text{asse } x)"></div>
+    <div class="formula" data-tex="T_1\sin\alpha + T_2\sin\beta = m\,g \quad (\text{asse } y)"></div>
     <p>Risolvendo:</p>
-    <div class="formula">T₁ = mg · cos β / sin(α+β)</div>
-    <div class="formula">T₂ = mg · cos α / sin(α+β)</div>
+    <div class="formula" data-tex="T_1 = \dfrac{m g\,\cos\beta}{\sin(\alpha+\beta)}"></div>
+    <div class="formula" data-tex="T_2 = \dfrac{m g\,\cos\alpha}{\sin(\alpha+\beta)}"></div>
     <div class="tip">Caso simmetrico (α = β): T = mg / (2 sin α). Più piccolo è l'angolo, più grandi le tensioni — per questo le funi tese quasi orizzontali si spezzano.</div>
   </div>
   </div>
@@ -391,10 +579,10 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
     <h2>Piano orizzontale con attrito</h2>
     <p>Sul piano orizzontale agiscono: peso <em>P = mg</em> verso il basso, reazione vincolare <em>N</em> verso l'alto, una forza applicata <em>F</em> inclinata di <em>θ</em>, e l'attrito <em>f<sub>a</sub></em>.</p>
     <h3>Equilibrio verticale</h3>
-    <div class="formula">N = m g − F sin θ &nbsp;&nbsp;(θ &gt; 0 verso l'alto)</div>
+    <div class="formula" data-tex="N = m g - F\sin\theta \quad (\theta&gt;0\ \text{verso l'alto})"></div>
     <h3>Equilibrio orizzontale</h3>
     <p>Il corpo resta fermo finché l'attrito statico bilancia la componente orizzontale:</p>
-    <div class="formula">F cos θ ≤ μₛ · N</div>
+    <div class="formula" data-tex="F\cos\theta \le \mu_s\,N"></div>
     <div class="tip">Tirando con un angolo verso l'alto si <em>scarica</em> il piano (N diminuisce): esiste un angolo ottimale θ = arctan(μₛ) che minimizza la forza necessaria a mettere in moto il corpo.</div>
   </div>
   </div>
@@ -449,11 +637,11 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <div class="card">
     <h2>Piano inclinato</h2>
     <p>Su un piano inclinato di angolo <em>θ</em> conviene scegliere gli assi <strong>parallelo</strong> e <strong>perpendicolare</strong> al piano. Il peso si scompone in:</p>
-    <div class="formula">P<sub>∥</sub> = m g sin θ &nbsp;&nbsp;(lungo il piano, verso il basso)</div>
-    <div class="formula">P<sub>⊥</sub> = m g cos θ &nbsp;&nbsp;⇒&nbsp; N = m g cos θ</div>
+    <div class="formula" data-tex="P_\parallel = m g\sin\theta \quad (\text{lungo il piano})"></div>
+    <div class="formula" data-tex="P_\perp = m g\cos\theta ;\Rightarrow; N = m g\cos\theta"></div>
     <h3>Condizione di equilibrio</h3>
     <p>Senza forze esterne, il corpo resta fermo se l'attrito statico riesce a tenere:</p>
-    <div class="formula">tan θ ≤ μₛ &nbsp;&nbsp;⇔&nbsp;&nbsp; θ ≤ θ<sub>lim</sub> = arctan(μₛ)</div>
+    <div class="formula" data-tex="\tan\theta \le \mu_s \iff \theta \le \theta_{\text{lim}} = \arctan(\mu_s)"></div>
     <div class="tip">È il principio del piano inclinato come "macchina semplice": serve meno forza per sollevare un corpo lungo il piano che verticalmente, percorrendo però una distanza maggiore.</div>
   </div>
   </div>
@@ -509,15 +697,15 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <div class="card">
     <h2>Forze elastiche — legge di Hooke</h2>
     <p>Una molla di costante elastica <em>k</em> deformata di <em>Δx</em> esercita una forza di <strong>richiamo</strong>:</p>
-    <div class="formula">F<sub>el</sub> = − k · Δx &nbsp;&nbsp;(modulo: |F<sub>el</sub>| = k |Δx|)</div>
+    <div class="formula" data-tex="F_{\text{el}} = -k\,\Delta x \quad (|F_{\text{el}}| = k\,|\Delta x|)"></div>
     <h3>(a) Molla verticale con massa appesa</h3>
     <p>All'equilibrio, il richiamo elastico bilancia il peso:</p>
-    <div class="formula">k · Δx = m g &nbsp;⇒&nbsp; Δx = m g / k</div>
+    <div class="formula" data-tex="k\,\Delta x = m g ;\Rightarrow; \Delta x = \dfrac{m g}{k}"></div>
     <h3>(b) Molla orizzontale con attrito</h3>
     <p>Il corpo resta fermo finché la forza elastica non supera l'attrito massimo:</p>
-    <div class="formula">|k · Δx| ≤ μₛ · m g</div>
+    <div class="formula" data-tex="|k\,\Delta x| \le \mu_s\,m g"></div>
     <h3>(c) Molla su piano inclinato (senza attrito)</h3>
-    <div class="formula">k · Δx = m g sin θ</div>
+    <div class="formula" data-tex="k\,\Delta x = m g\sin\theta"></div>
     <div class="tip">La costante <em>k</em> si misura in N/m: dice di quanti newton aumenta la forza elastica per ogni metro di deformazione.</div>
   </div>
   </div>
@@ -574,13 +762,13 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <div class="card">
     <h2>Momento di una forza</h2>
     <p>Il <strong>momento</strong> di una forza <em>F</em> rispetto a un punto O misura la sua capacità di far <strong>ruotare</strong> il corpo attorno a O:</p>
-    <div class="formula">M = F · d = F · r · sin φ</div>
+    <div class="formula" data-tex="M = F\,d = F\,r\sin\varphi"></div>
     <p>dove <em>d</em> è il <strong>braccio</strong> — la distanza perpendicolare dalla retta d'azione di F al punto O — <em>r</em> è la distanza dal punto di applicazione e <em>φ</em> l'angolo tra F e il segmento OP.</p>
     <h3>Segno del momento</h3>
     <p>Per convenzione: rotazione <strong>antioraria = positiva</strong>, oraria = negativa.</p>
-    <div class="formula">M = r × F &nbsp;&nbsp;(prodotto vettoriale)</div>
+    <div class="formula" data-tex="\vec M = \vec r \times \vec F \quad (\text{prodotto vettoriale})"></div>
     <h3>Unità di misura</h3>
-    <div class="formula">[M] = N · m</div>
+    <div class="formula" data-tex="[M] = \text{N}\cdot\text{m}"></div>
     <div class="tip">Con φ = 90° il braccio coincide con r e il momento è massimo. Con φ = 0° la forza punta verso O: il braccio è nullo e non c'è rotazione.</div>
     <div class="warn">Il momento M (N·m) ha le stesse dimensioni del lavoro (J = N·m), ma è un vettore perpendicolare al piano di rotazione, mentre il lavoro è uno scalare.</div>
   </div>
@@ -634,9 +822,9 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
     <p>La <strong>leva</strong> è una macchina semplice: un'asta rigida che ruota attorno a un punto fisso, il <strong>fulcro</strong>. Una forza <strong>motrice</strong> F₁ equilibra una forza <strong>resistente</strong> F₂.</p>
     <h3>Condizione di equilibrio</h3>
     <p>I momenti delle due forze rispetto al fulcro devono essere uguali:</p>
-    <div class="formula">F₁ · d₁ = F₂ · d₂</div>
+    <div class="formula" data-tex="F_1\,d_1 = F_2\,d_2"></div>
     <p>Il rapporto fra i bracci è il <strong>vantaggio meccanico</strong>:</p>
-    <div class="formula">VM = d₁ / d₂ = F₂ / F₁</div>
+    <div class="formula" data-tex="\text{VM} = \dfrac{d_1}{d_2} = \dfrac{F_2}{F_1}"></div>
     <h3>I tre generi di leva</h3>
     <p><strong>I genere</strong> — fulcro tra le due forze (forbici, bilancia, altalena). VM può essere &gt; o &lt; 1.<br>
     <strong>II genere</strong> — resistenza tra fulcro e motrice (carriola, schiaccianoci). VM sempre &gt; 1: <em>vantaggiosa</em>.<br>
@@ -701,9 +889,9 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
     <p>Una trave orizzontale di lunghezza <em>L</em> poggia su due vincoli: una <strong>cerniera</strong> in A (blocca traslazione orizzontale e verticale) e un <strong>carrello</strong> in B (trasmette solo la reazione verticale). Un carico <em>P</em> è applicato a distanza <em>a</em> da A.</p>
     <h3>Calcolo delle reazioni</h3>
     <p>Scrivendo l'equilibrio dei momenti rispetto ad A (ΣM_A = 0), la reazione R_A scompare perché ha braccio nullo:</p>
-    <div class="formula">R_B · L = P · a &nbsp;⇒&nbsp; R_B = P · a / L</div>
+    <div class="formula" data-tex="R_B\,L = P\,a ;\Rightarrow; R_B = \dfrac{P\,a}{L}"></div>
     <p>Dall'equilibrio verticale (ΣF_y = 0):</p>
-    <div class="formula">R_A = P − R_B = P · (L − a) / L</div>
+    <div class="formula" data-tex="R_A = P - R_B = \dfrac{P\,(L-a)}{L}"></div>
     <div class="tip">Carico in mezzeria (a = L/2): le reazioni si dividono equamente, R_A = R_B = P/2. Più il carico si avvicina a un appoggio, più quell'appoggio si carica.</div>
   </div>
   </div>
@@ -756,13 +944,11 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   <div class="card">
     <h2>Equilibrio del corpo rigido</h2>
     <p>Un corpo rigido è in equilibrio se e solo se sono soddisfatte <strong>tutte e tre</strong> le condizioni:</p>
-    <div class="formula" style="white-space:pre-line">Σ F<sub>x</sub> = 0
-Σ F<sub>y</sub> = 0
-Σ M<sub>O</sub> = 0</div>
+    <div class="formula" data-tex="\begin{aligned}\sum F_x &amp;= 0\\ \sum F_y &amp;= 0\\ \sum M_O &amp;= 0\end{aligned}"></div>
     <p>Le prime due impediscono la <strong>traslazione</strong>, la terza la <strong>rotazione</strong>. L'equazione dei momenti vale per <em>qualsiasi</em> polo O: conviene sceglierlo dove agisce una forza incognita, così quella forza sparisce dall'equazione.</p>
     <h3>Centro di massa</h3>
     <p>Il peso totale si considera applicato nel <strong>centro di massa</strong> G:</p>
-    <div class="formula">x<sub>G</sub> = Σ(mᵢ xᵢ) / M<sub>tot</sub></div>
+    <div class="formula" data-tex="x_G = \dfrac{\sum (m_i\,x_i)}{M_{\text{tot}}}"></div>
     <h3>Diagramma del corpo libero (DCL)</h3>
     <p>Per risolvere un problema di equilibrio: <strong>1.</strong> isola il corpo · <strong>2.</strong> disegna tutte le forze (peso, carichi, reazioni vincolari) · <strong>3.</strong> scegli il polo · <strong>4.</strong> scrivi le 3 equazioni · <strong>5.</strong> risolvi.</p>
     <div class="tip">Se ΣF = 0 ma ΣM ≠ 0, il centro di massa non accelera ma il corpo <em>ruota</em>: una coppia di forze non equilibrata produce solo rotazione.</div>
@@ -807,11 +993,43 @@ nav.subnav button.active{color:var(--primary);border-bottom-color:var(--primary)
   </div>
 </section>
 
+<!-- ============ QUIZ RIEPILOGATIVO ============ -->
+<section class="scene" id="quiz" data-title="Quiz riepilogativo">
+  <div class="card">
+    <h2>Quiz riepilogativo</h2>
+    <p class="lead">Una batteria di domande estratte da <strong>tutti</strong> gli argomenti della statica. Qui le <strong>correzioni compaiono solo alla fine</strong>: rispondi a tutte le domande, poi ottieni punteggio e revisione completa con le spiegazioni.</p>
+  </div>
+  <div id="qz-riepilogo" class="quiz-block"></div>
+</section>
+
 </main>
+<footer class="app-foot">Realizzato per studenti del liceo · Fisica</footer>
 <script>
 "use strict";
 const G = 9.81;
-const COL = {T:'#1565c0',P:'#e53935',N:'#2e7d32',F:'#f57c00',Fa:'#7b1fa2',Fe:'#00897b',M:'#c62828'};
+/* Palette vettori (Okabe–Ito, sicura per daltonici) e "cromatura", per tema chiaro/scuro */
+const COL_LIGHT={T:'#0072B2',P:'#D55E00',N:'#009E73',F:'#E69F00',Fa:'#CC79A7',Fe:'#56B4E9',M:'#525b66',ground:'#5b6470'};
+const COL_DARK ={T:'#38a1db',P:'#ef7f52',N:'#2bb58a',F:'#f0b03a',Fa:'#d98cbc',Fe:'#7cc7ef',M:'#c4ccd6',ground:'#8892a6'};
+const INK_LIGHT={text:'#6b7280',grid:'#9aa3b2',grid2:'#c2c9d6',ground:'#5b6470',panel:'#fcfdff',dark:'#37474f'};
+const INK_DARK ={text:'#9aa4b8',grid:'#4c5871',grid2:'#333e52',ground:'#8892a6',panel:'#141c28',dark:'#aeb9cc'};
+let COL=COL_LIGHT, INK=INK_LIGHT;
+function themeIsDark(){ return document.documentElement.getAttribute('data-theme')==='dark'; }
+function refreshThemeVars(){ const d=themeIsDark(); COL=d?COL_DARK:COL_LIGHT; INK=d?INK_DARK:INK_LIGHT; }
+/* ===== Set icone SVG (currentColor) ===== */
+const IC={
+  moon:'<svg class="ic" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z"/></svg>',
+  sun:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.1 3.1l1.1 1.1M11.8 11.8l1.1 1.1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1"/></svg>',
+  check:'<svg class="fb-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.4 3.4L13 4.6"/></svg>',
+  cross:'<svg class="fb-ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6"/></svg>',
+  trophy:'<svg class="quiz-done-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 4h11v2.5a5.5 5.5 0 0 1-11 0z"/><path d="M6.5 5H4v1.3A2.8 2.8 0 0 0 6.6 9.1M17.5 5H20v1.3A2.8 2.8 0 0 1 17.4 9.1"/><path d="M12 12v3.2M9 20h6M10.2 16h3.6l.6 4h-4.8z"/></svg>',
+  badge:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.7 8.4l2.6 2.6L12.3 5"/></svg>',
+  circle:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="5.3"/></svg>',
+  reset:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.5 8a4.5 4.5 0 1 1-1.32-3.15"/><path d="M12.8 2.5v2.7h-2.7"/></svg>',
+  book:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 4.1C6.3 2.8 4 2.8 2.7 3.3v8.5C4 11.3 6.3 11.3 8 12.6"/><path d="M8 4.1c1.7-1.3 4-1.3 5.3-.8v8.5c-1.3-.5-3.6-.5-5.3.8"/><path d="M8 4.1v8.5"/></svg>',
+  wave:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8c1.3-3.4 2.4-3.4 3.6 0s2.3 3.4 3.6 0 2.4-3.4 3.6 0"/></svg>',
+  pencil:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 2.9 13.1 5.4M2.6 10.9 10.4 3.1l2.5 2.5-7.8 7.8-3.1.6z"/></svg>',
+  target:'<svg class="ic" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="2.3"/></svg>'
+};
 
 /* ===== Helper: arrow as SVG string ===== */
 function arrow(x1,y1,x2,y2,color,label,labelOff){
@@ -836,10 +1054,10 @@ function hatch(x1,y1,x2,y2,side){
   // side: +1 below/right, -1 above/left
   const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy);
   const ux=dx/L, uy=dy/L, nx=-uy*side, ny=ux*side;
-  let s=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#5b6470" stroke-width="2"/>`;
+  let s=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${INK.ground}" stroke-width="2"/>`;
   for(let d=4;d<L;d+=12){
     const px=x1+ux*d, py=y1+uy*d;
-    s+=`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${(px+nx*8-ux*7).toFixed(1)}" y2="${(py+ny*8-uy*7).toFixed(1)}" stroke="#9aa3b2" stroke-width="1"/>`;
+    s+=`<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${(px+nx*8-ux*7).toFixed(1)}" y2="${(py+ny*8-uy*7).toFixed(1)}" stroke="${INK.grid}" stroke-width="1"/>`;
   }
   return s;
 }
@@ -848,9 +1066,10 @@ function hatch(x1,y1,x2,y2,side){
 const navBtns = document.querySelectorAll('#mainNav button');
 const scenes = document.querySelectorAll('section.scene');
 function showTab(name){
-  navBtns.forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  navBtns.forEach(b=>{ const on=b.dataset.tab===name; b.classList.toggle('active',on); if(on) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   scenes.forEach(s=>s.classList.toggle('active', s.id===name));
-  window.scrollTo({top:0,behavior:'smooth'});
+  const rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({top:0,behavior:rm?'auto':'smooth'});
 }
 navBtns.forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
 document.querySelectorAll('.home-card').forEach(c=>c.addEventListener('click',()=>showTab(c.dataset.go)));
@@ -895,11 +1114,11 @@ function renderFuni(){
   const svg=document.getElementById('svgFuni');
   svg.setAttribute('viewBox', `${minX} 0 ${maxX-minX} 300`);
   const Fmax=Math.max(W,T1,T2,1), sc=70/Fmax;
-  let ceiling=`<line x1="${minX}" y1="${ceil}" x2="${maxX}" y2="${ceil}" stroke="#5b6470" stroke-width="2"/>`;
+  let ceiling=`<line x1="${minX}" y1="${ceil}" x2="${maxX}" y2="${ceil}" stroke="${INK.ground}" stroke-width="2"/>`;
   for(let x=Math.floor(minX/14)*14;x<maxX;x+=14)
-    ceiling+=`<line x1="${x}" y1="${ceil}" x2="${x-7}" y2="${ceil-9}" stroke="#9aa3b2" stroke-width="1"/>`;
-  const ropes=`<line x1="${lx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="#6b7280" stroke-width="1.6"/>
-    <line x1="${rx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="#6b7280" stroke-width="1.6"/>`;
+    ceiling+=`<line x1="${x}" y1="${ceil}" x2="${x-7}" y2="${ceil-9}" stroke="${INK.grid}" stroke-width="1"/>`;
+  const ropes=`<line x1="${lx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="${INK.text}" stroke-width="1.6"/>
+    <line x1="${rx}" y1="${ceil}" x2="${cx}" y2="${cy}" stroke="${INK.text}" stroke-width="1.6"/>`;
   const bw=44, bh=34;
   const body=`<rect x="${cx-bw/2}" y="${cy}" width="${bw}" height="${bh}" rx="4" fill="#ffd54f" stroke="#8d6e00" stroke-width="1.5"/>
     <text x="${cx}" y="${cy+bh/2+4}" text-anchor="middle" font-size="12" fill="#5d4e00" font-weight="700">${m} kg</text>`;
@@ -910,10 +1129,10 @@ function renderFuni(){
   function arc(cxx,cyy,r,a1,a2){
     const x1=cxx+r*Math.cos(a1),y1=cyy-r*Math.sin(a1);
     const x2=cxx+r*Math.cos(a2),y2=cyy-r*Math.sin(a2);
-    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="#9aa3b2" stroke-width="1"/>`;
+    return `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${r} ${r} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" fill="none" stroke="${INK.grid}" stroke-width="1"/>`;
   }
-  const arcA=arc(lx,ceil,18,0,-a)+`<text x="${lx+24}" y="${ceil+14}" font-size="11" fill="#6b7280">α</text>`;
-  const arcB=arc(rx,ceil,18,Math.PI+b,Math.PI)+`<text x="${rx-30}" y="${ceil+14}" font-size="11" fill="#6b7280">β</text>`;
+  const arcA=arc(lx,ceil,18,0,-a)+`<text x="${lx+24}" y="${ceil+14}" font-size="11" fill="${INK.text}">α</text>`;
+  const arcB=arc(rx,ceil,18,Math.PI+b,Math.PI)+`<text x="${rx-30}" y="${ceil+14}" font-size="11" fill="${INK.text}">β</text>`;
   svg.innerHTML=ceiling+ropes+arcA+arcB+body+vP+vT1+vT2;
   document.getElementById('fuP').textContent=W.toFixed(1);
   document.getElementById('fuT1').textContent=T1.toFixed(1);
@@ -992,8 +1211,8 @@ function renderInclin(){
   const body=`<polygon points="${bodyPts}" fill="#ffcc80" stroke="#bf360c" stroke-width="1.5"/>
     <text x="${ccX.toFixed(1)}" y="${(ccY+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#5d2e00">${m}kg</text>`;
   const arcR=24;
-  const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="#6b7280" stroke-width="1.2"/>
-    <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="#6b7280">θ</text>`;
+  const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="${INK.text}" stroke-width="1.2"/>
+    <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="${INK.text}">θ</text>`;
   const Fmax=Math.max(W,F,N,fMax,1), sc=70/Fmax;
   const vP=arrow(ccX,ccY,ccX,ccY+W*sc,COL.P,'P');
   const compP=`<line x1="${ccX}" y1="${ccY}" x2="${(ccX-Pp*sc*aux).toFixed(1)}" y2="${(ccY-Pp*sc*auy).toFixed(1)}" stroke="${COL.P}" stroke-width="1" stroke-dasharray="4 3" opacity="0.55"/>
@@ -1025,7 +1244,7 @@ function renderInclin(){
 /* ============ MOLLA ============ */
 function springPath(x1,y1,x2,y2,coils,amp){
   const dx=x2-x1, dy=y2-y1, L=Math.hypot(dx,dy);
-  if(L<1) return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#6b7280" stroke-width="2"/>`;
+  if(L<1) return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${INK.text}" stroke-width="2"/>`;
   const ux=dx/L, uy=dy/L, nx=-uy, ny=ux, N=coils*2;
   let d=`M ${x1.toFixed(1)} ${y1.toFixed(1)} L ${(x1+ux*L*0.1).toFixed(1)} ${(y1+uy*L*0.1).toFixed(1)} `;
   for(let i=0;i<=N;i++){
@@ -1035,7 +1254,7 @@ function springPath(x1,y1,x2,y2,coils,amp){
     d+=`L ${px.toFixed(1)} ${py.toFixed(1)} `;
   }
   d+=`L ${(x1+ux*L*0.9).toFixed(1)} ${(y1+uy*L*0.9).toFixed(1)} L ${x2.toFixed(1)} ${y2.toFixed(1)}`;
-  return `<path d="${d}" fill="none" stroke="#6b7280" stroke-width="2"/>`;
+  return `<path d="${d}" fill="none" stroke="${INK.text}" stroke-width="2"/>`;
 }
 function setMollaUI(mode){
   document.getElementById('moTL').hidden=(mode!=='c');
@@ -1077,8 +1296,8 @@ function renderMolla(){
     const fa=ok?-Fel:-Math.sign(Fel)*fMaxA;
     const gy=180;
     let ground=hatch(20,gy,380,gy,1);
-    let wall=`<line x1="40" y1="60" x2="40" y2="${gy}" stroke="#5b6470" stroke-width="3"/>`;
-    for(let y=60;y<gy;y+=14) wall+=`<line x1="40" y1="${y}" x2="31" y2="${y+7}" stroke="#9aa3b2" stroke-width="1"/>`;
+    let wall=`<line x1="40" y1="60" x2="40" y2="${gy}" stroke="${INK.ground}" stroke-width="3"/>`;
+    for(let y=60;y<gy;y+=14) wall+=`<line x1="40" y1="${y}" x2="31" y2="${y+7}" stroke="${INK.grid}" stroke-width="1"/>`;
     const restX=180, bw=60, bh=40;
     const bx=restX+dx*400, by=gy-bh, cx=bx+bw/2;
     const sp=springPath(40,by+bh/2,bx,by+bh/2,9,8);
@@ -1131,8 +1350,8 @@ function renderMolla(){
     const body=`<polygon points="${bodyPts}" fill="#ffcc80" stroke="#bf360c" stroke-width="1.5"/>
       <text x="${ccX.toFixed(1)}" y="${(ccY+4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#5d2e00">${m.toFixed(1)}kg</text>`;
     const arcR=22;
-    const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="#6b7280" stroke-width="1.2"/>
-      <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="#6b7280">θ</text>`;
+    const arc=`<path d="M ${rightX-arcR} ${rightY} A ${arcR} ${arcR} 0 0 0 ${(rightX-arcR*Math.cos(t)).toFixed(1)} ${(rightY-arcR*Math.sin(t)).toFixed(1)}" fill="none" stroke="${INK.text}" stroke-width="1.2"/>
+      <text x="${(rightX-arcR-10).toFixed(1)}" y="${(rightY-6).toFixed(1)}" font-size="12" fill="${INK.text}">θ</text>`;
     const sc=60/Math.max(W,Math.abs(Fel),fMax,1);
     const vP=arrow(ccX,ccY,ccX,ccY+W*sc,COL.P,'P');
     const vN=arrow(ccX,ccY,ccX+nux*Nn*sc,ccY+nuy*Nn*sc,COL.N,'N');
@@ -1175,11 +1394,11 @@ function renderMomento(){
   const t=-(((Px-Ox)*fdx)+((Py-Oy)*fdy));
   const footX=Px+t*fdx, footY=Py+t*fdy;
   const svg=document.getElementById('svgMomento');
-  const rod=`<line x1="${Ox}" y1="${Oy}" x2="${Px.toFixed(1)}" y2="${Py}" stroke="#9aa3b2" stroke-width="3" stroke-linecap="round"/>`;
-  const pivot=`<circle cx="${Ox}" cy="${Oy}" r="7" fill="#5b6470"/>
-    <text x="${Ox-4}" y="${Oy+22}" font-size="12" fill="#5b6470" font-weight="700">O</text>`;
+  const rod=`<line x1="${Ox}" y1="${Oy}" x2="${Px.toFixed(1)}" y2="${Py}" stroke="${INK.grid}" stroke-width="3" stroke-linecap="round"/>`;
+  const pivot=`<circle cx="${Ox}" cy="${Oy}" r="7" fill="${INK.ground}"/>
+    <text x="${Ox-4}" y="${Oy+22}" font-size="12" fill="${INK.ground}" font-weight="700">O</text>`;
   const ptP=`<circle cx="${Px.toFixed(1)}" cy="${Py}" r="4.5" fill="${COL.F}"/>
-    <text x="${Px.toFixed(1)}" y="${Py+20}" font-size="11" fill="#6b7280" text-anchor="middle">P</text>`;
+    <text x="${Px.toFixed(1)}" y="${Py+20}" font-size="11" fill="${INK.text}" text-anchor="middle">P</text>`;
   const braccio=Math.abs(d)>0.015?`<line x1="${Ox}" y1="${Oy}" x2="${footX.toFixed(1)}" y2="${footY.toFixed(1)}" stroke="${COL.M}" stroke-width="1.6" stroke-dasharray="5 3"/>
     <line x1="${Px.toFixed(1)}" y1="${Py}" x2="${footX.toFixed(1)}" y2="${footY.toFixed(1)}" stroke="${COL.M}" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
     <text x="${((Ox+footX)/2).toFixed(1)}" y="${((Oy+footY)/2-7).toFixed(1)}" font-size="11" fill="${COL.M}" font-weight="700" text-anchor="middle">d = ${Math.abs(d).toFixed(2)} m</text>`:'';
@@ -1189,8 +1408,8 @@ function renderMomento(){
   if(phiD>3&&F>0.5){
     const aR=26;
     const ex=Px+aR*Math.cos(phi), ey=Py-aR*Math.sin(phi);
-    phiArc=`<path d="M ${Px+aR} ${Py} A ${aR} ${aR} 0 ${phiD>180?1:0} 0 ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="#6b7280" stroke-width="1.1"/>
-      <text x="${(Px+aR*1.45*Math.cos(phi/2)).toFixed(1)}" y="${(Py-aR*1.45*Math.sin(phi/2)+4).toFixed(1)}" font-size="11" fill="#6b7280" text-anchor="middle">φ</text>`;
+    phiArc=`<path d="M ${Px+aR} ${Py} A ${aR} ${aR} 0 ${phiD>180?1:0} 0 ${ex.toFixed(1)} ${ey.toFixed(1)}" fill="none" stroke="${INK.text}" stroke-width="1.1"/>
+      <text x="${(Px+aR*1.45*Math.cos(phi/2)).toFixed(1)}" y="${(Py-aR*1.45*Math.sin(phi/2)+4).toFixed(1)}" font-size="11" fill="${INK.text}" text-anchor="middle">φ</text>`;
   }
   let rotHint='';
   if(Math.abs(M)>0.4){
@@ -1228,7 +1447,7 @@ function renderLeva(){
   const fh=30;
   const fulc=`<polygon points="${fulcX},${beamY+7} ${fulcX-16},${beamY+7+fh} ${fulcX+16},${beamY+7+fh}" fill="#546e7a" stroke="#37474f" stroke-width="1.5"/>
     ${hatch(fulcX-26,beamY+7+fh,fulcX+26,beamY+7+fh,1)}
-    <text x="${fulcX}" y="${beamY+7+fh+22}" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="700">fulcro</text>`;
+    <text x="${fulcX}" y="${beamY+7+fh+22}" font-size="11" fill="${INK.text}" text-anchor="middle" font-weight="700">fulcro</text>`;
   const scF=Math.min(70,Math.max(F1,F2,1)>0?60/Math.max(F1,F2,1)*Math.max(F1,F2,1):60);
   const aLen=v=>14+Math.min(64,v*0.42);
   // F1 downward arrow (motrice)
@@ -1277,13 +1496,13 @@ function renderTrave(){
   // support A = cerniera (triangle)
   const supA=`<polygon points="${x0},${beamY+6} ${x0-13},${beamY+6+24} ${x0+13},${beamY+6+24}" fill="#546e7a" stroke="#37474f" stroke-width="1.5"/>
     ${hatch(x0-22,beamY+6+24,x0+22,beamY+6+24,1)}
-    <text x="${x0}" y="${beamY+6+24+18}" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="700">A · cerniera</text>`;
+    <text x="${x0}" y="${beamY+6+24+18}" font-size="11" fill="${INK.text}" text-anchor="middle" font-weight="700">A · cerniera</text>`;
   // support B = carrello (triangle + rollers)
   const supB=`<polygon points="${x1},${beamY+6} ${x1-13},${beamY+6+18} ${x1+13},${beamY+6+18}" fill="#546e7a" stroke="#37474f" stroke-width="1.5"/>
     <circle cx="${x1-7}" cy="${beamY+6+23}" r="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1"/>
     <circle cx="${x1+7}" cy="${beamY+6+23}" r="4.5" fill="#90a4ae" stroke="#37474f" stroke-width="1"/>
     ${hatch(x1-22,beamY+6+28,x1+22,beamY+6+28,1)}
-    <text x="${x1}" y="${beamY+6+28+16}" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="700">B · carrello</text>`;
+    <text x="${x1}" y="${beamY+6+28+16}" font-size="11" fill="${INK.text}" text-anchor="middle" font-weight="700">B · carrello</text>`;
   // load arrow (downward, below beam) — green
   const loadLen=46;
   const vP=arrow(loadX,beamY+6,loadX,beamY+6+loadLen,COL.N,'')+
@@ -1297,10 +1516,10 @@ function renderTrave(){
     `<text x="${x1+2}" y="${beamY-6-Math.max(12,RB*scR)-6}" font-size="10" fill="${COL.P}" text-anchor="middle">R_B</text>`;
   // dimension line
   const dimY=14;
-  const dim=`<line x1="${x0}" y1="${dimY}" x2="${loadX}" y2="${dimY}" stroke="#6b7280" stroke-width="1"/>
-    <line x1="${x0}" y1="${dimY-4}" x2="${x0}" y2="${dimY+4}" stroke="#6b7280" stroke-width="1"/>
-    <line x1="${loadX}" y1="${dimY-4}" x2="${loadX}" y2="${dimY+4}" stroke="#6b7280" stroke-width="1"/>
-    <text x="${(x0+loadX)/2}" y="${dimY-3}" font-size="10.5" fill="#6b7280" text-anchor="middle">a = ${a.toFixed(2)} m</text>`;
+  const dim=`<line x1="${x0}" y1="${dimY}" x2="${loadX}" y2="${dimY}" stroke="${INK.text}" stroke-width="1"/>
+    <line x1="${x0}" y1="${dimY-4}" x2="${x0}" y2="${dimY+4}" stroke="${INK.text}" stroke-width="1"/>
+    <line x1="${loadX}" y1="${dimY-4}" x2="${loadX}" y2="${dimY+4}" stroke="${INK.text}" stroke-width="1"/>
+    <text x="${(x0+loadX)/2}" y="${dimY-3}" font-size="10.5" fill="${INK.text}" text-anchor="middle">a = ${a.toFixed(2)} m</text>`;
   svg.innerHTML=beam+supA+supB+dim+vRA+vRB+vP;
   document.getElementById('trPout').textContent=P.toFixed(0);
   document.getElementById('trAout').textContent=a.toFixed(2);
@@ -1362,12 +1581,12 @@ function renderRigido(){
     <circle cx="${ax}" cy="${ay}" r="3.5" fill="#37474f"/>
     ${hatch(ax-20,ay+13,ax+20,ay+13,1)}
     <line x1="${ax}" y1="${ay+9}" x2="${ax}" y2="${ay+13}" stroke="#37474f" stroke-width="2"/>
-    <text x="${ax}" y="${ay+34}" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="700">A · cerniera</text>`;
+    <text x="${ax}" y="${ay+34}" font-size="11" fill="${INK.text}" text-anchor="middle" font-weight="700">A · cerniera</text>`;
   const Fsc=70/Math.max(W,F,1);
   // weight at centre
   const vW=arrow(cx,ay,cx,ay+W*Fsc,COL.P,'P')+
     `<circle cx="${cx}" cy="${ay}" r="4" fill="${COL.P}"/>
-     <text x="${cx}" y="${ay-9}" font-size="10" fill="#6b7280" text-anchor="middle">G</text>`;
+     <text x="${cx}" y="${ay-9}" font-size="10" fill="${INK.text}" text-anchor="middle">G</text>`;
   // external force F at fx
   const vF=F>0.5?arrow(fx,ay,fx+Fx*Fsc,ay-Fy*Fsc,COL.F,'F')+
     `<circle cx="${fx}" cy="${ay}" r="4" fill="${COL.F}"/>`:
@@ -1385,8 +1604,8 @@ function renderRigido(){
   }
   // dimension marks
   const dimY=ay+8+30;
-  const dim=`<line x1="${ax}" y1="${dimY}" x2="${fx}" y2="${dimY}" stroke="#6b7280" stroke-width="1" stroke-dasharray="3 2"/>
-    <text x="${(ax+fx)/2}" y="${dimY+13}" font-size="10" fill="#6b7280" text-anchor="middle">xꜰ = ${(xf*L).toFixed(2)} m</text>`;
+  const dim=`<line x1="${ax}" y1="${dimY}" x2="${fx}" y2="${dimY}" stroke="${INK.text}" stroke-width="1" stroke-dasharray="3 2"/>
+    <text x="${(ax+fx)/2}" y="${dimY+13}" font-size="10" fill="${INK.text}" text-anchor="middle">xꜰ = ${(xf*L).toFixed(2)} m</text>`;
   svg.innerHTML=beam+dim+hinge+vW+vF+vRA+rotHint;
   document.getElementById('rgSFx').textContent=(Fx+HA).toFixed(1);
   document.getElementById('rgSFy').textContent=(Fy+VA-W).toFixed(1);
@@ -2014,6 +2233,81 @@ rigido:[
 };
 
 /* ----- Rendering esercizi con suggerimenti progressivi ----- */
+function exCheck(raw,a){
+  const v=parseFloat(String(raw).trim().replace(',','.').replace(/[^0-9.+\-]/g,''));
+  if(isNaN(v)) return null;
+  if(Number.isInteger(a)) return Math.round(v)===a;
+  return Math.abs(v-a)<=Math.abs(a)*0.02;
+}
+function exVerifyBlock(chk){
+  if(!chk||!chk.length) return '';
+  const fields=chk.map(c=>`<span class="ver-field"><span class="ver-name">${c.l} =</span><input class="ver-in" type="text" inputmode="decimal" autocomplete="off" data-a="${c.a}" aria-label="Risposta: ${c.l}${c.u?(' in '+c.u):''}"><span class="ver-unit">${c.u}</span><span class="ver-fb" aria-hidden="true"></span></span>`).join('');
+  return `<div class="ex-verify">
+    <p class="ver-lab">Verifica la tua risposta</p>
+    <div class="ver-inputs">${fields}</div>
+    <div class="ver-row"><button class="ex-btn ver-btn" type="button">Verifica</button>
+      <span class="ver-result" role="status" aria-live="polite"></span></div>
+    <p class="ver-note">Tolleranza ±2% sui valori decimali; valori interi esatti.</p>
+  </div>`;
+}
+const CHECKS={
+funi:[
+ [{l:'T',u:'N',a:78.5}],
+ [{l:'T',u:'N',a:27.7}],
+ [{l:'T₁',u:'N',a:51.0},{l:'T₂',u:'N',a:29.4}],
+ [{l:'α_min',u:'°',a:14.2}],
+ [{l:'T₁',u:'N',a:64.0},{l:'T₂',u:'N',a:41.2}]
+],
+orizz:[
+ [{l:'f_a',u:'N',a:25}],
+ null,
+ [{l:'F_max',u:'N',a:31.4}],
+ null,
+ [{l:'μ',u:'',a:0.40}]
+],
+inclin:[
+ [{l:'F',u:'N',a:24.5}],
+ null,
+ [{l:'θ_lim',u:'°',a:26.6}],
+ [{l:'F_min',u:'N',a:32.1},{l:'F_max',u:'N',a:66.0}],
+ [{l:'F',u:'N',a:177},{l:'guadagno',u:'×',a:3.33}]
+],
+molla:[
+ [{l:'Δx',u:'cm',a:7.4}],
+ [{l:'f_a',u:'N',a:7.5}],
+ [{l:'Δx',u:'cm',a:5.5}],
+ [{l:'k',u:'N/m',a:153}],
+ [{l:'Δx',u:'cm',a:16.4},{l:'k_eq',u:'N/m',a:240}]
+],
+momento:[
+ [{l:'M',u:'N·m',a:10}],
+ [{l:'M',u:'N·m',a:17.3}],
+ [{l:'F',u:'N',a:75}],
+ [{l:'ΣM',u:'N·m',a:2.25}],
+ [{l:'d₂',u:'m',a:0.25}]
+],
+leva:[
+ [{l:'F₂',u:'N',a:90},{l:'VM',u:'',a:3}],
+ [{l:'F₁',u:'N',a:98.1}],
+ [{l:'F',u:'N',a:137}],
+ [{l:'F',u:'N',a:225.6}],
+ [{l:'d',u:'cm',a:23.5}]
+],
+trave:[
+ [{l:'R_A',u:'N',a:400},{l:'R_B',u:'N',a:400}],
+ [{l:'R_A',u:'N',a:800},{l:'R_B',u:'N',a:400}],
+ [{l:'R_A',u:'N',a:575},{l:'R_B',u:'N',a:725}],
+ [{l:'R_A',u:'N',a:3081},{l:'R_B',u:'N',a:1881}],
+ [{l:'a',u:'m',a:2}]
+],
+rigido:[
+ [{l:'T',u:'N',a:29.4}],
+ [{l:'θ_min',u:'°',a:51.3}],
+ [{l:'T',u:'N',a:122}],
+ [{l:'x_G',u:'m',a:0.61}],
+ [{l:'T',u:'N',a:41.3}]
+]
+};
 function renderEsercizi(sec){
   const el=document.getElementById('ex-'+sec);
   const list=ESERCIZI[sec];
@@ -2024,6 +2318,7 @@ function renderEsercizi(sec){
       <h3>Esercizio ${i+1} — ${e.t}</h3>
       <p class="testo">${e.p}</p>
       <div class="dati"><b>Dati:</b> ${e.d}</div>
+      ${exVerifyBlock(CHECKS[sec]?CHECKS[sec][i]:null)}
       <div class="hints"></div>
       <div class="sol"></div>
       <div class="ex-actions">
@@ -2067,6 +2362,25 @@ function renderEsercizi(sec){
       solBtn.disabled=true; solBtn.style.opacity=.45; solBtn.style.cursor='default';
       solBtn.textContent='Soluzione mostrata';
     });
+    const verBtn=card.querySelector('.ver-btn');
+    if(verBtn){
+      const result=card.querySelector('.ver-result');
+      verBtn.addEventListener('click',()=>{
+        const ins=[...card.querySelectorAll('.ver-in')]; let allok=true, any=false;
+        ins.forEach(inp=>{
+          const fb=inp.parentElement.querySelector('.ver-fb');
+          const res=exCheck(inp.value, parseFloat(inp.dataset.a));
+          inp.classList.remove('ok','no'); fb.classList.remove('ok','no'); fb.innerHTML='';
+          if(res===null) return;
+          any=true;
+          if(res){ inp.classList.add('ok'); fb.className='ver-fb ok'; fb.innerHTML=IC.check; }
+          else { inp.classList.add('no'); fb.className='ver-fb no'; fb.innerHTML=IC.cross; allok=false; }
+        });
+        if(!any){ result.className='ver-result'; result.textContent='Inserisci almeno un valore.'; return; }
+        result.className='ver-result '+(allok?'ok':'no');
+        result.innerHTML=(allok?IC.check+'<span>Tutto corretto!</span>':IC.cross+'<span>Rivedi i valori in rosso.</span>');
+      });
+    }
   });
 }
 
@@ -2306,64 +2620,68 @@ rigido:[
 ]};
 
 /* ============ QUIZ ENGINE ============ */
-const QSECTIONS=['funi','orizz','inclin','molla','momento','leva','trave','rigido'];
+const QSECTIONS=['funi','orizz','inclin','molla','momento','leva','trave','rigido','riepilogo'];
+const TOPIC_KEYS=QSECTIONS.filter(k=>k!=='riepilogo');
+const QUIZ_ENDONLY={riepilogo:true};
+const QUIZ_DRAW={riepilogo:15};           /* domande estratte; i pool valgono 3× */
+const QUIZ_DRAW_DEFAULT=8;
 const qState={};
-QSECTIONS.forEach(s=>{qState[s]={idx:0,score:0,answered:false,done:false};});
-
+function poolFor(s){ return s==='riepilogo' ? [].concat(...TOPIC_KEYS.map(k=>QUIZZES[k]||[]), QUIZZES.riepilogo||[]) : (QUIZZES[s]||[]); }
+function shuffle(n){ const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function drawCount(s){ const pool=poolFor(s).length; return Math.max(1, Math.min(pool, QUIZ_DRAW[s]||QUIZ_DRAW_DEFAULT)); }
+function freshQuiz(s){ return {idx:0,done:false,answers:[],order:shuffle(poolFor(s).length).slice(0,drawCount(s))}; }
+QSECTIONS.forEach(s=>{ qState[s]=freshQuiz(s); });
+function quizScore(s){ const qs=poolFor(s), st=qState[s]; let n=0; st.order.forEach((qi,pos)=>{ if(st.answers[pos]===qs[qi].ans) n++; }); return n; }
 function renderQuiz(s){
-  const st=qState[s], qs=QUIZZES[s], el=document.getElementById('qz-'+s);
-  if(!el) return;
-  const total=qs.length;
-  let body;
+  const st=qState[s], qs=poolFor(s), el=document.getElementById('qz-'+s);
+  if(!el||!qs.length) return;
+  const order=st.order, total=order.length, endOnly=!!QUIZ_ENDONLY[s]; let body;
+  const msgs=['Da rivedere — rileggi la teoria e riprova.','Sufficiente — qualche lacuna da colmare.','Buono — ancora un piccolo sforzo!','Ottimo risultato!','Perfetto — nessun errore!'];
   if(st.done){
-    const r=st.score/total;
-    const mi=r<=0.3?0:r<=0.5?1:r<=0.8?2:r<=0.94?3:4;
-    const icons=['😕','🙂','😊','🎉','🏆'];
-    const msgs=['Da rivedere — rileggi la teoria e riprova.','Sufficiente — qualche lacuna da colmare.','Buono — ancora un po\' e arrivi al massimo!','Ottimo risultato!','Perfetto — nessun errore!'];
-    body=`<div class="quiz-done">
-      <span class="quiz-score-big">${icons[mi]} ${st.score}/${total}</span>
+    const score=quizScore(s), r=score/total, mi=r<=0.3?0:r<=0.5?1:r<=0.8?2:r<=0.94?3:4;
+    let review='';
+    if(endOnly){
+      review='<div class="quiz-review">'+order.map((qi,pos)=>{ const q=qs[qi], ch=st.answers[pos], ok=ch===q.ans;
+        return `<div class="qr-item ${ok?'ok':'no'}">
+          <div class="qr-q">${pos+1}. ${q.q}</div>
+          <div class="qr-a">${ok?IC.check:IC.cross}<span>La tua risposta: <b>${ch==null?'nessuna':(('ABCD'[ch])+') '+q.opts[ch])}</b></span></div>
+          ${ok?'':`<div class="qr-correct">${IC.check}<span>Corretta: <b>${'ABCD'[q.ans]}) ${q.opts[q.ans]}</b></span></div>`}
+          <div class="qr-exp">${q.exp}</div>
+        </div>`; }).join('')+'</div>';
+    }
+    body=`<div class="quiz-done">${IC.trophy}
+      <span class="quiz-score-big">${score}/${total}</span>
       <p class="quiz-msg">${msgs[mi]}</p>
-      <button class="quiz-restart" onclick="restartQuiz('${s}')">🔄 Ricomincia quiz</button>
-    </div>`;
+      <button class="quiz-restart" onclick="restartQuiz('${s}')">${IC.reset}<span>Ricomincia quiz</span></button>
+    </div>${review}`;
   } else {
-    const q=qs[st.idx], pct=st.idx/total*100;
-    body=`<div class="quiz-hd">
-        <span style="color:var(--muted)">Domanda ${st.idx+1} / ${total}</span>
-        <span style="font-weight:700;color:var(--primary-d)">Punteggio: ${st.score}</span>
-      </div>
+    const q=qs[order[st.idx]], pct=st.idx/total*100, given=st.answers[st.idx], answered=given!=null, correct=answered&&given===q.ans;
+    const opts=q.opts.map((o,i)=>{ let cls='quiz-btn';
+      if(answered){ if(endOnly){ if(i===given) cls+=' chosen'; } else { if(i===q.ans) cls+=' correct'; else if(i===given) cls+=' wrong'; } }
+      const dis=(answered&&!endOnly)?' disabled':'';
+      return `<button class="${cls}"${dis} onclick="answerQuiz('${s}',${i})">${'ABCD'[i]}) ${o}</button>`; }).join('');
+    const counter=endOnly?`Risposte: ${st.answers.filter(a=>a!=null).length}/${total}`:`Punteggio: ${quizScore(s)}`;
+    const note=endOnly?`<p class="quiz-note-end">Le correzioni compaiono alla fine. Puoi tornare indietro con «Precedente»: le risposte restano quelle che hai dato.</p>`
+      :(answered?`<div class="quiz-exp ${correct?'ok':'no'}"><strong>${correct?IC.check+'Corretto!':IC.cross+'Sbagliato.'}</strong> ${q.exp}</div>`:'');
+    const prevBtn=st.idx>0?`<button class="quiz-prev" onclick="prevQuiz('${s}')">← Precedente</button>`:'<span></span>';
+    const nextBtn=answered?`<button class="quiz-next" onclick="nextQuiz('${s}')">${st.idx+1<total?'Prossima domanda →':'Vedi il risultato finale →'}</button>`:'<span></span>';
+    body=`<div class="quiz-hd"><span style="color:var(--text-soft)">Domanda ${st.idx+1} / ${total}</span><span style="font-weight:700;color:var(--accent-d)">${counter}</span></div>
       <div class="quiz-bar-wrap"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
+      ${endOnly?note:''}
       <p class="quiz-q">${q.q}</p>
-      <div class="quiz-opts">${q.opts.map((o,i)=>`<button class="quiz-btn" id="qb-${s}-${i}" onclick="answerQuiz('${s}',${i})">${'ABCD'[i]}) ${o}</button>`).join('')}</div>
-      <div class="quiz-exp" id="qexp-${s}" style="display:none"></div>
-      <button class="quiz-next" id="qnxt-${s}" style="display:none" onclick="nextQuiz('${s}')">${st.idx+1<total?'Prossima domanda →':'Vedi il risultato finale →'}</button>`;
+      <div class="quiz-opts">${opts}</div>
+      ${endOnly?'':note}
+      <div class="quiz-nav-row">${prevBtn}${nextBtn}</div>`;
   }
   el.innerHTML=`<div class="card"><h2>Quiz</h2>${body}</div>`;
 }
-function answerQuiz(s,chosen){
-  const st=qState[s]; if(st.answered) return; st.answered=true;
-  const q=QUIZZES[s][st.idx], correct=chosen===q.ans;
-  if(correct) st.score++;
-  for(let i=0;i<q.opts.length;i++){
-    const b=document.getElementById(`qb-${s}-${i}`); if(!b) continue;
-    b.disabled=true;
-    if(i===q.ans) b.classList.add('correct');
-    else if(i===chosen) b.classList.add('wrong');
-  }
-  const exp=document.getElementById(`qexp-${s}`);
-  exp.style.display='';
-  exp.className=`quiz-exp ${correct?'ok':'no'}`;
-  exp.innerHTML=`<strong>${correct?'✓ Corretto!':'✗ Sbagliato.'}</strong> ${q.exp}`;
-  document.getElementById(`qnxt-${s}`).style.display='';
-}
-function nextQuiz(s){
-  const st=qState[s]; st.idx++; st.answered=false;
-  if(st.idx>=QUIZZES[s].length) st.done=true;
-  renderQuiz(s);
-}
-function restartQuiz(s){
-  qState[s]={idx:0,score:0,answered:false,done:false};
-  renderQuiz(s);
-}
+function answerQuiz(s,chosen){ const st=qState[s];
+  if(!QUIZ_ENDONLY[s] && st.answers[st.idx]!=null) return;
+  st.answers[st.idx]=chosen; renderQuiz(s); }
+function nextQuiz(s){ const st=qState[s], tot=st.order.length;
+  if(st.idx<tot-1){ st.idx++; } else { st.done=true; markDone(s); } renderQuiz(s); }
+function prevQuiz(s){ const st=qState[s]; if(st.idx>0){ st.idx--; renderQuiz(s); } }
+function restartQuiz(s){ qState[s]=freshQuiz(s); renderQuiz(s); }
 
 /* ============ WIRING ============ */
 ['fuM','fuA','fuB'].forEach(id=>document.getElementById(id).addEventListener('input',renderFuni));
@@ -2394,8 +2712,41 @@ bindRange('trL','trLv',v=>v.toFixed(1));
 bindRange('rgM','rgMv'); bindRange('rgF','rgFv'); bindRange('rgAng','rgAngv',v=>v+'°');
 bindRange('rgXf','rgXfv',v=>v.toFixed(2)+' L');
 
+/* ----- Progresso / stato (in memoria) ----- */
+const PROGRESS_KEYS=QSECTIONS.slice();
+const doneSet={};
+function markDone(key){ if(doneSet[key])return; doneSet[key]=true; updateProgress(); }
+function updateProgress(){
+  const n=PROGRESS_KEYS.filter(k=>doneSet[k]).length, tot=PROGRESS_KEYS.length;
+  const fill=document.getElementById('progressFill'); if(fill) fill.style.width=(n/tot*100).toFixed(0)+'%';
+  const lab=document.getElementById('progressLab'); if(lab) lab.textContent=n+'/'+tot;
+  const pr=document.getElementById('progress'); if(pr) pr.setAttribute('aria-valuenow',n);
+  TOPIC_KEYS.forEach(k=>{ const b=document.getElementById('badge-'+k); if(b) b.classList.toggle('is-done',!!doneSet[k]); });
+}
+/* ----- Tema chiaro / scuro ----- */
+function redrawAllSims(){ renderFuni(); renderOrizz(); renderInclin(); renderMolla(); renderMomento(); renderLeva(); renderTrave(); renderRigido(); }
+function paintTheme(){
+  refreshThemeVars();
+  const dark=themeIsDark(), btn=document.getElementById('themeBtn');
+  if(btn){ btn.innerHTML=dark?IC.sun:IC.moon; btn.title=dark?'Passa al tema chiaro':'Passa al tema scuro'; btn.setAttribute('aria-label',btn.title); }
+  const mt=document.querySelector('meta[name="theme-color"]'); if(mt) mt.setAttribute('content', dark?'#0d1620':'#eef3f8');
+  redrawAllSims();
+}
+function setTheme(t){ document.documentElement.setAttribute('data-theme',t); try{localStorage.setItem('statica-theme',t);}catch(e){} paintTheme(); }
+document.getElementById('themeBtn').addEventListener('click',()=>setTheme(themeIsDark()?'light':'dark'));
+document.getElementById('homeBtn').addEventListener('click',()=>showTab('intro'));
+/* icone nelle sotto-schede */
+const SUBIC={teoria:IC.book, sim:IC.wave, eserc:IC.pencil, quiz:IC.target};
+document.querySelectorAll('nav.subnav button').forEach(b=>{ const ic=SUBIC[b.dataset.sub]; if(ic) b.insertAdjacentHTML('afterbegin',ic); });
+/* badge di completamento sulle card della home */
+TOPIC_KEYS.forEach(k=>{ const card=document.querySelector('.home-card[data-go="'+k+'"]'); if(!card) return;
+  const b=document.createElement('span'); b.className='card-badge'; b.id='badge-'+k; b.setAttribute('aria-hidden','true');
+  b.innerHTML='<span class="bi bi-todo">'+IC.circle+'</span><span class="bi bi-done">'+IC.badge+'</span><span class="lab-todo">Da fare</span><span class="lab-done">Fatto</span>';
+  card.appendChild(b); });
+updateProgress();
+
 QSECTIONS.forEach(renderQuiz);
-QSECTIONS.forEach(renderEsercizi);
+TOPIC_KEYS.forEach(renderEsercizi);
 
 /* In stampa espande tutte le soluzioni (i suggerimenti restano nascosti dal CSS) */
 window.addEventListener('beforeprint',()=>{
@@ -2409,9 +2760,18 @@ function _updateNavTop(){ _nav.style.top=_hdr.offsetHeight+'px'; }
 new ResizeObserver(_updateNavTop).observe(_hdr);
 _updateNavTop();
 
-/* ----- Initial render ----- */
-renderFuni(); renderOrizz(); renderInclin(); renderMolla();
-renderMomento(); renderLeva(); renderTrave(); renderRigido();
+/* ----- Formule KaTeX ----- */
+function renderMath(root){
+  if(typeof katex==='undefined') return;
+  (root||document).querySelectorAll('[data-tex]').forEach(el=>{
+    if(el.dataset.rendered) return;
+    try{ katex.render(el.getAttribute('data-tex'), el, {throwOnError:false, displayMode: el.classList.contains('formula')}); el.dataset.rendered='1'; }catch(e){}
+  });
+}
+if(document.readyState!=='loading') renderMath(); else document.addEventListener('DOMContentLoaded',function(){ renderMath(); });
+
+/* ----- Primo disegno con i colori del tema corrente ----- */
+paintTheme();
 </script>
 </body>
 </html>
